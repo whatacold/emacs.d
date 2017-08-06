@@ -26,9 +26,14 @@ Fallback theme is used only if the console does NOT support 256 colors."
     (setq my-current-color-theme "fallback"))
    (t
     ;; {{ enable my favourite color theme
-    (unless (featurep 'color-theme-molokai)
-      (require 'color-theme-molokai))
-    (color-theme-molokai)
+    (unless (featurep 'color-theme-solarized)
+      (require 'color-theme-solarized))
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (let ((mode (if (display-graphic-p frame) 'light 'dark)))
+                  (set-frame-parameter frame 'background-mode mode)
+                  (set-terminal-parameter frame 'background-mode mode))
+                (color-theme-solarized)))
     ;; }}
     (setq my-current-color-theme "favorite"))))
 ;; turn on the color theme now!

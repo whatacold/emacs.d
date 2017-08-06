@@ -750,6 +750,7 @@ If no region is selected. You will be asked to use `kill-ring' or clipboard inst
 
 ;; {{ auto-save.el
 (require 'auto-save)
+(setq auto-save-idle 5)     ; in second
 (auto-save-enable)
 (setq auto-save-slient t)
 ;; }}

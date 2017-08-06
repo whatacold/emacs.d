@@ -5,6 +5,7 @@
 ;; @see https://github.com/purcell/emacs.d/issues/352
 (setq desktop-restore-frames nil)
 (desktop-save-mode 1)
+(setq desktop-auto-save-timeout 120)     ; in second
 
 ;;----------------------------------------------------------------------------
 ;; Restore histories and registers after saving

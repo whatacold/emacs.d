@@ -158,6 +158,10 @@ If use-indirect-buffer is not nil, use `indirect-buffer' to hold the widen conte
 
 (eval-after-load 'org
   '(progn
+
+     (setq org-default-notes-file (concat org-directory "/inbox.org")
+           org-agenda-files `(,org-directory))
+
      (setq org-imenu-depth 9)
      (require 'org-clock)
      ;; @see http://irreal.org/blog/1
