@@ -26,14 +26,21 @@ Fallback theme is used only if the console does NOT support 256 colors."
     (setq my-current-color-theme "fallback"))
    (t
     ;; {{ enable my favourite color theme
-    (unless (featurep 'color-theme-solarized)
-      (require 'color-theme-solarized))
-    (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (let ((mode (if (display-graphic-p frame) 'light 'dark)))
-                  (set-frame-parameter frame 'background-mode mode)
-                  (set-terminal-parameter frame 'background-mode mode))
-                (color-theme-solarized)))
+    ;; @see https://github.com/sellout/emacs-color-theme-solarized
+    (add-to-list 'custom-theme-load-path "~/.emacs.d/site-lisp/emacs-color-theme-solarized")
+    (setq solarized-termcolors 256)
+    ;; below code of mixing dark and light theme doesn't work,
+    ;; so just stick with the light one :-(
+    (setq frame-background-mode 'light)
+    (load-theme 'solarized t)
+    ;;(add-hook 'after-make-frame-functions
+    ;;          (lambda (frame)
+    ;;            (let ((mode (if (display-graphic-p frame) 'dark 'dark)))
+    ;;              (message "apply %s theme to %s" mode frame)
+    ;;              (set-frame-parameter frame 'background-mode mode)
+    ;;              (set-terminal-parameter frame 'background-mode mode)
+    ;;              (set-terminal-parameter (frame-terminal frame) 'background-mode mode))
+    ;;            (enable-theme 'solarized)))
     ;; }}
     (setq my-current-color-theme "favorite"))))
 ;; turn on the color theme now!
