@@ -292,6 +292,8 @@ If the character before and after CH is space or tab, CH is NOT slash"
   "gk" 'outline-backward-same-level
   (kbd "TAB") 'org-cycle)
 
+;; {{ specify major mode uses Evil (vim) NORMAL state or EMACS original state.
+;; You may delete this setup to use Evil NORMAL state always.
 (loop for (mode . state) in
       '((minibuffer-inactive-mode . emacs)
         (grep-mode . emacs)
@@ -331,6 +333,7 @@ If the character before and after CH is space or tab, CH is NOT slash"
         (js2-error-buffer-mode . emacs)
         )
       do (evil-set-initial-state mode state))
+;; }}
 
 ;; I prefer Emacs way after pressing ":" in evil-mode
 (define-key evil-ex-completion-map (kbd "C-a") 'move-beginning-of-line)
@@ -434,7 +437,6 @@ If the character before and after CH is space or tab, CH is NOT slash"
        "mk" 'bookmark-set
        "yy" 'counsel-browse-kill-ring
        "gf" 'counsel-git ; find file
-       "gl" 'counsel-git-grep-yank-line
        "gg" 'counsel-git-grep-by-selected ; quickest grep should be easy to press
        "gm" 'counsel-git-find-my-file
        "gs" 'ffip-show-diff ; find-file-in-project 5.0+

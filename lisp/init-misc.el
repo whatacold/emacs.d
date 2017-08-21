@@ -149,11 +149,6 @@
     ))
 ;; }}
 
-;; {{ crontab
-;; in shell "EDITOR='emacs -nw' crontab -e" to edit cron job
-(add-to-list 'auto-mode-alist '("crontab.*\\'" . crontab-mode))
-;; }}
-
 ;; cmake
 (setq auto-mode-alist (append '(("CMakeLists\\.txt\\'" . cmake-mode))
                               '(("\\.cmake\\'" . cmake-mode))
@@ -882,6 +877,16 @@ If no region is selected. You will be asked to use `kill-ring' or clipboard inst
 ;; {{ eacl - emacs auto complete line(s)
 (global-set-key (kbd "C-x C-l") 'eacl-complete-line)
 (global-set-key (kbd "C-x ;") 'eacl-complete-statement)
+(global-set-key (kbd "C-x C-]") 'eacl-complete-snippet)
+(global-set-key (kbd "C-x C-t") 'eacl-complete-tag)
+;; }}
 
+;; {{ wgrep and rgrep, inspired by http://oremacs.com/2015/01/27/my-refactoring-workflow/
+(eval-after-load 'grep
+  '(define-key grep-mode-map
+     (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode))
+(eval-after-load 'wgrep
+  '(define-key grep-mode-map
+     (kbd "C-c C-c") 'wgrep-finish-edit))
 ;; }}
 (provide 'init-misc)
