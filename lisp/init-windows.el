@@ -92,6 +92,4 @@
              (set-window-start w2 s1)
              (setq i (1+ i)))))))
 
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
 (provide 'init-windows)
