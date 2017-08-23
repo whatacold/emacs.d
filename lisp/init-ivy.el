@@ -292,10 +292,9 @@ Or else, find files since 24 weeks (6 months) ago."
                       (ivy--regex
                        (progn (string-match "\"\\(.*\\)\"" (buffer-name))
                               (match-string 1 (buffer-name))))))
-         (cands (remove nil (mapcar (lambda (s) (if (string-match-p regex s) s))
-                                    (split-string (shell-command-to-string (my-grep-cli keyword t))
-                                                  "[\r\n]+" t)))))
-
+         (cands (ivy--filter regex
+                             (split-string (shell-command-to-string (my-grep-cli keyword t))
+                                           "[\r\n]+" t))))
     ;; Need precise number of header lines for `wgrep' to work.
     (insert (format "-*- mode:grep; default-directory: %S -*-\n\n\n"
                     default-directory))
