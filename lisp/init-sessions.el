@@ -1,13 +1,10 @@
-;; A desktop is killed when the user changes desktops or quits Emacs.
-
 ;; save a list of open files in ~/.emacs.d/.emacs.desktop
 ;; save the desktop file automatically if it already exists
-(setq desktop-path '("~/org/"))
+(setq desktop-path '("~/.emacs.d"))
 (setq desktop-save 'if-exists)
 ;; @see https://github.com/purcell/emacs.d/issues/352
 (setq desktop-restore-frames nil)
-(desktop-save-mode 1)                    ; automatic saving and restoration
-(setq desktop-auto-save-timeout 120)     ; in second
+(desktop-save-mode 1)
 
 ;;----------------------------------------------------------------------------
 ;; Restore histories and registers after saving
