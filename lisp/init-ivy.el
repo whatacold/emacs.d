@@ -225,7 +225,8 @@ Or else, find files since 24 weeks (6 months) ago."
 (defvar my-grep-opts-cache '())
 
 (defun my-grep-exclude-opts (use-cache)
-  ;; (message "my-grep-exclude-opts called => %s" use-cache)
+  (when my-grep-debug
+    (message "my-grep-exclude-opts called => %s" use-cache))
   (let* ((ignore-dirs (if use-cache (plist-get my-grep-opts-cache :ignore-dirs)
                         my-grep-ignore-dirs))
          (ignore-file-exts (if use-cache (plist-get my-grep-opts-cache :ignore-file-exts)
