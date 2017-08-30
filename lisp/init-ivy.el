@@ -269,7 +269,8 @@ Or else, find files since 24 weeks (6 months) ago."
                         (my-grep-exclude-opts use-cache)
                         extra-opts
                         keyword))))
-    ;; (message "cmd=%s" cmd)
+    (when my-grep-debug
+      (message "my-grep cmd=%s" cmd))
     cmd))
 
 (defun my-root-dir ()
