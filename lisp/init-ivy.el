@@ -21,6 +21,18 @@
                       (read-string hint)))))
     keyword))
 
+(defun my-counsel-recentf ()
+  "Find a file on `recentf-list'."
+  (interactive)
+  (require 'recentf)
+  (recentf-mode)
+  (ivy-read "Recentf: " (mapcar #'substring-no-properties recentf-list)
+            :initial-input (if (region-active-p) (my-selected-str))
+            :action (lambda (f)
+                      (with-ivy-window
+                       (find-file f)))
+            :caller 'counsel-recentf))
+
 (defmacro counsel-git-grep-or-find-api (fn git-cmd hint no-keyword)
   "Apply FN on the output lines of GIT-CMD.  HINT is hint when user input.
 Yank the file name at the same time.  FILTER is function to filter the collection"
@@ -288,13 +300,10 @@ Or else, find files since 24 weeks (6 months) ago."
   ;; useless to set `default-directory', it's already correct
   ;; (message "default-directory=%s" default-directory)
   ;; we use regex in elisp, don't unquote regex
-  (let* ((regex (setq ivy--old-re
-                      (ivy--regex
-                       (progn (string-match "\"\\(.*\\)\"" (buffer-name))
-                              (match-string 1 (buffer-name))))))
-         (cands (ivy--filter regex
+  (let* ((cands (ivy--filter ivy-text
                              (split-string (shell-command-to-string (my-grep-cli keyword t))
                                            "[\r\n]+" t))))
+    ;; (message "ivy-text=%s cands-length=%d" ivy-text (length cands))
     ;; Need precise number of header lines for `wgrep' to work.
     (insert (format "-*- mode:grep; default-directory: %S -*-\n\n\n"
                     default-directory))
