@@ -39,3 +39,15 @@
                                    ("$" "￥")
                                    ("!" "！")
                                    ("`" "・")))))
+
+(setq browse-url-generic-program
+      (when *unix* ; linux or unix
+        (or (executable-find "chrome") "/opt/google/chrome/chrome")))
+
+;; maximized
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
+;; Windows
+(if (and *win64* (file-directory-p "f:/cygwin64/bin"))
+  (add-to-list 'exec-path "f:/cygwin64/bin"))
