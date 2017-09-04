@@ -1,3 +1,9 @@
+;; Don't use https, cause it doesn't work when behind a proxy.
+(setq package-archives
+      '(("localelpa" . "~/.emacs.d/localelpa/")
+        ("melpa" . "http://melpa.org/packages/")
+        ("melpa-stable" . "http://stable.melpa.org/packages/")))
+
 (setq auto-save-idle 1)     ; in second
 
 ;; M-x my-grep tuning
