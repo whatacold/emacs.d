@@ -55,5 +55,10 @@
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
 ;; Windows
-(if (and *win64* (file-directory-p "f:/cygwin64/bin"))
-  (add-to-list 'exec-path "f:/cygwin64/bin"))
+(if *win64*
+  (progn
+    (when (file-directory-p "f:/cygwin64/bin")
+      (add-to-list 'exec-path "f:/cygwin64/bin"))
+    (setq shell-file-name "bash")
+    (setq explicit-shell-file-name shell-file-name)
+    (setq tramp-default-method "scp")))
