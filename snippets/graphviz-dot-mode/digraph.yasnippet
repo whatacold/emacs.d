@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# name: digraph
+# key: digraph
+# --
+digraph foo_bar {
+    // an inline comment
+    /**
+     * a multi-line comment
+     */
+
+    label="hello\nworld";
+
+    graph[rankdir=LR];
+    node[fontsize="16",shape="record"];
+
+    subgraph cluster_legend {
+        a -> b -> c;
+    }
+
+    // only for `record' shape
+    d[label="<d1>part 1 | <d2>part 2"];
+    
+    e[label="node e"];
+
+    c -> d:d1;
+    d:d2 -> e;
+}
