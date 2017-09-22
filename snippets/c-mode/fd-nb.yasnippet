@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: fd nonblock
+# key: fd-nb
+# contributor: whatacold@gmail.com
+# --
+#include <unistd.h>
+#include <fcntl.h>$0
+
+int ${1:flags} = fcntl(${2:fd}, F_GETFL);
+$1 |= O_NONBLOCK;
+if(fcntl($2, F_SETFL, $1) < 0) {
+    ${3:fprintf(stderr, "failed to F_SETFL\n")};
+}

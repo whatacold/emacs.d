@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: signal
+# key: signal
+# contributor: whatacold@gmail.com
+# --
+#include <signal.h>$0
+
+struct sigaction ${1:act};
+
+sigemptyset(&$1.sa_mask);
+/**
+ * When the SA_SIGINFO flag is set in sa_flags then sa_sigaction is used.
+ * Otherwise, sa_handler is used.
+ */
+$1.sa_flags = 0;
+// void $2(int);
+$1.sa_handler = ${2:sigShutdownHandler};
+sigaction(SIGINT, &$1, NULL);

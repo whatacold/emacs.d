@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: time format
+# key: tm-format
+# contributor: whatacold@gmail.com
+# --
+#include <time.h>$0
+
+time_t ${1:now} = time(NULL);
+struct tm ${2:tm_result};
+char ${3:tbuf}[${4:64}] = {0};
+strftime($3, sizeof($3), "%Y-%m-%d %H:%M:%S", localtime_r(&$1, &$2));
