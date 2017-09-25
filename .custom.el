@@ -6,6 +6,9 @@
 
 (setq auto-save-idle 1)     ; in second
 
+(prefer-coding-system 'gbk)
+(prefer-coding-system 'utf-8)
+
 ;; M-x my-grep tuning
 (setq my-grep-debug nil)
 (delete "test" my-grep-ignore-dirs)
