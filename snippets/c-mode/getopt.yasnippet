@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# name: getopt
+# key: getopt
+# contributor: whatacold@gmail.com
+# --
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int flags, opt;
+int nsecs;
+
+nsecs = 0;
+flags = 0;
+
+optind = 1; // where to parse from, default is 1
+while ((opt = getopt(argc, argv, "${1:nt:}")) != -1) {
+    switch (opt) {
+    case '${2:n}':
+        ${3:flags = 1};
+        break;
+    case '${4:t}':
+        ${5:nsecs = atoi(optarg)};
+        break;
+    default: /* '?' */
+        ${6:fprintf(stderr, "Usage: %s [-t nsecs] [-n] name\n",
+                argv[0]);
+        exit(1)};
+    }
+}$0
