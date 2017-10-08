@@ -84,6 +84,7 @@
     (let* ((new-height (* 10 height))
            (new-point-height (/ new-height 10)))
       (dolist (f (frame-list))
+        (require 'init-fonts)
         (with-selected-frame f
           ;; Latest 'set-frame-font supports a "frames" arg, but
           ;; we cater to Emacs 23 by looping instead.
