@@ -20,6 +20,9 @@
      (setq org-default-notes-file (concat org-directory "/inbox.org")
            org-agenda-files `(,org-directory))))
 
+(require 'ox-reveal)
+(setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+
 ;; sessions
 ;; A desktop is killed when the user changes desktops or quits Emacs.
 (setq desktop-path '("~/org/"))
