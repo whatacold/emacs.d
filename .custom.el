@@ -93,3 +93,4 @@
                           t)))
       (set-face-attribute 'default nil :height new-height)
       (message "default font size is now %d" new-point-height))))
+(my-set-font-height 16)
