@@ -72,8 +72,14 @@
   (interactive)
   (shell-command (format "rsync.sh %s" (my-root-dir))))
 
+(defun my-counsel-etag-grep ()
+  "Use the symbol at point as default grep keyword"
+  (interactive)
+  (counsel-etag-grep (thing-at-point 'symbol t)))
+
 (eval-after-load "evil"
   (nvmap :prefix ","
+         "qq" 'my-counsel-etag-grep
          "sy" 'my-rsync))
 
 (defun my-set-font-height (height)
