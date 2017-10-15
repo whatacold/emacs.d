@@ -11,7 +11,7 @@
 
 (eval-after-load 'org
   '(progn
-     (setq org-default-notes-file (concat org-directory "/inbox.org")
+     (setq org-default-notes-file (concat org-directory "/gtd/inbox.org")
            org-agenda-files `(,org-directory))))
 
 (require 'ox-reveal)
