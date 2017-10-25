@@ -101,4 +101,6 @@
       (message "default font size is now %d" new-point-height))))
 (my-set-font-height 16)
 
+;;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
+(add-hook 'magit-mode-hook 'magit-svn-mode)
