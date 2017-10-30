@@ -17,10 +17,11 @@
 (require 'ox-reveal)
 (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
 
-;; sessions
+;; Sessions tuning, in addition to `init-sessions.el'
 ;; A desktop is killed when the user changes desktops or quits Emacs.
 (setq desktop-path '("~/org/"))
-(setq desktop-auto-save-timeout 120)     ; in second
+(setq desktop-auto-save-timeout 1)    ; in second
+(setq desktop-restore-eager 16)          ; lazily restore the remaining buffers if any
 
 ;; chinese pyim
 (eval-after-load 'pyim

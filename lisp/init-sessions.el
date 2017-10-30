@@ -4,7 +4,7 @@
 (setq desktop-save 'if-exists)
 ;; @see https://github.com/purcell/emacs.d/issues/352
 (setq desktop-restore-frames nil)
-(desktop-save-mode 1)
+(desktop-save-mode 1)                   ; automatic saving and restoration
 
 ;;----------------------------------------------------------------------------
 ;; Restore histories and registers after saving
