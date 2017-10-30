@@ -9,9 +9,11 @@
 (prefer-coding-system 'gbk)
 (prefer-coding-system 'utf-8)
 
+;; org-refile seems to only support files in `org-directory'
 (eval-after-load 'org
   '(progn
-     (setq org-default-notes-file (concat org-directory "/gtd/inbox.org")
+     (setq org-directory "~/org/gtd")
+     (setq org-default-notes-file (concat org-directory "/inbox.org")
            org-agenda-files `(,org-directory))))
 
 (require 'ox-reveal)
@@ -19,8 +21,7 @@
 
 ;; Sessions tuning, in addition to `init-sessions.el'
 ;; A desktop is killed when the user changes desktops or quits Emacs.
-(setq desktop-path '("~/org/"))
-(setq desktop-auto-save-timeout 1)    ; in second
+(setq desktop-auto-save-timeout 120)     ; in second
 (setq desktop-restore-eager 16)          ; lazily restore the remaining buffers if any
 
 ;; chinese pyim
