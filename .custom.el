@@ -106,3 +106,7 @@
 ;;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
 (add-hook 'magit-mode-hook 'magit-svn-mode)
+
+;;; midnight mode
+;; autokilling buffers not displayed more that this days.
+(setq clean-buffer-list-delay-general 30)
