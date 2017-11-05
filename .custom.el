@@ -6,8 +6,25 @@
 
 (setq auto-save-idle 1)     ; in second
 
+;;; coding system
 (prefer-coding-system 'gbk)
 (prefer-coding-system 'utf-8)
+(defun my-set-eol ()
+  (interactive)
+  (ivy-read (format "current coding system: %s, select one eol: "
+                    buffer-file-coding-system)
+            (list "unix" "dos" "mac")
+            :require-match t
+            :action
+            (lambda (type)
+              (cond
+               ((string= type "unix")
+                ;; not really work if EOLs are mixed, e.g. \n and \r\n
+                (set-buffer-file-coding-system 'unix))
+               ((string= type "dos")
+                (set-buffer-file-coding-system 'dos))
+               (t
+                (set-buffer-file-coding-system 'mac))))))
 
 ;; org-refile seems to only support files in `org-directory'
 (eval-after-load 'org
