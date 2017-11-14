@@ -1,8 +1,9 @@
 ;; Don't use https, cause it doesn't work when behind a proxy.
-(setq package-archives
-      '(("localelpa" . "~/.emacs.d/localelpa/")
-        ("melpa" . "http://melpa.org/packages/")
-        ("melpa-stable" . "http://stable.melpa.org/packages/")))
+;; It doesn't work, because this file is loaded after `init-elpa.el'
+;; (setq package-archives
+;; '(("localelpa" . "~/.emacs.d/localelpa/")
+;;        ("melpa" . "http://melpa.org/packages/")
+;;        ("melpa-stable" . "http://stable.melpa.org/packages/")))
 
 (setq auto-save-idle 1)     ; in second
 
