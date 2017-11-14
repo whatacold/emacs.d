@@ -125,6 +125,27 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (add-hook 'magit-mode-hook 'magit-svn-mode)
 
-;;; midnight mode
+;;; midnight mode {{
 ;; autokilling buffers not displayed more that this days.
-(setq clean-buffer-list-delay-general 30)
+;(setq clean-buffer-list-delay-general 30)
+(defun my-refresh-one-project-buffer ()
+  (interactive)
+  (let ((now (current-time))
+        project-alist bfn root)
+    (dolist (buf (buffer-list))
+      (when (and (buffer-live-p buf) (buffer-file-name buf))
+        (setq bfn (buffer-file-name buf))
+        (with-current-buffer buf
+          (setq root (ffip-project-root)))
+        (when (and root (not (assoc root project-alist)))
+          (with-current-buffer buf
+            (message "refresh %s's display time: %s -> %s" bfn (format-time-string "%Y-%m-%d %T" buffer-display-time) (format-time-string "%Y-%m-%d %T" now))
+            (setq buffer-display-time now)
+            (setq project-alist (cons (cons root t) project-alist))))))))
+
+(eval-after-load 'midnight
+  (if (boundp 'midnight-hook)
+      (add-hook 'midnight-hook 'my-refresh-one-project-buffer) ; not hit
+    ;; XXX why is it not bound even after loaded?
+    (setq midnight-hook '(my-refresh-one-project-buffer clean-buffer-list))))
+;;; }}
