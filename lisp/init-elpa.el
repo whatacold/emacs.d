@@ -1,14 +1,12 @@
+;; emacs24 require calling `package-initialize' explicitly
 (require 'package)
-
-;; Set it to `t' to use safer HTTPS to download packages
-(defvar melpa-use-https-repo nil
-  "By default, HTTP is used to download packages.
-But you may use safer HTTPS instead.")
+(package-initialize)
 
 ;; List of VISIBLE packages from melpa-unstable (http://melpa.org)
 ;; Feel free to add more packages!
 (defvar melpa-include-packages
   '(ace-mc
+    ace-window ; lastest stable is released on year 2014
     bbdb
     dumb-jump
     color-theme
@@ -33,6 +31,7 @@ But you may use safer HTTPS instead.")
     counsel-gtags ; the stable version is never released
     noflet
     db
+    package-lint
     creole
     web
     idomenu
@@ -62,24 +61,21 @@ But you may use safer HTTPS instead.")
     company-c-headers)
   "Don't install any Melpa packages except these packages")
 
-;; We include the org repository for completeness, but don't use it.
-;; Lock org-mode temporarily:
 (setq package-archives
       '(;; uncomment below line if you need use GNU ELPA
         ;; ("gnu" . "https://elpa.gnu.org/packages/")
-        ;; ("org" . "http://orgmode.org/elpa/") ; latest org-mode
         ("localelpa" . "~/.emacs.d/localelpa/")
         ;; ("my-js2-mode" . "https://raw.githubusercontent.com/redguardtoo/js2-mode/release/") ; github has some issue
+        ;; {{ backup repositories
+        ;; ("melpa" . "http://mirrors.163.com/elpa/melpa/")
+        ;; ("melpa-stable" . "http://mirrors.163.com/elpa/melpa-stable/")
+        ;; }}
         ("melpa" . "https://melpa.org/packages/")
-        ("melpa-stable" . "https://stable.melpa.org/packages/")))
+        ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ))
 
-;; Un-comment below line if your extract https://github.com/redguardtoo/myelpa/archive/master.zip into ~/myelpa/
-;; (setq package-archives '(("myelpa" . "~/myelpa")))
-
-;; Or Un-comment below line if you install package from https://github.com/redguardtoo/myelpa/
-;; (setq package-archives '(("myelpa" . "https://raw.github.com/redguardtoo/myelpa/master/")))
-
-
+;; Un-comment below line if you follow "Install stable version in easiest way"
+;; (setq package-archives '(("myelpa" . "~/projs/myelpa")))
 
 ;;------------------------------------------------------------------------------
 ;; Internal implementation, newbies should NOT touch code below this line!
@@ -147,8 +143,6 @@ But you may use safer HTTPS instead.")
 ;;------------------------------------------------------------------------------
 ;; Fire up package.el and ensure the following packages are installed.
 ;;------------------------------------------------------------------------------
-
-(package-initialize)
 
 (require-package 'async)
 (require-package 'dash) ; required by string-edit
@@ -264,7 +258,6 @@ But you may use safer HTTPS instead.")
 (require-package 'package-lint) ; lint package before submit it to MELPA
 (require-package 'iedit)
 (require-package 'ace-pinyin)
-(require-package 'org-jira) ; @see https://github.com/ahungry/org-jira
 (require-package 'bash-completion)
 (require-package 'graphviz-dot-mode)
 (require-package 'magit)

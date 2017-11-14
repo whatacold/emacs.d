@@ -1,18 +1,18 @@
-;;; eacl.el --- Emacs auto-complete line by GNU grep
+;;; eacl.el --- Auto-complete line(s) by grepping project
 
 ;; Copyright (C) 2017 Chen Bin
 ;;
-;; Version: 0.0.3
-;; Keywords: autocomplete line
+;; Version: 1.0.3
 ;; Author: Chen Bin <chenbin DOT sh AT gmail DOT com>
-;; URL: http://github.com/redguardtoo/eapl
-;; Package-Requires: ((ivy "0.9.1") (emacs "24.3"))
+;; URL: http://github.com/redguardtoo/eacl
+;; Package-Requires: ((emacs "24.3") (ivy "0.9.1"))
+;; Keywords: abbrev, convenience, matching
 
 ;; This file is not part of GNU Emacs.
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2, or (at your option)
+;; the Free Software Foundation; either version 3, or (at your option)
 ;; any later version.
 
 ;; This program is distributed in the hope that it will be useful,
@@ -26,10 +26,9 @@
 
 ;;; Commentary:
 
-;; Mutiple commands are provided to grep files in the project to get
 ;; Multiple commands are provided to grep files in the project to get
 ;; auto complete candidates.
-;; The keyword to grep is the text from line beginning to current cursor.
+;; The keyword to grep is text from line beginning to current cursor.
 ;; Project is *automatically* detected if Git/Mercurial/Subversion is used.
 ;; You can override the project root by setting `eacl-project-root',
 ;;
@@ -38,29 +37,64 @@
 ;; `eacl-complete-line' complete line.  You could assign key binding
 ;; "C-x C-l" to this command.
 ;;
-;; `eacl-complete-statement' completes statement.  Statement could be
-;; multiple lines and is matched by pattern `eacl-statement-regex'.
-;; According to default value of `eacl-statement-regex'.
-;; Statement ends with ";"
+;; `eacl-complete-statement' completes statement which ends with ";".
+;; For example, input "import" and run this command.
 ;;
-;; `eacl-complete-snippet' completes snippets ending with "}"
+;; `eacl-complete-snippet' completes snippets which ends with "}".
+;; For example, input "if" and run this command.
 ;;
-;; `eacl-complete-tag' completes HTML tag ending with ">"
+;; `eacl-complete-tag' completes HTML tag which ends with ">".
+;; For example, input "<div" and run this command.
+;;
+;; Modify `grep-find-ignored-directories' and `grep-find-ignored-files'
+;; to setup directories and files grep should ignore:
+;;   (eval-after-load 'grep
+;;     '(progn
+;;        (dolist (v '("node_modules"
+;;                     "bower_components"
+;;                     ".sass_cache"
+;;                     ".cache"
+;;                     ".npm"))
+;;          (add-to-list 'grep-find-ignored-directories v))
+;;        (dolist (v '("*.min.js"
+;;                     "*.bundle.js"
+;;                     "*.min.css"
+;;                     "*.json"
+;;                     "*.log"))
+;;          (add-to-list 'grep-find-ignored-files v))))
+;;
+;; Or you can setup above ignore options in ".dir-locals.el".
+;; The content of ".dir-locals.el":
+;;   ((nil . ((eval . (progn
+;;                      (dolist (v '("node_modules"
+;;                                   "bower_components"
+;;                                   ".sass_cache"
+;;                                   ".cache"
+;;                                   ".npm"))
+;;                        (add-to-list 'grep-find-ignored-directories v))
+;;                      (dolist (v '("*.min.js"
+;;                                   "*.bundle.js"
+;;                                   "*.min.css"
+;;                                   "*.json"
+;;                                   "*.log"))
+;;                        (add-to-list 'grep-find-ignored-files v)))))))
 ;;
 ;; GNU Grep, Emacs 24.3 and counsel (https://github.com/abo-abo/swiper)
 ;; are required.
+;;
+;; Please use HomeBrew (https://brew.sh/) to install GNU Grep on macOS.
+;; Then insert `(setq eacl-grep-program "ggrep")' into "~/.emacs".
+;; The bundled "BSD Grep" on macOS is too outdated to use.
+
 
 ;;; Code:
 (require 'ivy)
+(require 'grep)
 (require 'cl-lib)
 
 (defgroup eacl nil
-  "eacl")
-
-(defcustom eacl-statement-regex "[^;]*;"
-  "Regular expression to match the statement."
-  :type 'string
-  :group 'eacl)
+  "Emacs auto-complete line(s) by grepping project."
+  :group 'tools)
 
 (defcustom eacl-grep-program "grep"
   "GNU Grep program."
@@ -77,48 +111,14 @@
   :type '(repeat sexp)
   :group 'eacl)
 
-(defcustom eacl-grep-ignore-dirs
-  '(".git"
-    ".bzr"
-    ".svn"
-    "bower_components"
-    "node_modules"
-    ".sass-cache"
-    ".cache"
-    "test"
-    "tests"
-    ".metadata"
-    "logs")
-  "Directories to ignore when grepping."
-  :type '(repeat sexp)
+(defcustom eacl-project-root-callback 'eacl-get-project-root
+  "The callback to get project root directory.
+The callback is expected to return the path of project root."
+  :type 'function
   :group 'eacl)
 
-(defcustom eacl-grep-ignore-file-exts
-  '("log"
-    "properties"
-    "session"
-    "swp")
-  "File extensions to ignore when grepping."
-  :type '(repeat sexp)
-  :group 'eacl)
-
-(defcustom eacl-grep-ignore-file-names
-  '("TAGS"
-    "tags"
-    "GTAGS"
-    "GPATH"
-    ".bookmarks.el"
-    "*.svg"
-    "history"
-    "#*#"
-    "*.min.js"
-    "*bundle*.js"
-    "*vendor*.js"
-    "*.min.css"
-    "*~")
-  "File names to ignore when grepping."
-  :type '(repeat sexp)
-  :group 'eacl)
+(defvar eacl-keyword-start nil
+  "The start position of multi-line keyword.  Internal variable.")
 
 ;;;###autoload
 (defun eacl-get-project-root ()
@@ -134,44 +134,46 @@
   (buffer-substring-no-properties (line-beginning-position)
                                   (point)))
 
-;;;###autoload
-(defun eacl-leading-spaces (cur-line)
-  "Leading space at the begining of CUR-LINE."
-  (if (string-match "^\\([ \t]*\\)" cur-line)
-      (match-string 1 cur-line)
-    ""))
+(defun eacl-trim-left (s)
+  "Remove whitespace at the beginning of S."
+  (if (string-match "\\`[ \t\n\r]+" s) (replace-match "" t t s) s))
+
+(defun eacl-encode(s)
+  "Encode S."
+  (setq s (regexp-quote s))
+  ;; Be generic about quotes. Most scrip languages could use either double quotes
+  ;; or single quote to wrap string.
+  ;; In this case, we don't care, we just want to get mores candidates for
+  ;; code completion
+  ;; For example, in javascript, `import { Button } from "react-bootstrap` and
+  ;; `import { Button } from 'react-bootstrap';` are same.
+  (setq s (replace-regexp-in-string "'" "." s))
+  (setq s (replace-regexp-in-string "\"" "." s))
+  s)
+
+(defun eacl-shell-quote-argument (argument)
+  "Try `shell-quote-argument' ARGUMENT and process special characters."
+  (cond
+   ((eq system-type 'ms-dos)
+    (shell-quote-argument argument))
+   (t
+    ;; We only use GNU Grep from Cygwin/MSYS2 even on Windows.
+    ;; So we can safely assume the Linux Shell is available.
+    ;; Below code is copied from `shell-quote-argument'.
+    (if (equal argument "")
+        "''"
+      (replace-regexp-in-string "[^-0-9a-zA-Z<>{}[]:_./\n]" "\\\\\\&"
+                                (replace-regexp-in-string
+                                 "[\n\r\t ]" "[[:space:]]"
+                                 argument))))))
 
 (defun eacl-grep-exclude-opts ()
   "Create grep exclude options."
   (concat (mapconcat (lambda (e) (format "--exclude-dir='%s'" e))
-                     eacl-grep-ignore-dirs " ")
-          " "
-          (mapconcat (lambda (e) (format "--exclude='*.%s'" e))
-                     eacl-grep-ignore-file-exts " ")
+                     grep-find-ignored-directories " ")
           " "
           (mapconcat (lambda (e) (format "--exclude='%s'" e))
-                     eacl-grep-ignore-file-names " ")))
-
-(defun eacl-unquote-regex-parens (str)
-  (let ((start 0)
-        ms)
-    (while (setq start (string-match "\\\\)\\|\\\\(\\|[()]" str start))
-      (setq ms (match-string-no-properties 0 str))
-      (cond ((equal ms "\\(")
-             (setq str (replace-match "(" nil t str))
-             (setq start (+ start 1)))
-            ((equal ms "\\)")
-             (setq str (replace-match ")" nil t str))
-             (setq start (+ start 1)))
-            ((equal ms "(")
-             (setq str (replace-match "\\(" nil t str))
-             (setq start (+ start 2)))
-            ((equal ms ")")
-             (setq str (replace-match "\\)" nil t str))
-             (setq start (+ start 2)))
-            (t
-             (error "unexpected"))))
-    str))
+                     grep-find-ignored-files " ")))
 
 ;;;###autoload
 (defun eacl-get-keyword (cur-line)
@@ -179,14 +181,12 @@
   (let* ((keyword (replace-regexp-in-string "^[ \t]*"
                                             ""
                                             cur-line)))
-    (eacl-unquote-regex-parens keyword)))
+    (eacl-encode keyword)))
 
-(defun eacl-replace-current-line (leading-spaces content)
-  "Insert LEADING-SPACES and CONTENT."
-  (beginning-of-line)
-  (kill-line)
-  (insert (concat leading-spaces content))
-  (end-of-line))
+(defun eacl-replace-text (content start is-multiline)
+  "Insert CONTENT from START to current point if IS-MULTILINE is t."
+  (delete-region start (if is-multiline (point) (line-end-position)))
+  (insert content))
 
 (defun eacl-create-candidate-summary (s)
   "If S is too wide to fit into the screen, return pair summary and S."
@@ -200,72 +200,99 @@
         (setq key (concat (substring key 0 (- w 4)) "...")))
     (cons key s)))
 
-(defun eacl-complete-line-or-statement (regex cur-line keyword)
+(defun eacl-complete-line-or-statement (regex cur-line keyword start)
   "Complete line or statement according to REGEX.
-CUR-LINE and KEYWORD are also required.
+If REGEX is nil, we only complete current line.
+CUR-LINE and KEYWORD are also required.  START is position we insert
+next text.
 If REGEX is not nil, complete statement."
-  (let* ((default-directory (or (eacl-get-project-root) default-directory))
-         (cmd-format-opts (if regex "%s -rsnhPzoI %s \"%s\" *"
-                            "%s -rshEI %s \"%s\" *"))
-         (cmd (format cmd-format-opts
+  (let* ((default-directory (or (funcall eacl-project-root-callback) default-directory))
+         (quoted-keyword (eacl-shell-quote-argument keyword))
+         (cmd (format (if regex "%s -rshzoI %s -- \"%s\" *" "%s -rshI %s -- \"%s\" *")
                       eacl-grep-program
                       (eacl-grep-exclude-opts)
-                      (if regex (concat keyword regex)
-                        keyword)))
-         (leading-spaces (eacl-leading-spaces cur-line))
-         (sep (if regex "^[0-9]+:" "[\r\n]+"))
-         (collection (split-string (shell-command-to-string cmd) sep t "[ \t\r\n]+")))
+                      (if regex (concat quoted-keyword regex) quoted-keyword)))
+         ;; Please note grep's "-z" will output null character at the end of each candidate
+         (sep (if regex "\x0" "[\r\n]+"))
+         (collection (split-string (shell-command-to-string cmd) sep t "[ \t\r\n]+"))
+         (rlt t))
+    ;; (message "keyword=%s" keyword)
+    ;; (message "quoted keyword=%s" quoted-keyword)
+    ;; (message "cmd=%s" cmd)
+    ;; (message "collection length=%s sep=%s" (length collection) sep)
     (when collection
       (setq collection (delq nil (delete-dups collection)))
       (cond
        ((= 1 (length collection))
         ;; insert only candidate
-        (eacl-replace-current-line leading-spaces (car collection)))
+        (cond
+         ((string= (car collection) (buffer-substring-no-properties start (point)))
+          (setq rlt nil))
+         (t
+          (eacl-replace-text (car collection) start regex))))
        ((> (length collection) 1)
         ;; uniq
-        (if regex
+        (when regex
           (setq collection (mapcar 'eacl-create-candidate-summary collection)))
         (ivy-read "candidates:"
                   collection
                   :action (lambda (l)
                             (if (consp l) (setq l (cdr l)))
-                            (eacl-replace-current-line leading-spaces l))))))))
+                            (eacl-replace-text l start regex))))))
+    (unless collection (setq rlt nil))
+    rlt))
+
+(defun eacl-line-beginning-position ()
+  "Get line beginning position."
+  (save-excursion (back-to-indentation) (point)))
+
+
+;;;###autoload
+(defun eacl-complete-multi-lines-internal (regex)
+  "Complete multi-lines.  REGEX is used to match the lines."
+  (let* ((cur-line (eacl-current-line))
+         (keyword (eacl-get-keyword cur-line))
+         (start (eacl-line-beginning-position))
+         (continue t))
+    (while continue
+      (unless (eacl-complete-line-or-statement regex cur-line keyword start)
+        (message "Auto-completion done!")
+        (setq continue nil))
+      (cond
+       (continue
+        (when (fboundp 'xref-pulse-momentarily)
+          (xref-pulse-momentarily))
+        (when (yes-or-no-p "Continue?")
+          (setq keyword (eacl-encode (eacl-trim-left (buffer-substring-no-properties start (point)))))))
+       (t
+        (setq continue nil))))))
 
 ;;;###autoload
 (defun eacl-complete-line ()
-  "Complete line by grepping in project.
-The keyword to grep is the text from line beginning to current cursor."
+  "Complete line by grepping project."
   (interactive)
   (let* ((cur-line (eacl-current-line))
+         (start (eacl-line-beginning-position))
          (keyword (eacl-get-keyword cur-line)))
-    (eacl-complete-line-or-statement nil cur-line keyword)))
+    (eacl-complete-line-or-statement nil cur-line keyword start)))
 
 ;;;###autoload
 (defun eacl-complete-statement ()
-  "Complete statement which end with pattern `eacl-statement-regex'.
-The keyword to grep is the text from line beginning to current cursor."
+  "Complete statement which ends with \";\" by grepping project."
   (interactive)
-  (let* ((cur-line (eacl-current-line))
-         (keyword (eacl-get-keyword cur-line)))
-    (eacl-complete-line-or-statement eacl-statement-regex cur-line keyword)))
+  (eacl-complete-multi-lines-internal "[^;]*;"))
 
 ;;;###autoload
 (defun eacl-complete-snippet ()
-  "Complete snippet which ends with \"}\".
-The keyword to grep is the text from line beginning to current cursor."
+  "Complete snippet which ends with \"}\" by grepping in project."
   (interactive)
-  (let* ((eacl-statement-regex "[^}]*}"))
-    (eacl-complete-statement)))
+  (eacl-complete-multi-lines-internal "[^}]*}"))
 
 ;;;###autoload
 (defun eacl-complete-tag ()
-  "Complete snippet which ends with \">\".
-The keyword to grep is the text from line beginning to current cursor."
+  "Complete snippet which ends with \">\" by grepping in project."
   (interactive)
-  (let* ((cur-line (eacl-current-line))
-         (keyword (concat "<" (replace-regexp-in-string "^<" "" (eacl-get-keyword cur-line))))
-         (regex "[^>]*>"))
-    (eacl-complete-line-or-statement regex cur-line keyword)))
+  (eacl-complete-multi-lines-internal "[^>]*>"))
 
 (provide 'eacl)
 ;;; eacl.el ends here
