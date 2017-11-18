@@ -13,7 +13,7 @@
     "%02l" "," "%01c"
       ;; (propertize "%02l" 'face 'font-lock-type-face) ","
       ;; (propertize "%02c" 'face 'font-lock-type-face)
-    ") "
+    ") %p "
 
     ;; the current major mode for the buffer.
     "["
