@@ -142,10 +142,5 @@
             (message "refresh %s's display time: %s -> %s" bfn (format-time-string "%Y-%m-%d %T" buffer-display-time) (format-time-string "%Y-%m-%d %T" now))
             (setq buffer-display-time now)
             (setq project-alist (cons (cons root t) project-alist))))))))
-
-(eval-after-load 'midnight
-  (if (boundp 'midnight-hook)
-      (add-hook 'midnight-hook 'my-refresh-one-project-buffer) ; not hit
-    ;; XXX why is it not bound even after loaded?
-    (setq midnight-hook '(my-refresh-one-project-buffer clean-buffer-list))))
+(setq midnight-hook '(my-refresh-one-project-buffer clean-buffer-list))
 ;;; }}
