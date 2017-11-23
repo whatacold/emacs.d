@@ -94,10 +94,10 @@
 
 (defun my-counsel-etags-grep (arg)
   "Grep a keyword within current project,
-use the symbol at point as default keyword when no prefix arg,
-or keyword will be asked to input."
-  (interactive "p")
-  (if (= 1 arg)
+use the symbol at point as default keyword when no prefix arg provided,
+or a keyword will be asked to input."
+  (interactive "P")
+  (if (not arg)
       ;; no prefix arg
       (counsel-etags-grep (thing-at-point 'symbol t))
     (counsel-etags-grep)))
