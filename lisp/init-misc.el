@@ -81,15 +81,14 @@
 (defun my-git-diff()
   "Run 'git diff version'."
   (let* ((default-directory (locate-dominating-file default-directory ".git"))
-         (line (ivy-read "diff current file:" (my-git-versions)))
+         (line (ivy-read "diff all files compared to: " (my-git-versions)))
          (version (replace-regexp-in-string "^ *\\*? *" "" (car (split-string line "|" t)))))
     (shell-command-to-string (format "git --no-pager diff %s" version))))
-
 
 (defun my-git-diff-current-file ()
   "Run 'git diff version:current-file current-file'."
   (let* ((default-directory (locate-dominating-file default-directory ".git"))
-         (line (ivy-read "diff current file:" (my-git-versions))))
+         (line (ivy-read "diff current file compared to:" (my-git-versions))))
     (shell-command-to-string (format "git --no-pager diff %s:%s %s"
                                      (replace-regexp-in-string "^ *\\*? *" "" (car (split-string line "|" t)))
                                      (file-relative-name buffer-file-name default-directory)
