@@ -71,6 +71,19 @@
 
 (setq w3m-user-agent "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36")
 
+(defun my-w3m-browse-org-link (new-session)
+  "Browse the org link at point, if any, in org-mode,
+use prefix arg to open in a new w3m session."
+  (interactive "P")
+  (let (url)
+    (if (and
+         (eq 'org-mode major-mode)
+         ;; Inspired by `org-insert-link'
+         (org-in-regexp org-bracket-link-regexp 1))
+        (setq url (match-string-no-properties 1)))
+    (if url (w3m-browse-url url new-session)
+      (call-interactively 'w3m-browse-url))))
+
 ;; maximized
 (custom-set-variables
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
