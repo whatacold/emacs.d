@@ -147,6 +147,10 @@ or a keyword will be asked to input."
 ;; autokilling buffers not displayed more that this days.
 ;(setq clean-buffer-list-delay-general 30)
 (defun my-refresh-one-project-buffer ()
+  "Refresh the display time of a buffer of every project,
+to prevent it from being killed by midnight hook `clean-buffer-list',
+so as to keep at least one file of the project open,
+so that I could do project switching more quickly, instead of finding files."
   (interactive)
   (let ((now (current-time))
         project-alist bfn root)
