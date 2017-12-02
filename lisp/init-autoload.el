@@ -9,6 +9,8 @@
 (autoload 'counsel-etags-find-tag-at-point "counsel-etags" "" t nil)
 (autoload 'counsel-etags-scan-code "counsel-etags" "" t nil)
 (autoload 'counsel-etags-grep "counsel-etags" "" t nil)
+(autoload 'counsel-etags-grep-symbol-at-point "counsel-etags" "" t nil)
+(autoload 'counsel-etags-recent-tag "counsel-etags" "" t nil)
 (autoload 'turn-on-stripe-buffer-mode "stripe-buffer" "" nil)
 (autoload 'turn-on-stripe-table-mode "stripe-buffer" "" nil)
 (autoload 'doxygen-insert-function-comment "doxygen" "insert comment for the function at point" t)
@@ -68,6 +70,7 @@
 (autoload 'eacl-complete-line "eacl" "")
 (autoload 'eacl-complete-statement "eacl" "")
 (autoload 'eacl-complete-snippet "eacl" "")
+(autoload 'eacl-complete-tag "eacl" "")
 
 (provide 'init-autoload)
 ;;; init-autoload.el ends here

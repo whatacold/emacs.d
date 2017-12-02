@@ -11,7 +11,7 @@ _p_revious   _s_ave workgroup
 _P_ause      _l_oad workgroup
 _O_pen       _b_ookmark
 _L_ Playlist Goto book_m_ark
-_q_uit
+_q_uit       Undo _v_isualize
 "
   ("b" bookmark-set)
   ("m" counsel-bookmark-goto)
@@ -22,6 +22,7 @@ _q_uit
   ("a" toggle-company-ispell)
   ("E" toggle-typewriter)
   ("V" twm/toggle-sound-style)
+  ("v" undo-tree-visualize)
   ("r" emms-random)
   ("n" emms-next)
   ("p" emms-previous)
@@ -310,7 +311,7 @@ _q_ cancel
   ("a" avy-goto-char-timer )
 
   ("q" nil))
-(global-set-key (kbd "C-c ;") 'hydra-search/body)
+(global-set-key (kbd "C-c C-s") 'hydra-search/body)
 ;; (global-set-key (kbd "C-c ; b") 'sdcv-search-pointer)
 ;; (global-set-key (kbd "C-c ; t") 'sdcv-search-input+)
 
