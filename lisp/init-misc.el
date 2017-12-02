@@ -543,7 +543,7 @@ See \"Reusing passwords for several connections\" from INFO.
 (require 'sdcv)
 (setq sdcv-dictionary-simple-list '())
 (setq sdcv-dictionary-complete-list '("牛津现代英汉双解词典"))
-(setq sdcv-buffer-name "*sdcv*") ; prefer the name in downcase
+(setq sdcv-buffer-name "*sdcv*") ; prefer the buffer name in lowercase.
 ;; }}
 
 ;; ANSI-escape coloring in compilation-mode
