@@ -537,8 +537,12 @@ See \"Reusing passwords for several connections\" from INFO.
 ;; # Langdao Chinese => English
 ;; curl http://abloz.com/huzheng/stardict-dic/zh_CN/stardict-langdao-ec-gb-2.4.2.tar.bz2 | tar jx -C ~/.stardict/dic
 ;;
-(setq sdcv-dictionary-simple-list '("朗道英汉字典5.0"))
-(setq sdcv-dictionary-complete-list '("WordNet"))
+;; You could find more dictionaries at: http://stardict.rrr.rs/ , which is maintained by Hu Zheng.
+;; Show dictionaries' name with: =sdcv -l=
+;;
+(setq sdcv-dictionary-simple-list '())
+(setq sdcv-dictionary-complete-list '("牛津现代英汉双解词典"))
+(setq sdcv-buffer-name "*sdcv*") ; prefer the name in downcase
 ;; }}
 
 ;; ANSI-escape coloring in compilation-mode
