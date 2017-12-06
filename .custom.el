@@ -4,6 +4,7 @@
 ;; '(("localelpa" . "~/.emacs.d/localelpa/")
 ;;        ("melpa" . "http://melpa.org/packages/")
 ;;        ("melpa-stable" . "http://stable.melpa.org/packages/")))
+(add-to-list 'melpa-include-packages 'org-download)
 
 (setq auto-save-idle 1)     ; in second
 
@@ -27,6 +28,7 @@
                (t
                 (set-buffer-file-coding-system 'mac))))))
 
+;; org mode {{
 ;; org-refile seems to only support files in `org-directory'
 (eval-after-load 'org
   '(progn
@@ -36,6 +38,11 @@
 
 (require 'ox-reveal)
 (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+
+(require-package 'org-download)
+(require 'org-download)
+(setq org-download-image-dir "./images/")
+;; }}
 
 ;; Sessions tuning, in addition to `init-sessions.el'
 ;; A desktop is killed when the user changes desktops or quits Emacs.
