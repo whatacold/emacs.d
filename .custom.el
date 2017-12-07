@@ -37,7 +37,7 @@
            org-agenda-files `(,org-directory))))
 
 (require 'ox-reveal)
-(setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+(setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0/")
 
 (require-package 'org-download)
 (require 'org-download)
