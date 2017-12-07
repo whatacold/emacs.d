@@ -42,6 +42,10 @@
 (require-package 'org-download)
 (require 'org-download)
 (setq org-download-image-dir "./images/")
+(setq org-download-screenshot-method
+      (if *cygwin*
+          "convert clipboard: %s"
+        "gnome-screenshot -a -f %s"))
 ;; }}
 
 ;; Sessions tuning, in addition to `init-sessions.el'
