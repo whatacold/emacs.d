@@ -150,6 +150,15 @@ or a keyword will be asked to input."
 (global-set-key (kbd "C-x g") 'magit-status)
 (add-hook 'magit-mode-hook 'magit-svn-mode)
 
+;; vc svn dirty hack: don't specify `-u' to `svn status'
+(defun vc-svn-dir-status-files (_dir files callback)
+  "Run 'svn status' for DIR and update BUFFER via CALLBACK.
+CALLBACK is called as (CALLBACK RESULT BUFFER), where
+RESULT is a list of conses (FILE . STATE) for directory DIR."
+  ;; FIXME shouldn't this rather default to all the files in dir?
+  (apply #'vc-svn-command (current-buffer) 'async nil "status" files)
+  (vc-run-delayed (vc-svn-after-dir-status callback nil)))
+
 ;;; midnight mode {{
 ;; autokilling buffers not displayed more that this days.
 ;(setq clean-buffer-list-delay-general 30)
