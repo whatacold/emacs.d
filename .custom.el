@@ -178,12 +178,19 @@ so that I could do project switching more quickly, instead of finding files."
     (dolist (buf (buffer-list))
       (when (and (buffer-live-p buf) (buffer-file-name buf))
         (setq bfn (buffer-file-name buf))
-        (with-current-buffer buf
-          (setq root (ffip-project-root)))
-        (when (and root (not (assoc root project-alist)))
-          (with-current-buffer buf
-            (message "refresh %s's display time: %s -> %s" bfn (format-time-string "%Y-%m-%d %T" buffer-display-time) (format-time-string "%Y-%m-%d %T" now))
-            (setq buffer-display-time now)
-            (setq project-alist (cons (cons root t) project-alist))))))))
+        (condition-case exception
+            (with-current-buffer buf
+              (setq root (ffip-project-root)))
+          (when (and root (not (assoc root project-alist)))
+            (with-current-buffer buf
+              (message "refresh %s's display time: %s -> %s"
+                       bfn
+                       (format-time-string "%Y-%m-%d %T"
+                                           buffer-display-time)
+                       (format-time-string "%Y-%m-%d %T" now))
+              (setq buffer-display-time now)
+              (setq project-alist (cons (cons root t) project-alist))))
+          ('error (message "failed to refresh %s %s" bfn exception)))))))
+
 (setq midnight-hook '(my-refresh-one-project-buffer clean-buffer-list))
 ;;; }}
