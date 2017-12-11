@@ -29,12 +29,108 @@
                 (set-buffer-file-coding-system 'mac))))))
 
 ;; org mode {{
-;; org-refile seems to only support files in `org-directory'
-(eval-after-load 'org
-  '(progn
-     (setq org-directory "~/org/gtd")
-     (setq org-default-notes-file (concat org-directory "/inbox.org")
-           org-agenda-files `(,org-directory))))
+
+; GTD, see https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
+(setq org-default-notes-file "~/org/gtd/inbox.org")
+(setq org-capture-templates '(("t" "GTD: collect sth. into inbox" entry
+                               (file+headline "~/org/gtd/inbox.org" "Tasks")
+                               "* TODO %i%?\n  Captured at: %u")
+                              ("T" "Tickler" entry
+                               (file+headline "~/org/gtd/tickler.org" "Tickler")
+                               "* %i%?\n %U")))
+
+(setq org-agenda-files '("~/org/gtd/inbox.org"
+                         "~/org/gtd/gtd.org"
+                         "~/org/gtd/tickler.org"))
+(setq org-refile-targets '(("~/org/gtd/gtd.org" :maxlevel . 3)
+                           ("~/org/gtd/someday.org" :level . 1)
+                           ("~/org/gtd/tickler.org" :maxlevel . 2)
+                           ("~/org/gtd/trash.org" :level . 1)
+                           ("~/org/gtd/reference.org" :level . 1)))
+
+(setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-tag-alist '((:startgroup . nil)
+                      ("@office" . ?o)
+                      ("@home" . ?h)
+                      ("@dormitory" . ?d)
+                      ("@transport" . ?t)
+                      (:endgroup . nil)
+                      ("hobby" . ?b)
+                      ("emacs" . ?e)))
+
+(setq org-agenda-custom-commands
+      '(("w" . "TODOs")
+        ("d" "30 days deadlines" agenda ""
+         ((org-agenda-entry-types
+           (quote
+            (:deadline)))
+          (org-agenda-overriding-header "Month deadlines")
+          (org-agenda-span
+           (quote month))
+          (org-agenda-overriding-header "")))
+        ("n" "Next actions of every project"
+         ((alltodo ""
+                   ((org-agenda-tag-filter-preset
+                     (quote nil))
+                    (org-agenda-overriding-header "Next actions")
+                    (org-agenda-skip-function
+                     (quote
+                      (my-org-agenda-skip-all-siblings-but-first)))
+                    (org-agenda-prefix-format "%-32:(org-agenda-format-parent 30)")
+                    (org-agenda-todo-keyword-format "%-4s")
+                    (org-agenda-files
+                     (quote
+                      ("~/org/gtd/gtd.org"))))))
+         nil nil)
+        ("@" "Contexts"
+         ((tags "emacs"
+                ((org-agenda-overriding-header "Emacs next actions")
+                 (org-agenda-skip-function
+                  (quote
+                   (my-org-agenda-skip-all-siblings-but-first)))))
+          (todo "WAITING"
+                ((org-agenda-overriding-header "Waiting")))
+          (tags-todo "@office"
+                     ((org-agenda-overriding-header "At the office")
+                      (org-agenda-skip-function
+                       (quote
+                        (my-org-agenda-skip-all-siblings-but-first)))))
+          (tags-todo "@home"
+                     ((org-agenda-overriding-header "At home")
+                      (org-agenda-skip-function
+                       (quote
+                        (my-org-agenda-skip-all-siblings-but-first))))))
+          (tags-todo "@dormitory"
+                     ((org-agenda-overriding-header "At dormitory")
+                      (org-agenda-skip-function
+                       (quote
+                        (my-org-agenda-skip-all-siblings-but-first)))))
+          (tags-todo "@transport"
+                     ((org-agenda-overriding-header "On some transport like subway, bus etc.")
+                      (org-agenda-skip-function
+                       (quote
+                        (my-org-agenda-skip-all-siblings-but-first)))))
+         nil
+         nil)))
+
+(defun my-org-agenda-skip-all-siblings-but-first ()
+  "Skip all but the first non-done entry."
+  (let (should-skip-entry)
+    (unless (my-org-current-is-todo)
+      (setq should-skip-entry t))
+    (save-excursion
+      (while (and (not should-skip-entry) (org-goto-sibling t))
+        (when (my-org-current-is-todo)
+          (setq should-skip-entry t))))
+    (when should-skip-entry
+      (or (outline-next-heading)
+          (goto-char (point-max))))))
+
+(defun my-org-current-is-todo ()
+  (string= "TODO" (org-get-todo-state)))
+
+(global-set-key (kbd "C-c c") #'org-capture)
+(global-set-key (kbd "C-c a") #'org-agenda)
 
 (require 'ox-reveal)
 (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0/")
