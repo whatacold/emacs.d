@@ -56,6 +56,7 @@
                       ("@transport" . ?t)
                       (:endgroup . nil)
                       ("hobby" . ?b)
+                      ("break" . ?k)
                       ("emacs" . ?e)))
 
 (setq org-agenda-custom-commands
