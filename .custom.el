@@ -34,7 +34,7 @@
 (setq org-default-notes-file "~/org/gtd/inbox.org")
 (setq org-capture-templates '(("t" "GTD: collect sth. into inbox" entry
                                (file+headline "~/org/gtd/inbox.org" "Tasks")
-                               "* TODO %i%?\n  Captured at: %u")
+                               "* TODO %i%?\n  Captured on: %u")
                               ("T" "Tickler" entry
                                (file+headline "~/org/gtd/tickler.org" "Tickler")
                                "* %i%?\n %U")))
@@ -76,7 +76,7 @@
                     (org-agenda-skip-function
                      (quote
                       (my-org-agenda-skip-all-siblings-but-first)))
-                    (org-agenda-prefix-format "%-32:(org-agenda-format-parent 30)")
+                    (org-agenda-prefix-format "%-32:(my-org-agenda-format-parent 30)")
                     (org-agenda-todo-keyword-format "%-4s")
                     (org-agenda-files
                      (quote
@@ -99,19 +99,27 @@
                      ((org-agenda-overriding-header "At home")
                       (org-agenda-skip-function
                        (quote
-                        (my-org-agenda-skip-all-siblings-but-first))))))
+                        (my-org-agenda-skip-all-siblings-but-first)))))
           (tags-todo "@dormitory"
                      ((org-agenda-overriding-header "At dormitory")
                       (org-agenda-skip-function
                        (quote
                         (my-org-agenda-skip-all-siblings-but-first)))))
           (tags-todo "@transport"
-                     ((org-agenda-overriding-header "On some transport like subway, bus etc.")
+                     ((org-agenda-overriding-header "On transport")
                       (org-agenda-skip-function
                        (quote
-                        (my-org-agenda-skip-all-siblings-but-first)))))
+                        (my-org-agenda-skip-all-siblings-but-first))))))
          nil
          nil)))
+
+(defun my-org-agenda-format-parent (n)
+  ;; (s-truncate n (org-format-outline-path (org-get-outline-path)))
+  (save-excursion
+    (save-restriction
+      (widen)
+      (org-up-heading-safe)
+      (s-truncate n (org-get-heading t t)))))
 
 (defun my-org-agenda-skip-all-siblings-but-first ()
   "Skip all but the first non-done entry."
@@ -261,8 +269,6 @@ or a keyword will be asked to input."
 ;;   (vc-run-delayed (vc-svn-after-dir-status callback nil)))
 
 ;;; midnight mode {{
-;; autokilling buffers not displayed more that this days.
-;(setq clean-buffer-list-delay-general 30)
 (defun my-refresh-one-project-buffer ()
   "Refresh the display time of a buffer of every project,
 to prevent it from being killed by midnight hook `clean-buffer-list',
@@ -274,19 +280,20 @@ so that I could do project switching more quickly, instead of finding files."
     (dolist (buf (buffer-list))
       (when (and (buffer-live-p buf) (buffer-file-name buf))
         (setq bfn (buffer-file-name buf))
-        (condition-case exception
-            (with-current-buffer buf
-              (setq root (ffip-project-root)))
-          (when (and root (not (assoc root project-alist)))
-            (with-current-buffer buf
-              (message "refresh %s's display time: %s -> %s"
-                       bfn
-                       (format-time-string "%Y-%m-%d %T"
-                                           buffer-display-time)
-                       (format-time-string "%Y-%m-%d %T" now))
-              (setq buffer-display-time now)
-              (setq project-alist (cons (cons root t) project-alist))))
-          ('error (message "failed to refresh %s %s" bfn exception)))))))
+        (condition-case ex
+            (progn
+              (with-current-buffer buf
+                (setq root (ffip-project-root)))
+              (when (and root (not (assoc root project-alist)))
+                (with-current-buffer buf
+                  (message "refresh %s's display time: %s -> %s"
+                           bfn
+                           (format-time-string "%Y-%m-%d %T"
+                                               buffer-display-time)
+                           (format-time-string "%Y-%m-%d %T" now))
+                  (setq buffer-display-time now)
+                  (setq project-alist (cons (cons root t) project-alist)))))
+          (error (message "failed to refresh %s: %s" bfn ex)))))))
 
 (setq midnight-hook '(my-refresh-one-project-buffer clean-buffer-list))
 ;;; }}
