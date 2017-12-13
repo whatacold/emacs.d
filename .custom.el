@@ -47,6 +47,7 @@
                            ("~/org/gtd/tickler.org" :maxlevel . 2)
                            ("~/org/gtd/trash.org" :level . 1)
                            ("~/org/gtd/reference.org" :level . 1)))
+(setq org-refile-allow-creating-parent-nodes 'confirm)
 
 (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 (setq org-tag-alist '((:startgroup . nil)
