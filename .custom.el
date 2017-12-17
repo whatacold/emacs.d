@@ -142,6 +142,9 @@
 (global-set-key (kbd "C-c c") #'org-capture)
 (global-set-key (kbd "C-c a") #'org-agenda)
 
+;; For a specific file, enable it with #+OPTIONS: ^:t
+(setq org-export-with-sub-superscripts nil)
+
 (require 'ox-reveal)
 (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0/")
 
