@@ -145,6 +145,12 @@
 ;; For a specific file, enable it with #+OPTIONS: ^:t
 (setq org-export-with-sub-superscripts nil)
 
+(defun my-org-export-dispatch (orig-fun &rest args)
+  "Workaround for `xdg-open' not working."
+  (let ((process-connection-type nil))
+    (apply orig-fun args)))
+(advice-add #'org-export-dispatch :around #'my-org-export-dispatch)
+
 (require 'ox-reveal)
 (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0/")
 
