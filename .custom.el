@@ -272,24 +272,26 @@ or a keyword will be asked to input."
          "qq" 'my-counsel-etags-grep
          "sy" 'my-rsync))
 
-(defun my-set-font-height (height)
-  "set font height to HEIGHT"
-  (interactive "P")
-  (if (> height 24)
-      (message "font height too large: %d" height)
-    (let* ((new-height (* 10 height))
-           (new-point-height (/ new-height 10)))
-      (dolist (f (frame-list))
-        (require 'init-fonts)
-        (with-selected-frame f
-          ;; Latest 'set-frame-font supports a "frames" arg, but
-          ;; we cater to Emacs 23 by looping instead.
-          (set-frame-font (font-name-replace-size (face-font 'default)
-                                                  new-point-height)
-                          t)))
-      (set-face-attribute 'default nil :height new-height)
-      (message "default font size is now %d" new-point-height))))
-(my-set-font-height 16)
+;; (defun my-set-font-height (height)
+;;   "set font height to HEIGHT"
+;;   (interactive "P")
+;;   (if (> height 24)
+;;       (message "font height too large: %d" height)
+;;     (let* ((new-height (* 10 height))
+;;            (new-point-height (/ new-height 10)))
+;;       (dolist (f (frame-list))
+;;         (require 'init-fonts)
+;;         (with-selected-frame f
+;;           ;; Latest 'set-frame-font supports a "frames" arg, but
+;;           ;; we cater to Emacs 23 by looping instead.
+;;           (set-frame-font (font-name-replace-size (face-font 'default)
+;;                                                   new-point-height)
+;;                           t)))
+;;       (set-face-attribute 'default nil :height new-height)
+;;       (message "default font size is now %d" new-point-height))))
+;; (my-set-font-height 16)
+(require 'cnfonts)
+(cnfonts-enable)
 
 ;;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
