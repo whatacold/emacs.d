@@ -216,6 +216,7 @@
                   pyim-probe-isearch-mode
                   pyim-probe-program-mode
                   pyim-probe-org-structure-template))
+(global-set-key (kbd "C-c M-j") #'pyim-convert-code-at-point)
 
 (setq browse-url-generic-program
       (when *unix* ; linux or unix
