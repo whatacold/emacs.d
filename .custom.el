@@ -296,7 +296,7 @@ or a keyword will be asked to input."
 (cnfonts-enable)
 
 ;;; magit
-(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x g") #'magit-status)
 (add-hook 'magit-mode-hook 'magit-svn-mode)
 
 ;; It looks not that slow with `-u', so just comment it out.
