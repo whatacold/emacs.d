@@ -338,3 +338,7 @@ so that I could do project switching more quickly, instead of finding files."
 
 (setq midnight-hook '(my-refresh-one-project-buffer clean-buffer-list))
 ;;; }}
+
+;; local
+(when (file-exists-p "~/.emacs.d/local-specific.el")
+  (load-file "~/.emacs.d/local-specific.el"))
