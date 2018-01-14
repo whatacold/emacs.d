@@ -210,13 +210,14 @@
                                    ("!" "！")
                                    ("`" "・")))))
 ;; How to get back to Chinese:
-;; type ni-hao and execute M-x pyim-convert-code-at-point
+;; type nihao and execute M-x pyim-convert-code-at-point
 (setq-default pyim-english-input-switch-functions
                 '(pyim-probe-dynamic-english
                   pyim-probe-isearch-mode
                   pyim-probe-program-mode
                   pyim-probe-org-structure-template))
-(global-set-key (kbd "C-c M-j") #'pyim-convert-code-at-point)
+;; h for HanYu
+(global-set-key (kbd "C-c h") #'pyim-convert-code-at-point)
 
 (setq browse-url-generic-program
       (when *unix* ; linux or unix
