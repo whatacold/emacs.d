@@ -299,15 +299,7 @@ or a keyword will be asked to input."
 (global-set-key (kbd "C-x g") #'magit-status)
 (add-hook 'magit-mode-hook 'magit-svn-mode)
 
-;; It looks not that slow with `-u', so just comment it out.
-;; ;; vc svn dirty hack: don't specify `-u' to `svn status'
-;; (defun vc-svn-dir-status-files (_dir files callback)
-;;   "Run 'svn status' for DIR and update BUFFER via CALLBACK.
-;; CALLBACK is called as (CALLBACK RESULT BUFFER), where
-;; RESULT is a list of conses (FILE . STATE) for directory DIR."
-;;   ;; FIXME shouldn't this rather default to all the files in dir?
-;;   (apply #'vc-svn-command (current-buffer) 'async nil "status" files)
-;;   (vc-run-delayed (vc-svn-after-dir-status callback nil)))
+(setq vc-handled-backends (delete 'Git vc-handled-backends))
 
 ;;; midnight mode {{
 (defun my-refresh-one-project-buffer ()
