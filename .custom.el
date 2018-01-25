@@ -244,16 +244,6 @@ use prefix arg to open in a new w3m session."
 
 (setq neo-autorefresh nil)
 
-;; Windows
-(if *win64*
-  (progn
-    (set-face-attribute 'default nil :height 140)
-    (when (file-directory-p "f:/cygwin64/bin")
-      (add-to-list 'exec-path "f:/cygwin64/bin"))
-    (setq shell-file-name "bash")
-    (setq explicit-shell-file-name shell-file-name)
-    (setq tramp-default-method "scp")))
-
 (defun my-rsync ()
   "Util to easily rsync projects"
   (interactive)
