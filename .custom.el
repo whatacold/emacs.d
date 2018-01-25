@@ -244,6 +244,14 @@ use prefix arg to open in a new w3m session."
 
 (setq neo-autorefresh nil)
 
+;; projects
+(eval-after-load "counsel-etags"
+  (lambda ()
+    (add-to-list 'counsel-etags-project-file "GTAGS")))
+(eval-after-load "find-file-in-project"
+  (lambda ()
+    (add-to-list 'ffip-project-file "GTAGS")))
+
 (defun my-rsync ()
   "Util to easily rsync projects"
   (interactive)
