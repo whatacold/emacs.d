@@ -11,6 +11,7 @@
 ;;; coding system
 (prefer-coding-system 'gbk)
 (prefer-coding-system 'utf-8)
+(modify-coding-system-alist 'file "\\.sh\\'" 'unix)
 (defun my-set-eol ()
   (interactive)
   (ivy-read (format "current coding system: %s, select one eol: "
@@ -314,6 +315,6 @@ so that I could do project switching more quickly, instead of finding files."
 (require 'slime)
 (setq inferior-lisp-program (executable-find "clisp"))
 
-;; local
+;; specific to local machine
 (when (file-exists-p "~/.emacs.d/local-specific.el")
   (load-file "~/.emacs.d/local-specific.el"))
