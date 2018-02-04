@@ -223,6 +223,7 @@
 (setq browse-url-generic-program
       (when *unix* ; linux or unix
         (or (executable-find "chrome") "/opt/google/chrome/chrome")))
+(setq browse-url-browser-function #'w3m-browse-url)
 
 (setq w3m-user-agent "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36")
 
@@ -318,3 +319,6 @@ so that I could do project switching more quickly, instead of finding files."
 ;; specific to local machine
 (when (file-exists-p "~/.emacs.d/local-specific.el")
   (load-file "~/.emacs.d/local-specific.el"))
+;; e.g.
+(pyvenv-activate "~/path/to/virtualenv/foo/")
+(setq common-lisp-hyperspec-root "file:/path/to/HyperSpec/")
