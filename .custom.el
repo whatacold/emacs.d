@@ -253,6 +253,9 @@ use prefix arg to open in a new w3m session."
 (eval-after-load "find-file-in-project"
   (lambda ()
     (add-to-list 'ffip-project-file "GTAGS")))
+(global-set-key (kbd "<f5>") #'counsel-gtags-dwim)
+(global-set-key (kbd "<f6>") #'counsel-gtags-go-backward)
+(global-set-key (kbd "<f7>") #'counsel-gtags-go-forward)
 
 (defun my-rsync ()
   "Util to easily rsync projects"
