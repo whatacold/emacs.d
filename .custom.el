@@ -317,11 +317,11 @@ so that I could do project switching more quickly, instead of finding files."
 ;;; }}
 
 (require 'slime)
-(setq inferior-lisp-program (executable-find "clisp"))
+(setq inferior-lisp-program (executable-find "alisp"))
 
 ;; specific to local machine
 (when (file-exists-p "~/.emacs.d/local-specific.el")
   (load-file "~/.emacs.d/local-specific.el"))
 ;; e.g.
-(pyvenv-activate "~/path/to/virtualenv/foo/")
-(setq common-lisp-hyperspec-root "file:/path/to/HyperSpec/")
+;; (pyvenv-activate "~/path/to/virtualenv/foo/")
+;; (setq common-lisp-hyperspec-root "file:/path/to/HyperSpec/")
