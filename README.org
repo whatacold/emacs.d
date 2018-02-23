@@ -7,7 +7,7 @@
 - Robust, you can install packages without network access
 - Popular programming languages are supported, C/C++/Java/Ruby/Perl/Python/C#/Lua/Javascript ...
 * Checklist
-- Tested with Emacs 24.3, 24.4, 24.5, 25.3 on Linux/Windows/Cygwin/macOS (I will stop 24.3 support at <2018-01-01>)
+- Tested with Emacs 24.4, 24.5, 25.3 on Linux/Windows/Cygwin/macOS
 - Please read FAQ to disable [[http://www.vim.org][Vim]] key bindings
 - Please read section "Key bindings" to learn key bindings
 - If you use Windows Emacs, you have to [[https://emacs.stackexchange.com/questions/27202/how-do-i-install-gnutls-for-emacs-25-1-on-windows][install GnuTLS Dlls manually]] to be able to install packages from remote repositories. Or else you got error message like =error: Package `async-' is unavailble= on Windows
@@ -40,7 +40,7 @@ Ensure that the init.el contained in this repo ends up at =~/.emacs.d/init.el=.
 By default, packages are installed automatically during Emacs startup.
 
 ** Install stable version in easiest way (OPTIONAL)
-You only need two zip files instead of git or network.
+You only need two zip files.
 
 Here are the *exact steps*,
 - Remove =~/.emacs=.
@@ -246,38 +246,20 @@ Check [[https://emacsthemes.com/]].
 Write down the name of color theme (for example, molokai).
 
 *** Setup color theme manually (recommended)
-Search below code in =~/.emacs.d/lisp/init-color-theme.el= and replace "molokai" with your color theme name,
-#+BEGIN_SRC elisp
-;; the color theme name "molokai"" could be replaced with other theme name
-(unless (featurep 'color-theme-molokai)
-  (require 'color-theme-molokai))
-(color-theme-molokai)
-#+END_SRC
+Search "molokai" in =~/.emacs.d/lisp/init-color-theme.el= and replace it with your own color theme name,
 
-Please note =M-x color-theme-select= *may not work* because of some design flaw in Emacs.
+You can =M-x counsel-load-theme= to switch themes.
 
-There is *NO unified way* to enable color theme because two color theme systems exist. You need read color theme's documentation at first.
-
-My code works for most color themes.
-
-If you insist on configuring the color theme in a different way, please,
-- Comment out the line containing =(require 'init-color-theme)= in =~/.emacs.d/init.el= at first
-- Read [[http://www.emacswiki.org/emacs?action=browse;oldid=ColorTheme;id=ColorAndCustomThemes][EmacsWiki]]
 *** Use color theme in terminal
 Start Emacs this way,
 #+BEGIN_SRC sh
 TERM=xterm-256color emacs -nw
 #+END_SRC
-*** Toggle color theme
-By default [[https://github.com/alloy-d/color-theme-molokai/blob/master/molokai-theme.el][color-theme-molokai]] is used.
-
-But you can run the =M-x my-toggle-color-theme= to switch to the fallback theme =color-theme-deep-blue=.
-
-You can change the definition of =my-toggle-color-theme= in =init-color-theme.el=.
 ** Grep/Replace text in project
 Many third party plugins bundled in this setup have already provided all the features you needed. For example, if you use =git=, =counsel-git-grep= from package [[https://github.com/abo-abo/swiper][counsel/ivy]] works out of the box.
 
 A generic grep program =counsel-etags-grep= is provided if you don't use =git=. Since =counsel-etags-grep= is based on =counsel/ivy=, it also supports "multi-editing via Ivy". You could read [[https://sam217pa.github.io/2016/09/11/nuclear-power-editing-via-ivy-and-ag/][Nuclear weapon multi-editing via Ivy and Ag]] to get the idea.
+
 
 Multi-edit workflow is optimized. After =M-x counsel-etags-grep= or pressing ",qq", press =C-c C-o C-x C-q= to enable =wgrep-mode=. You can edit text (for example, delete lines) in =wgrep-mode= directly.
 
@@ -430,14 +412,14 @@ You can =M-x my-pyim-export-dictionary= to export your personal words into perso
 Run below commands in shell:
 #+begin_src bash
 mkdir -p ~/tmp;
-curl http://ftp.gnu.org/gnu/emacs/emacs-24.3.tar.gz | tar xvz -C ~/tmp/emacs-24.3
-cd ~/tmp/emacs-24.3;
-mkdir -p ~/myemacs/24.3;
-rm -rf ~/myemacs/24.3/*;
-./configure --prefix=~/myemacs/24.3 --without-x --without-dbus --without-sound && make && make install
+curl http://ftp.gnu.org/gnu/emacs/emacs-24.4.tar.gz | tar xvz -C ~/tmp/emacs-24.4
+cd ~/tmp/emacs-24.4;
+mkdir -p ~/myemacs/24.4;
+rm -rf ~/myemacs/24.4/*;
+./configure --prefix=~/myemacs/24.4 --without-x --without-dbus --without-sound && make && make install
 #+end_src
 
-Feel free to replace 24.3 with other version number.
+Feel free to replace 24.4 with other version number.
 ** Change Time Locale
 Insert below code into =~/.emacs= or =~/.custom.el,
 #+begin_src elisp
@@ -458,18 +440,16 @@ My own snippets is at =~/.emacs.d/snippets=.
 
 Other directories don't matter.
 ** About Emacs 23
-Version 1.2 of this setup is the last versionit to support Emacs v23.
+Version 1.2 of this setup is the last version to support Emacs v23.
 
 Here are the steps to use that setup:
 - Download [[https://github.com/redguardtoo/emacs.d/archive/1.2.zip]]
 - Download [[https://github.com/redguardtoo/myelpa/archive/1.2.zip]]
 - Follow the section =Install stable version in easiest way= but skip the download steps
 ** About Emacs 24.3
-Version 2.6 is the last versionit to support =Emacs 24.3=.
+Version 2.6 is the last version to support =Emacs 24.3=.
 
 Download [[https://github.com/redguardtoo/emacs.d/archive/2.6.zip]] and [[https://github.com/redguardtoo/myelpa/archive/2.6.zip]] and you are good to go.
-** Editing Emacs Lisp
-We use [[https://github.com/abo-abo/lispy/tree/0.26.0][lispy]] and [[https://github.com/noctuid/lispyville][lispyville]] when editing Emacs Lisp. So you need be familar with their key bindings.
 * Tips
 - Never turn off any bundled mode if it's on by default. Future version of Emacs may assume it's on. Tweak its flag in mode hook instead!
 - Git skills are *extremely useful*. Please read the chapters "Git Basics", "Git Branching", "Git Tools" from [[https://git-scm.com/book/en/][Pro Git]]

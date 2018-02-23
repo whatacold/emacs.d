@@ -1,6 +1,7 @@
 ;; {{ shell and conf
 (add-to-list 'auto-mode-alist '("\\.[^b][^a][a-zA-Z]*rc$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.aspell\\.en\\.pws\\'" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\mimeapps\\.list$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.editorconfig$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.meta\\'" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.?muttrc\\'" . conf-mode))
@@ -924,6 +925,9 @@ If no region is selected. You will be asked to use `kill-ring' or clipboard inst
        (add-to-list 'grep-find-ignored-files v))))
 ;; }}
 
-(add-hook 'lispy-mode-hook #'lispyville-mode)
+;; {{ https://www.emacswiki.org/emacs/EmacsSession better than "desktop.el"
+(setq session-save-file (expand-file-name "~/.emacs.d/.session"))
+(add-hook 'after-init-hook 'session-initialize)
+;; }}
 
 (provide 'init-misc)

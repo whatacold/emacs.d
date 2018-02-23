@@ -6,18 +6,18 @@
 ;; Feel free to add more packages!
 (defvar melpa-include-packages
   '(ace-mc
+    atomic-chrome
     ace-window ; lastest stable is released on year 2014
     bbdb
+    command-log-mode
+    auto-yasnippet
     dumb-jump
     websocket ; to talk to the browser
-    color-theme
     evil-exchange
     evil-find-char-pinyin
     evil-lion
     iedit
     undo-tree
-    lispy
-    lispyville
     js-doc
     jss ; remote debugger of browser
     ;; {{ since stable v0.9.1 released, we go back to stable version
@@ -25,6 +25,25 @@
     ;; counsel
     ;; swiper
     ;; }}
+    moe-theme
+    ample-theme
+    molokai-theme
+    alect-themes
+    tangotango-theme
+    gruber-darker-theme
+    ample-zen-theme
+    flatland-theme
+    clues-theme
+    darkburn-theme
+    soothe-theme
+    dakrone-theme
+    busybee-theme
+    bubbleberry-theme
+    cherry-blossom-theme
+    heroku-theme
+    hemisu-theme
+    badger-theme
+    distinguished-theme
     wgrep
     robe
     groovy-mode
@@ -51,14 +70,10 @@
     htmlize
     scratch
     session
-    bookmark+
     flymake-lua
     multi-term
-    dired+
     inflections
-    dropdown-list
     lua-mode
-    tidy
     pomodoro
     auto-compile
     packed
@@ -113,8 +128,9 @@
   (let* (rlt)
     (cond
       ((string= archive "melpa-stable")
-       (set rlt (not (memq package melpa-stable-banned-packages))))
+       (setq rlt (not (memq package melpa-stable-banned-packages))))
       ((string= archive "melpa")
+       (message "package=%s" package)
        ;; NO unstable packages with a few exceptions
        (setq rlt (or (memq package melpa-include-packages)
                       ;; color themes are welcomed
@@ -153,7 +169,6 @@
 (require-package 'async)
 (require-package 'dash) ; required by string-edit
 ; color-theme 6.6.1 in elpa is buggy
-(require-package 'color-theme)
 (require-package 'auto-compile)
 (require-package 'smex)
 (require-package 'avy)
@@ -183,7 +198,6 @@
 (require-package 'haml-mode)
 (require-package 'scss-mode)
 (require-package 'markdown-mode)
-(require-package 'dired+)
 (require-package 'link)
 (require-package 'connection)
 (require-package 'dictionary) ; dictionary requires 'link and 'connection
@@ -207,14 +221,13 @@
 (require-package 'ibuffer-vc)
 (require-package 'less-css-mode)
 (require-package 'move-text)
-(require-package 'mwe-log-commands)
+(require-package 'command-log-mode)
 (require-package 'page-break-lines)
 (require-package 'regex-tool)
 (require-package 'groovy-mode)
 (require-package 'ruby-compilation)
 (require-package 'emmet-mode)
 (require-package 'session)
-(require-package 'tidy)
 (require-package 'unfill)
 (require-package 'w3m)
 (require-package 'idomenu)
@@ -227,11 +240,9 @@
 (require-package 'bbdb)
 (require-package 'pomodoro)
 (require-package 'flymake-lua)
-(require-package 'dropdown-list)
 ;; rvm-open-gem to get gem's code
 (require-package 'rvm)
 ;; C-x r l to list bookmarks
-(require-package 'bookmark+)
 (require-package 'multi-term)
 (require-package 'js-doc)
 (require-package 'js2-mode)
@@ -267,8 +278,6 @@
 (require-package 'websocket) ; for debug debugging of browsers
 (require-package 'jss)
 (require-package 'undo-tree)
-(require-package 'lispy)
-(require-package 'lispyville)
 (require-package 'evil)
 (require-package 'evil-escape)
 (require-package 'evil-exchange)
@@ -279,6 +288,36 @@
 (require-package 'evil-nerd-commenter)
 (require-package 'evil-surround)
 (require-package 'evil-visualstar)
+(require-package 'atomic-chrome)
+;; {{ @see https://pawelbx.github.io/emacs-theme-gallery/
+(require-package 'zenburn-theme)
+(require-package 'color-theme-sanityinc-solarized)
+(require-package 'color-theme-sanityinc-tomorrow)
+(require-package 'monokai-theme)
+(require-package 'molokai-theme)
+(require-package 'moe-theme)
+(require-package 'cyberpunk-theme)
+(require-package 'ample-theme)
+(require-package 'gotham-theme)
+(require-package 'gruvbox-theme)
+(require-package 'alect-themes)
+(require-package 'grandshell-theme)
+(require-package 'tangotango-theme)
+(require-package 'gruber-darker-theme)
+(require-package 'ample-zen-theme)
+(require-package 'flatland-theme)
+(require-package 'clues-theme)
+(require-package 'darkburn-theme)
+(require-package 'soothe-theme)
+(require-package 'dakrone-theme)
+(require-package 'busybee-theme)
+(require-package 'bubbleberry-theme)
+(require-package 'cherry-blossom-theme)
+(require-package 'heroku-theme)
+(require-package 'hemisu-theme)
+(require-package 'badger-theme)
+(require-package 'distinguished-theme)
+; }}
 
 ;; my tuning
 (require-package 'graphviz-dot-mode)

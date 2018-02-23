@@ -31,12 +31,21 @@ if no files marked, always operate on current line in dired-mode
 (defvar binary-file-name-regexp "\\.\\(avi\\|pdf\\|mp[34g]\\|mkv\\|exe\\|3gp\\|rmvb\\|rm\\)$"
   "Is binary file name?")
 
+;; https://www.emacswiki.org/emacs/EmacsSession which is easier to setup than "desktop.el"
+;; See `session-globals-regexp' in "session.el".
+;; If the variable is named like "*-history", it will be automaticlaly saved.
+(defvar my-dired-directory-history nil "Recent directories accessed by dired.")
 ;; avoid accidently edit huge media file in dired
 (defadvice dired-find-file (around dired-find-file-hack activate)
-  (if (string-match-p binary-file-name-regexp (dired-get-file-for-visit))
-      (if (yes-or-no-p "Edit binary file?")
-          ad-do-it)
-    ad-do-it))
+  (let* ((file (dired-get-file-for-visit)))
+    (cond
+     ((string-match-p binary-file-name-regexp file)
+      ;; confirm before open big file
+      (if (yes-or-no-p "Edit binary file?") ad-do-it))
+     (t
+      (when (file-directory-p file)
+        (add-to-list 'my-dired-directory-history file))
+      ad-do-it))))
 
 (defadvice dired-guess-default (after dired-guess-default-after-hack activate)
   (if (and (stringp ad-return-value) (string-match-p "^mplayer -quiet" ad-return-value))
@@ -104,7 +113,7 @@ if no files marked, always operate on current line in dired-mode
      (setq dired-recursive-deletes 'always)
      (dolist (file `(((if *unix* "zathura" "open") "pdf" "dvi" "pdf.gz" "ps" "eps")
                      ("7z x" "rar" "zip" "7z") ; "e" to extract, "x" to extract with full path
-                     ((if (not *is-a-mac*) (my-guess-mplayer-path) "open")  "ogm" "avi" "mpg" "rmvb" "rm" "flv" "wmv" "mkv" "mp4" "m4v" "webm" "part")
+                     ((if (not *is-a-mac*) (my-guess-mplayer-path) "open")  "ogm" "avi" "mpg" "rmvb" "rm" "flv" "wmv" "mkv" "mp4" "m4v" "webm" "part" "mov")
                      ((concat (my-guess-mplayer-path) " -playlist") "list" "pls")
                      ((if *unix* "feh" "open") "gif" "jpeg" "jpg" "tif" "png" )
                      ((if *unix* "libreoffice" "open") "doc" "docx" "xls" "xlsx" "odt")
@@ -135,6 +144,42 @@ if no files marked, always operate on current line in dired-mode
 (setq vc-make-backup-files nil)
 ;; }}
 
+;; {{ try to re-play the last dired commands
+(defvar my-dired-shell-command-args-history nil
+  "History of `dired-do-shell-command' arguments.")
+(defun my-format-dired-args (args)
+  (let* ((cmd (file-name-nondirectory (nth 0 args))))
+    (format "%s %s"
+            (car (split-string cmd " "))
+            (nth 2 args))))
+
+(defadvice dired-do-shell-command (before dired-do-shell-command-before-hack activate)
+  (add-to-list 'my-dired-shell-command-args-history
+               (list (my-format-dired-args (ad-get-args 0))
+                     default-directory
+                     (ad-get-args 0))))
+
+(defun my-dired-redo-last-shell-command ()
+  "Redo last shell command."
+  (interactive)
+  (let* ((info (car my-dired-shell-command-args-history)))
+    (when info
+      (let* ((default-directory (nth 1 info))
+             (args (nth 2 info)))
+        (apply 'dired-do-shell-command args)))))
+
+(defun my-dired-redo-previous-shell-command ()
+  "Redo previous shell command."
+  (interactive)
+  (when my-dired-shell-command-args-history
+    (ivy-read "Previous dired shell commands:"
+              my-dired-shell-command-args-history
+              :action
+              (lambda (info)
+                (let* ((default-directory (nth 1 info))
+                       (args (nth 2 info)))
+                  (apply 'dired-do-shell-command args))))))
+;; }}
 
 ;; {{ tramp setup
 (add-to-list 'backup-directory-alist

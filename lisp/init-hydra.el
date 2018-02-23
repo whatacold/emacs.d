@@ -3,27 +3,37 @@
 ;; use similar key bindings as init-evil.el
 (defhydra hydra-launcher (:color blue)
   "
-^Emms^       ^Misc^             ^Typewriter^
+^Emms^       ^Misc^
 ------------------------------------------------
-_r_andom     _t_erm             _E_nable/Disable
-_n_ext       _a_utoComplete     _V_intage/Modern
-_p_revious   _s_ave workgroup
-_P_ause      _l_oad workgroup
-_O_pen       _b_ookmark
-_L_ Playlist Goto book_m_ark
-_q_uit       Undo _v_isualize
+_R_andom     _t_erm           _E_nable/Disable
+_n_ext       _a_utoComplete   _V_intage/Modern
+_p_revious   _s_ave workgroup Open _r_ecent file
+_P_ause      _l_oad workgroup Recent _d_irectory
+_O_pen       _b_ookmark       Previous shell _c_ommand
+_L_ Playlist Goto book_m_ark  Last _s_hell command
+_q_uit       Undo _v_isualize _T_oggle atomic chrome server
 "
+  ("c" my-dired-redo-previous-shell-command)
+  ("s" my-dired-redo-last-shell-command)
   ("b" bookmark-set)
   ("m" counsel-bookmark-goto)
   ("r" my-counsel-recentf)
-  ("s" wg-create-workgroup)
+  ("T" (cond
+        (atomic-chrome-server-atomic-chrome
+         (atomic-chrome-stop-server)
+         (message "atomic chrome server STOPPED!"))
+        (t
+         (atomic-chrome-start-server)
+         (message "atomic chrome server STARTED!"))))
+  ("d" counsel-recent-dir)
+  ("S" wg-create-workgroup)
   ("l" my-wg-switch-workgroup)
   ("t" ansi-term)
   ("a" toggle-company-ispell)
   ("E" toggle-typewriter)
   ("V" twm/toggle-sound-style)
   ("v" undo-tree-visualize)
-  ("r" emms-random)
+  ("R" emms-random)
   ("n" emms-next)
   ("p" emms-previous)
   ("P" emms-pause)
@@ -146,10 +156,15 @@ _q_uit       Undo _v_isualize
                (default-directory (file-name-directory video-file)))
           (shell-command (format "periscope.py -l en %s &" (file-name-nondirectory video-file))))
         "1 subtitle")
-       ("cf" (let* ((f (file-truename (dired-file-name-at-point))))
+       ("cc" (let* ((f (file-truename (dired-file-name-at-point))))
                (copy-yank-str f)
-               (message "filename %s => clipboard & yank ring" f)) "Copy filename")
+               (message "filename %s => clipboard & yank ring" f)) "Copy full path")
        ("C" dired-do-copy "cp")
+       ("cf" find-file "Create new file")
+       ("ff" (lambda (regexp)
+               (interactive "sMatching regexp: ")
+               (find-lisp-find-dired default-directory regexp))  "Filter with Regex")
+       ("xq" dired-toggle-read-only "Rename file(s)")
        ("mv" diredp-do-move-recursive "mv")
        ("mk" dired-create-directory "mkdir")
        ("q" nil "Bye"))))
@@ -161,7 +176,8 @@ _q_uit       Undo _v_isualize
 ;; increase and decrease font size in GUI emacs
 ;; @see https://oremacs.com/download/london.pdf
 (when (display-graphic-p)
-  (defhydra hydra-zoom (global-map "C-c")
+  ;; Since we already use GUI Emacs, f2 is definitely available
+  (defhydra hydra-zoom (global-map "<f2>")
     "Zoom"
     ("g" text-scale-increase "in")
     ("l" text-scale-decrease "out")

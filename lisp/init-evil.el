@@ -350,6 +350,7 @@ If the character before and after CH is space or tab, CH is NOT slash"
 (define-key evil-visual-state-map (kbd "C-]") 'counsel-etags-find-tag-at-point)
 (define-key evil-insert-state-map (kbd "C-x C-n") 'evil-complete-next-line)
 (define-key evil-insert-state-map (kbd "C-x C-p") 'evil-complete-previous-line)
+(define-key evil-insert-state-map (kbd "C-w") 'aya-expand)
 
 ;; the original "gd" or `evil-goto-definition' now try `imenu', `xref', search string to `point-min'
 ;; xref part is annoying because I already use `counsel-etags' to search tag.
@@ -432,7 +433,6 @@ If the character before and after CH is space or tab, CH is NOT slash"
        "aw" 'ace-swap-window
        "af" 'ace-maximize-window
        "ac" 'aya-create
-       "ae" 'aya-expand
        "zz" 'paste-from-x-clipboard ; used frequently
        "cy" 'strip-convert-lines-into-one-big-string
        "bs" '(lambda () (interactive) (goto-edge-by-comparing-font-face -1))
@@ -448,8 +448,10 @@ If the character before and after CH is space or tab, CH is NOT slash"
        "fn" 'cp-filename-of-current-buffer
        "fp" 'cp-fullpath-of-current-buffer
        "dj" 'dired-jump ;; open the dired from current file
+       "xd" 'ido-dired
        "ff" 'toggle-full-window ;; I use WIN+F in i3
        "ip" 'find-file-in-project
+       "jj" 'find-file-in-project-at-point
        "kk" 'find-file-in-project-by-selected
        "kn" 'find-file-with-similar-name ; ffip v5.3.1
        "fd" 'find-directory-in-project-by-selected
@@ -514,8 +516,6 @@ If the character before and after CH is space or tab, CH is NOT slash"
        "tt" 'dumb-jump-go
        "tb" 'dumb-jump-back
        "tm" 'my-git-timemachine
-       "tdb" 'tidy-buffer
-       "tdl" 'tidy-current-line
        ;; toggle overview,  @see http://emacs.wordpress.com/2007/01/16/quick-and-dirty-code-folding/
        "ov" 'my-overview-of-current-buffer
        "or" 'open-readme-in-git-root-directory
@@ -528,12 +528,23 @@ If the character before and after CH is space or tab, CH is NOT slash"
        "cxi" 'org-clock-in ; `C-c C-x C-i'
        "cxo" 'org-clock-out ; `C-c C-x C-o'
        "cxr" 'org-clock-report ; `C-c C-x C-r'
-       "qq" 'counsel-etags-grep
+       "qq" (lambda (n)
+              (interactive "P")
+              (cond
+               ((not n)
+                (counsel-etags-grep))
+               ((= n 1)
+                ;; grep references of current web component
+                (counsel-etags-grep (format "<%s" (file-name-base buffer-file-name))))
+               ((= n 2)
+                ;; grep web component attribute name
+                (counsel-etags-grep (format "^ *%s[=:]" (or (thing-at-point 'symbol)
+                                                             (read-string "Component attribute name?")))))))
        "dd" 'counsel-etags-grep-symbol-at-point
        "xc" 'save-buffers-kill-terminal
        "rr" 'my-counsel-recentf
        "rh" 'counsel-yank-bash-history ; bash history command => yank-ring
-       "rf" 'counsel-goto-recent-directory
+       "rf" 'counsel-recent-dir
        "da" 'diff-region-tag-selected-as-a
        "db" 'diff-region-compare-with-b
        "di" 'evilmi-delete-items
@@ -646,6 +657,8 @@ If the character before and after CH is space or tab, CH is NOT slash"
 ;; {{ Use `SPC` as leader key
 ;; all keywords arguments are still supported
 (nvmap :prefix "SPC"
+       "pc" 'my-dired-redo-previous-shell-command
+       "cc" 'my-dired-redo-last-shell-command
        "ss" 'wg-create-workgroup ; save windows layout
        "se" 'evil-iedit-state/iedit-mode ; start iedit in emacs
        "sc" 'shell-command
