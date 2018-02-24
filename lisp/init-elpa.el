@@ -324,5 +324,6 @@
 (require-package 'magit)
 (require-package 'magit-svn)
 (require-package 'cnfonts)
+(require-package 'youdao-dictionary)
 
 (provide 'init-elpa)
