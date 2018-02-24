@@ -586,7 +586,6 @@ If the character before and after CH is space or tab, CH is NOT slash"
        "hk" 'describe-key
        "hv" 'describe-variable
        "gt" 'counsel-gtags-dwim ; jump from reference to definition or vice versa
-       "gb" 'counsel-gtags-go-backward
        "gr" 'counsel-gtags-find-symbol
        "gu" 'counsel-gtags-update-tags
        "fb" 'flyspell-buffer
