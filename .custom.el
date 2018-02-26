@@ -322,6 +322,12 @@ so that I could do project switching more quickly, instead of finding files."
 (require 'slime)
 (setq inferior-lisp-program (executable-find "alisp"))
 
+(defun my-kill-specific-processes (name)
+  "Kill processes whose names match NAME"
+  (dolist (proc (process-list))
+    (when (string-match name (process-name proc))
+      (kill-process proc))))
+
 ;; specific to local machine
 (when (file-exists-p "~/.emacs.d/local-specific.el")
   (load-file "~/.emacs.d/local-specific.el"))
