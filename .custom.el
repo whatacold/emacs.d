@@ -289,36 +289,6 @@ or a keyword will be asked to input."
 
 (setq vc-handled-backends (delete 'Git vc-handled-backends))
 
-;;; midnight mode {{
-(defun my-refresh-one-project-buffer ()
-  "Refresh the display time of a buffer of every project,
-to prevent it from being killed by midnight hook `clean-buffer-list',
-so as to keep at least one file of the project open,
-so that I could do project switching more quickly, instead of finding files."
-  (interactive)
-  (let ((now (current-time))
-        project-alist bfn root)
-    (dolist (buf (buffer-list))
-      (when (and (buffer-live-p buf) (buffer-file-name buf))
-        (setq bfn (buffer-file-name buf))
-        (condition-case ex
-            (progn
-              (with-current-buffer buf
-                (setq root (ffip-project-root)))
-              (when (and root (not (assoc root project-alist)))
-                (with-current-buffer buf
-                  (message "refresh %s's display time: %s -> %s"
-                           bfn
-                           (format-time-string "%Y-%m-%d %T"
-                                               buffer-display-time)
-                           (format-time-string "%Y-%m-%d %T" now))
-                  (setq buffer-display-time now)
-                  (setq project-alist (cons (cons root t) project-alist)))))
-          (error (message "failed to refresh %s: %s" bfn ex)))))))
-
-(setq midnight-hook '(my-refresh-one-project-buffer clean-buffer-list))
-;;; }}
-
 (require 'slime)
 (setq inferior-lisp-program (executable-find "alisp"))
 
