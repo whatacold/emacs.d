@@ -280,6 +280,14 @@ or a keyword will be asked to input."
          "qq" 'my-counsel-etags-grep
          "sy" 'my-rsync))
 
+;; {{ specify major mode uses Evil (vim) NORMAL state or EMACS original state.
+;; You may delete this setup to use Evil NORMAL state always.
+(loop for (mode . state) in
+      '((youdao-dictionary-mode . emacs)
+        )
+      do (evil-set-initial-state mode state))
+;; }}
+
 (require 'cnfonts)
 (cnfonts-enable)
 
