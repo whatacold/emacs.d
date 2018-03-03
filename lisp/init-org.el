@@ -194,7 +194,8 @@ If use-indirect-buffer is not nil, use `indirect-buffer' to hold the widen conte
            ;; open with `browse-url-generic-program'
            ((equal (ad-get-arg 0) '(4)) 'browse-url-generic)
            ;; open with w3m
-           (t 'w3m-browse-url))))
+           (t 'w3m-browse-url)))
+         (process-connection-type nil))
     ad-do-it))
 
 (defadvice org-publish (around org-publish-advice activate)
