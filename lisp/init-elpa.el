@@ -8,6 +8,7 @@
   '(ace-mc
     atomic-chrome
     ace-window ; lastest stable is released on year 2014
+    ace-link
     bbdb
     command-log-mode
     auto-yasnippet
