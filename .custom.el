@@ -144,6 +144,7 @@
 
 (global-set-key (kbd "C-c c") #'org-capture)
 (global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c o l") #'org-store-link)
 
 ;; For a specific file, enable it with #+OPTIONS: ^:t
 (setq org-export-with-sub-superscripts nil)
