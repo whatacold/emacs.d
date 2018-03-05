@@ -184,6 +184,12 @@
       (if *cygwin*
           "convert clipboard: %s"
         "gnome-screenshot -a -f %s"))
+
+(defun my-org-html-app (file-path link-no-proto)
+  "Use w3m to open .html"
+  (w3m-browse-url (concat "file://" link-no-proto)))
+
+(add-to-list 'org-file-apps '("\\.x?html?\\'" . my-org-html-app))
 ;; }}
 
 ;; Sessions tuning, in addition to `init-sessions.el'
