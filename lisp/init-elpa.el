@@ -6,7 +6,7 @@
 ;; Feel free to add more packages!
 (defvar melpa-include-packages
   '(ace-mc
-    atomic-chrome
+    color-theme ; emacs24 need this package
     ace-window ; lastest stable is released on year 2014
     ace-link
     bbdb
@@ -47,6 +47,7 @@
     distinguished-theme
     wgrep
     robe
+    slime
     groovy-mode
     inf-ruby
     ;; company ; I won't wait another 2 years for stable
@@ -90,6 +91,8 @@
 (defvar melpa-stable-banned-packages nil
   "Banned packages from melpa-stable")
 
+;; I don't use any packages from GNU ELPA because I want to minimize
+;; dependency on 3rd party web site.
 (setq package-archives
       '(;; uncomment below line if you need use GNU ELPA
         ;; ("gnu" . "https://elpa.gnu.org/packages/")
@@ -289,35 +292,37 @@
 (require-package 'evil-nerd-commenter)
 (require-package 'evil-surround)
 (require-package 'evil-visualstar)
-(require-package 'atomic-chrome)
+(require-package 'slime)
 ;; {{ @see https://pawelbx.github.io/emacs-theme-gallery/
-(require-package 'zenburn-theme)
-(require-package 'color-theme-sanityinc-solarized)
-(require-package 'color-theme-sanityinc-tomorrow)
-(require-package 'monokai-theme)
-(require-package 'molokai-theme)
-(require-package 'moe-theme)
-(require-package 'cyberpunk-theme)
-(require-package 'ample-theme)
-(require-package 'gotham-theme)
-(require-package 'gruvbox-theme)
-(require-package 'alect-themes)
-(require-package 'grandshell-theme)
-(require-package 'tangotango-theme)
-(require-package 'gruber-darker-theme)
-(require-package 'ample-zen-theme)
-(require-package 'flatland-theme)
-(require-package 'clues-theme)
-(require-package 'darkburn-theme)
-(require-package 'soothe-theme)
-(require-package 'dakrone-theme)
-(require-package 'busybee-theme)
-(require-package 'bubbleberry-theme)
-(require-package 'cherry-blossom-theme)
-(require-package 'heroku-theme)
-(require-package 'hemisu-theme)
-(require-package 'badger-theme)
-(require-package 'distinguished-theme)
+(when *emacs24* (require-package 'color-theme))
+(when *emacs25*
+  (require-package 'zenburn-theme)
+  (require-package 'color-theme-sanityinc-solarized)
+  (require-package 'color-theme-sanityinc-tomorrow)
+  (require-package 'monokai-theme)
+  (require-package 'molokai-theme)
+  (require-package 'moe-theme)
+  (require-package 'cyberpunk-theme)
+  (require-package 'ample-theme)
+  (require-package 'gotham-theme)
+  (require-package 'gruvbox-theme)
+  (require-package 'alect-themes)
+  (require-package 'grandshell-theme)
+  (require-package 'tangotango-theme)
+  (require-package 'gruber-darker-theme)
+  (require-package 'ample-zen-theme)
+  (require-package 'flatland-theme)
+  (require-package 'clues-theme)
+  (require-package 'darkburn-theme)
+  (require-package 'soothe-theme)
+  (require-package 'dakrone-theme)
+  (require-package 'busybee-theme)
+  (require-package 'bubbleberry-theme)
+  (require-package 'cherry-blossom-theme)
+  (require-package 'heroku-theme)
+  (require-package 'hemisu-theme)
+  (require-package 'badger-theme)
+  (require-package 'distinguished-theme))
 ; }}
 
 ;; my tuning
