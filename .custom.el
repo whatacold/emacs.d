@@ -190,6 +190,8 @@
   (w3m-browse-url (concat "file://" link-no-proto)))
 
 (add-to-list 'org-file-apps '("\\.x?html?\\'" . my-org-html-app))
+(setq org-agenda-include-diary nil
+      org-agenda-span 7)
 ;; }}
 
 ;; Sessions tuning, in addition to `init-sessions.el'
