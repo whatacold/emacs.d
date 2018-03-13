@@ -293,6 +293,7 @@ or a keyword will be asked to input."
 ;; You may delete this setup to use Evil NORMAL state always.
 (loop for (mode . state) in
       '((youdao-dictionary-mode . emacs)
+        (process-menu-mode . emacs) ; e.g. M-x list-processes
         )
       do (evil-set-initial-state mode state))
 ;; }}
