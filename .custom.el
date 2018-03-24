@@ -308,7 +308,7 @@ or a keyword will be asked to input."
 (setq vc-handled-backends (delete 'Git vc-handled-backends))
 
 (require 'slime)
-(setq inferior-lisp-program (executable-find "alisp"))
+(setq inferior-lisp-program (executable-find "sbcl"))
 
 (defun my-kill-specific-processes (name)
   "Kill processes whose names match NAME"
