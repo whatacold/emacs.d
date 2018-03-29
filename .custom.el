@@ -73,50 +73,55 @@
           (org-agenda-span
            (quote month))
           (org-agenda-overriding-header "")))
-        ("n" "Next actions of every project"
+        ("n" "Next actions"
          ((alltodo ""
-                   ((org-agenda-tag-filter-preset
-                     (quote nil))
+                   ((org-agenda-tag-filter-preset nil)
                     (org-agenda-overriding-header "Next actions")
-                    (org-agenda-skip-function
-                     (quote
-                      (my-org-agenda-skip-all-siblings-but-first)))
+                    (org-agenda-sorting-strategy '(priority-down))
+                    (org-agenda-skip-function #'my-org-agenda-skip-non-next-action)
                     (org-agenda-prefix-format "%-32:(my-org-agenda-format-parent 30)")
                     (org-agenda-todo-keyword-format "%-4s")
-                    (org-agenda-files
-                     (quote
-                      ("~/org/gtd/gtd.org"))))))
+                    (org-agenda-files '("~/org/gtd/gtd.org")))))
          nil nil)
         ("@" "Contexts"
          ((tags "emacs"
                 ((org-agenda-overriding-header "Emacs next actions")
                  (org-agenda-skip-function
                   (quote
-                   (my-org-agenda-skip-all-siblings-but-first)))))
+                   (my-org-agenda-skip-non-next-action)))))
           (todo "WAITING"
                 ((org-agenda-overriding-header "Waiting")))
           (tags-todo "@office"
                      ((org-agenda-overriding-header "At the office")
                       (org-agenda-skip-function
                        (quote
-                        (my-org-agenda-skip-all-siblings-but-first)))))
+                        (my-org-agenda-skip-non-next-action)))))
           (tags-todo "@home"
                      ((org-agenda-overriding-header "At home")
                       (org-agenda-skip-function
                        (quote
-                        (my-org-agenda-skip-all-siblings-but-first)))))
+                        (my-org-agenda-skip-non-next-action)))))
           (tags-todo "@dormitory"
                      ((org-agenda-overriding-header "At dormitory")
                       (org-agenda-skip-function
                        (quote
-                        (my-org-agenda-skip-all-siblings-but-first)))))
+                        (my-org-agenda-skip-non-next-action)))))
           (tags-todo "@transport"
                      ((org-agenda-overriding-header "On transport")
                       (org-agenda-skip-function
                        (quote
-                        (my-org-agenda-skip-all-siblings-but-first))))))
+                        (my-org-agenda-skip-non-next-action))))))
          nil
          nil)))
+
+(defun my-org-agenda-parent-heading ()
+  (let (heading)
+    (save-excursion
+      (save-restriction
+        (widen)
+        (org-up-heading-safe)
+        (setq heading (org-get-heading t t t t))))
+    (substring-no-properties heading)))
 
 (defun my-org-agenda-format-parent (n)
   ;; (s-truncate n (org-format-outline-path (org-get-outline-path)))
@@ -126,20 +131,47 @@
       (org-up-heading-safe)
       (s-truncate n (org-get-heading t t)))))
 
-(defun my-org-agenda-skip-all-siblings-but-first ()
-  "Skip all but the first non-done entry."
-  (let (should-skip-entry)
-    (unless (my-org-current-is-todo)
-      (setq should-skip-entry t))
+(defun my-org-next-action-position ()
+  "Return the position of next action item in current subtree of parent heading."
+  (let (first-todo-position
+        first-highest-priority-position
+        stop
+        (highest-priority (* 1000 (- org-lowest-priority ?A))))
     (save-excursion
-      (while (and (not should-skip-entry) (org-goto-sibling t))
-        (when (my-org-current-is-todo)
-          (setq should-skip-entry t))))
-    (when should-skip-entry
-      (or (outline-next-heading)
-          (goto-char (point-max))))))
+      (ignore-errors (outline-up-heading 1 t))
+      (org-goto-first-child)
+      (while (and (not stop)
+                  (or (not (or first-todo-position
+                               first-highest-priority-position))
+                      (and first-todo-position
+                           (not first-highest-priority-position))))
+        (when (my-org-current-todo-p)
+          (unless first-todo-position
+            (setq first-todo-position (point)))
+          (when (and (not first-highest-priority-position)
+                     (= highest-priority
+                        (org-get-priority (thing-at-point 'line t))))
+            (setq first-highest-priority-position (point))))
+        (setq stop (not (org-goto-sibling)))))
+    (cond (first-highest-priority-position first-highest-priority-position)
+          (first-todo-position first-todo-position)
+          (t nil))))
 
-(defun my-org-current-is-todo ()
+(setq my-org-agenda-runtime-parent-heading "")
+(setq my-org-agenda-runtime-next-action-pos nil)
+
+(defun my-org-agenda-skip-non-next-action ()
+  "Skip all but the first non-done entry."
+      (let ((parent-heading (my-org-agenda-parent-heading)))
+        (unless (string= my-org-agenda-runtime-parent-heading parent-heading)
+          (setq my-org-agenda-runtime-parent-heading parent-heading)
+          (setq my-org-agenda-runtime-next-action-pos (my-org-next-action-position)))
+        (if (and (numberp my-org-agenda-runtime-next-action-pos)
+                 (= (point) my-org-agenda-runtime-next-action-pos))
+            nil
+          (org-end-of-subtree))))
+
+(defun my-org-current-todo-p ()
   (string= "TODO" (org-get-todo-state)))
 
 (global-set-key (kbd "C-c c") #'org-capture)
