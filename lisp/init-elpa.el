@@ -88,6 +88,7 @@
     erlang
     workgroups2
     zoutline
+    pyim
     company-c-headers
     company-statistics)
   "Packages to install from melpa-unstable.")
