@@ -83,6 +83,16 @@
                     (org-agenda-todo-keyword-format "%-4s")
                     (org-agenda-files '("~/org/gtd/gtd.org")))))
          nil nil)
+
+        ("D" "Done in last 7 days in archive"
+         tags "+TODO=\"DONE\"&CLOSED<=\"<today>\"&CLOSED>=\"<-7d>\""
+         ((org-agenda-tag-filter-preset nil)
+          (org-agenda-overriding-header "Done in last 7 days")
+          (org-agenda-sorting-strategy '(tsia-up))
+          (org-agenda-prefix-format "%-32:(my-org-agenda-format-parent 30)")
+          (org-agenda-todo-keyword-format "%-4s")
+          (org-agenda-files '("~/org/gtd/gtd.org_archive"))))
+
         ("@" "Contexts"
          ((tags "emacs"
                 ((org-agenda-overriding-header "Emacs next actions")
