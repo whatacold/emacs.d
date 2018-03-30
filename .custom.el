@@ -125,11 +125,7 @@
 
 (defun my-org-agenda-format-parent (n)
   ;; (s-truncate n (org-format-outline-path (org-get-outline-path)))
-  (save-excursion
-    (save-restriction
-      (widen)
-      (org-up-heading-safe)
-      (s-truncate n (org-get-heading t t)))))
+  (s-truncate n (my-org-agenda-parent-heading)))
 
 (defun my-org-next-action-position ()
   "Return the position of next action item in current subtree of parent heading."
@@ -161,15 +157,16 @@
 (setq my-org-agenda-runtime-next-action-pos nil)
 
 (defun my-org-agenda-skip-non-next-action ()
-  "Skip all but the first non-done entry."
-      (let ((parent-heading (my-org-agenda-parent-heading)))
-        (unless (string= my-org-agenda-runtime-parent-heading parent-heading)
-          (setq my-org-agenda-runtime-parent-heading parent-heading)
-          (setq my-org-agenda-runtime-next-action-pos (my-org-next-action-position)))
-        (if (and (numberp my-org-agenda-runtime-next-action-pos)
-                 (= (point) my-org-agenda-runtime-next-action-pos))
-            nil
-          (org-end-of-subtree))))
+  "Skip all but the next action entry."
+  (let ((parent-heading (my-org-agenda-parent-heading))
+        (subtree-end (save-excursion (org-end-of-subtree t))))
+    (unless (string= my-org-agenda-runtime-parent-heading parent-heading)
+      (setq my-org-agenda-runtime-parent-heading parent-heading)
+      (setq my-org-agenda-runtime-next-action-pos (my-org-next-action-position)))
+    (if (and (numberp my-org-agenda-runtime-next-action-pos)
+             (= (point) my-org-agenda-runtime-next-action-pos))
+        nil
+      subtree-end)))
 
 (defun my-org-current-todo-p ()
   (string= "TODO" (org-get-todo-state)))
