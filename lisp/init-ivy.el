@@ -235,7 +235,7 @@ If N is nil, use `ivy-mode' to browse the `kill-ring'."
   (interactive)
   (unless (featurep 'ivy) (require 'ivy))
   (let ((this-command 'ivy-switch-buffer))
-    (ivy-read "Switch to buffer: " 'internal-complete-buffer
+    (ivy-read "Switch to buffer by pinyin: " 'internal-complete-buffer
               :matcher #'ivy-switch-buffer-matcher-pinyin
               :preselect (buffer-name (other-buffer (current-buffer)))
               :action #'ivy--switch-buffer-action
