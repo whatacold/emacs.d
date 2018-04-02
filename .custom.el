@@ -73,7 +73,7 @@
           (org-agenda-span
            (quote month))
           (org-agenda-overriding-header "")))
-        ("n" "Next actions"
+        ("n" "My GTD"
          ((alltodo ""
                    ((org-agenda-tag-filter-preset nil)
                     (org-agenda-overriding-header "Next actions")
@@ -83,8 +83,10 @@
                     (org-agenda-todo-keyword-format "%-4s")
                     (org-agenda-files '("~/org/gtd/gtd.org"))))
           (todo "WAITING"
-                ((org-agenda-overriding-header "Wait for something or somebody"))))
-         nil nil)
+                ((org-agenda-overriding-header "Wait for something or somebody")))
+          (agenda ""
+                  ((org-agenda-overriding-header "Agenda for the next 2 days")
+                   (org-agenda-span 2)))))
 
         ("D" "Done in last 7 days in archive"
          tags "+TODO=\"DONE\"&CLOSED<=\"<today>\"&CLOSED>=\"<-7d>\""
