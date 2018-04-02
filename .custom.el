@@ -81,7 +81,9 @@
                     (org-agenda-skip-function #'my-org-agenda-skip-non-next-action)
                     (org-agenda-prefix-format "%-32:(my-org-agenda-format-parent 30)")
                     (org-agenda-todo-keyword-format "%-4s")
-                    (org-agenda-files '("~/org/gtd/gtd.org")))))
+                    (org-agenda-files '("~/org/gtd/gtd.org"))))
+          (todo "WAITING"
+                ((org-agenda-overriding-header "Wait for something or somebody"))))
          nil nil)
 
         ("D" "Done in last 7 days in archive"
