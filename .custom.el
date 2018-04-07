@@ -1,3 +1,7 @@
+(when (or (display-graphic-p)
+          (string-match-p "256color"(getenv "TERM")))
+  (load-theme 'sanityinc-solarized-light t))
+
 ;; Don't use https, cause it doesn't work when behind a proxy.
 ;; It doesn't work, because this file is loaded after `init-elpa.el'
 ;; (setq package-archives
