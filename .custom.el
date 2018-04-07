@@ -54,7 +54,10 @@
                            ("~/org/gtd/tickler.org" :maxlevel . 2)
                            ("~/org/gtd/trash.org" :level . 1)
                            ("~/org/gtd/reference.org" :level . 1)))
-(setq org-refile-allow-creating-parent-nodes 'confirm)
+
+(setq org-refile-allow-creating-parent-nodes 'confirm
+      org-agenda-include-diary nil
+      org-agenda-span 7)
 
 (setq org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 (setq org-tag-alist '((:startgroup . nil)
@@ -237,8 +240,6 @@
   (w3m-browse-url (concat "file://" link-no-proto)))
 
 (add-to-list 'org-file-apps '("\\.x?html?\\'" . my-org-html-app))
-(setq org-agenda-include-diary nil
-      org-agenda-span 7)
 ;; }}
 
 ;; Sessions tuning, in addition to `init-sessions.el'
