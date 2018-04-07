@@ -145,9 +145,6 @@
   ;; misc has some crucial tools I need immediately
   (require-init 'init-misc)
 
-  ;; comment below line if you want to setup color theme in your own way
-  (if (or (display-graphic-p) (string-match-p "256color"(getenv "TERM"))) (require-init 'init-color-theme))
-
   (require-init 'init-emacs-w3m)
   (require-init 'init-hydra)
   (require-init 'init-graphviz)

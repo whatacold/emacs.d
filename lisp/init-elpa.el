@@ -47,6 +47,7 @@
     hemisu-theme
     badger-theme
     distinguished-theme
+    challenger-deep-theme
     wgrep
     robe
     slime
@@ -102,11 +103,22 @@
       '(;; uncomment below line if you need use GNU ELPA
         ;; ("gnu" . "https://elpa.gnu.org/packages/")
         ;; ("localelpa" . "~/.emacs.d/localelpa/")
-        ;; ("my-js2-mode" . "https://raw.githubusercontent.com/redguardtoo/js2-mode/release/") ; github has some issue
-        ;; {{ backup repositories
+
+        ;; {{ 163 repository:
+        ;; ("melpa" . "https://mirrors.163.com/elpa/melpa/")
+        ;; ("melpa-stable" . "https://mirrors.163.com/elpa/melpa-stable/")
         ("melpa" . "http://mirrors.163.com/elpa/melpa/")
         ("melpa-stable" . "http://mirrors.163.com/elpa/melpa-stable/")
         ;; }}
+
+        ;; {{ tsinghua repository (more stable than 163, recommended)
+        ;; See https://mirror.tuna.tsinghua.edu.cn/help/elpa/ on usage:
+        ;; ("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+        ;; ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+        ;; ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
+        ;; ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+        ;; }}
+
         ;; ("melpa" . "https://melpa.org/packages/")
         ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
         ))
@@ -139,11 +151,11 @@
       ((string= archive "melpa-stable")
        (setq rlt (not (memq package melpa-stable-banned-packages))))
       ((string= archive "melpa")
-       (message "package=%s" package)
-       ;; NO unstable packages with a few exceptions
-       (setq rlt (or (memq package melpa-include-packages)
+       ;; We still need use some unstable packages
+       (setq rlt (or (string-match-p (format "%s" package)
+                                     (mapconcat (lambda (s) (format "%s" s)) melpa-include-packages " "))
                       ;; color themes are welcomed
-                      (string-match (format "%s" package) "-theme"))))
+                      (string-match-p "-theme" (format "%s" package)))))
       (t
         ;; I'm not picky on other repositories
         (setq rlt t)))
@@ -332,7 +344,8 @@
   (require-package 'heroku-theme)
   (require-package 'hemisu-theme)
   (require-package 'badger-theme)
-  (require-package 'distinguished-theme))
+  (require-package 'distinguished-theme)
+  (require-package 'challenger-deep-theme))
 ; }}
 
 ;; kill buffer without my confirmation
