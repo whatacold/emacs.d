@@ -60,6 +60,8 @@
       org-agenda-span 7)
 
 (setq org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-clock-in-switch-to-state "DOING")
+
 (setq org-tag-alist '((:startgroup . nil)
                       ("@office" . ?o)
                       ("@home" . ?h)
