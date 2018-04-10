@@ -71,6 +71,8 @@
                       ("READING" . ?r))
       org-tags-exclude-from-inheritance '("ROOT"))
 
+(setq my-org-agenda-project-format "%10CATEGORY %25ITEM %8TODO %DEADLINE %SCHEDULE")
+
 (setq org-agenda-custom-commands
       '(("g" "GTD"
          ((alltodo ""
@@ -97,11 +99,11 @@
           (org-agenda-files '("~/org/gtd/gtd.org_archive"))))
 
         ("p" "Project view"
-         tags "+PROJECT-ROOT"
+         tags "+PROJECT-ROOT-PRJIGN"
          ((org-agenda-tag-filter-preset nil)
           (org-agenda-overriding-header "Project view")
           (org-agenda-sorting-strategy '(deadline-up))
-          (org-columns-default-format "%10CATEGORY %25ITEM %TODO %SCHEDULED %DEADLINE")
+          (org-columns-default-format my-org-agenda-project-format)
           (org-agenda-view-columns-initially t)
           ;(org-agenda-todo-keyword-format "%-8s")
           (org-agenda-files '("~/org/gtd/gtd.org"))))
