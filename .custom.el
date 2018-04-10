@@ -62,12 +62,13 @@
 (setq org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 (setq org-clock-in-switch-to-state "DOING")
 
-(setq org-tag-alist '((:startgroup . nil)
+(setq org-tag-alist '((:startgroup)
                       ("@office" . ?o)
                       ("@home" . ?h)
                       ("@dormitory" . ?d)
-                      ("@transport" . ?t)
-                      (:endgroup . nil))
+                      (:endgroup)
+                      ("PROJECT" . ?p)
+                      ("READING" . ?r))
       org-tags-exclude-from-inheritance '("ROOT"))
 
 (setq org-agenda-custom-commands
@@ -120,11 +121,6 @@
                         (my-org-agenda-skip-non-next-action)))))
           (tags-todo "@dormitory"
                      ((org-agenda-overriding-header "At dormitory")
-                      (org-agenda-skip-function
-                       (quote
-                        (my-org-agenda-skip-non-next-action)))))
-          (tags-todo "@transport"
-                     ((org-agenda-overriding-header "On transport")
                       (org-agenda-skip-function
                        (quote
                         (my-org-agenda-skip-non-next-action))))))
