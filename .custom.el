@@ -71,16 +71,7 @@
       org-tags-exclude-from-inheritance '("ROOT"))
 
 (setq org-agenda-custom-commands
-      '(("w" . "TODOs")
-        ("d" "30 days deadlines" agenda ""
-         ((org-agenda-entry-types
-           (quote
-            (:deadline)))
-          (org-agenda-overriding-header "Month deadlines")
-          (org-agenda-span
-           (quote month))
-          (org-agenda-overriding-header "")))
-        ("n" "My GTD"
+      '(("g" "GTD"
          ((alltodo ""
                    ((org-agenda-tag-filter-preset nil)
                     (org-agenda-overriding-header "Next actions")
@@ -112,7 +103,7 @@
           (org-columns-default-format "%10CATEGORY %25ITEM %TODO %SCHEDULED %DEADLINE")
           (org-agenda-view-columns-initially t)
           ;(org-agenda-todo-keyword-format "%-8s")
-          (org-agenda-files '("~/org/gtd/try.org"))))
+          (org-agenda-files '("~/org/gtd/gtd.org"))))
 
         ("@" "Contexts"
          ((todo "WAITING"
