@@ -67,10 +67,8 @@
                       ("@home" . ?h)
                       ("@dormitory" . ?d)
                       ("@transport" . ?t)
-                      (:endgroup . nil)
-                      ("hobby" . ?b)
-                      ("break" . ?k)
-                      ("emacs" . ?e)))
+                      (:endgroup . nil))
+      org-tags-exclude-from-inheritance '("ROOT"))
 
 (setq org-agenda-custom-commands
       '(("w" . "TODOs")
@@ -103,16 +101,21 @@
           (org-agenda-overriding-header "Done in last 7 days")
           (org-agenda-sorting-strategy '(tsia-up))
           (org-agenda-prefix-format "%-32:(my-org-agenda-format-parent 30)")
-          (org-agenda-todo-keyword-format "%-4s")
+          (org-agenda-todo-keyword-format "%-8s")
           (org-agenda-files '("~/org/gtd/gtd.org_archive"))))
 
+        ("p" "Project view"
+         tags "+PROJECT-ROOT"
+         ((org-agenda-tag-filter-preset nil)
+          (org-agenda-overriding-header "Project view")
+          (org-agenda-sorting-strategy '(deadline-up))
+          (org-columns-default-format "%10CATEGORY %25ITEM %TODO %SCHEDULED %DEADLINE")
+          (org-agenda-view-columns-initially t)
+          ;(org-agenda-todo-keyword-format "%-8s")
+          (org-agenda-files '("~/org/gtd/try.org"))))
+
         ("@" "Contexts"
-         ((tags "emacs"
-                ((org-agenda-overriding-header "Emacs next actions")
-                 (org-agenda-skip-function
-                  (quote
-                   (my-org-agenda-skip-non-next-action)))))
-          (todo "WAITING"
+         ((todo "WAITING"
                 ((org-agenda-overriding-header "Waiting")))
           (tags-todo "@office"
                      ((org-agenda-overriding-header "At the office")
