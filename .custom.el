@@ -87,6 +87,7 @@
                     (org-agenda-files '("~/org/gtd/gtd.org"))))
           (agenda ""
                   ((org-agenda-overriding-header "Agenda for the next 2 days")
+                   (org-deadline-warning-days 2)
                    (org-agenda-span 2)))
           (todo "WAITING"
                 ((org-agenda-overriding-header "Wait for something or somebody")))))
@@ -104,7 +105,7 @@
          tags "+PROJECT-ROOT-PRJIGN"
          ((org-agenda-tag-filter-preset nil)
           (org-agenda-overriding-header "Project view")
-          (org-agenda-sorting-strategy '(deadline-up))
+          (org-agenda-sorting-strategy '(category-keep deadline-up))
           (org-columns-default-format my-org-agenda-project-format)
           (org-agenda-view-columns-initially t)
           ;(org-agenda-todo-keyword-format "%-8s")
