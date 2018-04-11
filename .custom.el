@@ -83,11 +83,11 @@
                     (org-agenda-prefix-format "%-32:(my-org-agenda-format-parent 30)")
                     (org-agenda-todo-keyword-format "%-4s")
                     (org-agenda-files '("~/org/gtd/gtd.org"))))
-          (todo "WAITING"
-                ((org-agenda-overriding-header "Wait for something or somebody")))
           (agenda ""
                   ((org-agenda-overriding-header "Agenda for the next 2 days")
-                   (org-agenda-span 2)))))
+                   (org-agenda-span 2)))
+          (todo "WAITING"
+                ((org-agenda-overriding-header "Wait for something or somebody")))))
 
         ("D" "Done in last 7 days in archive"
          tags "+TODO=\"DONE\"&CLOSED<=\"<today>\"&CLOSED>=\"<-7d>\""
@@ -114,18 +114,15 @@
           (tags-todo "@office"
                      ((org-agenda-overriding-header "At the office")
                       (org-agenda-skip-function
-                       (quote
-                        (my-org-agenda-skip-non-next-action)))))
+                       #'my-org-agenda-skip-non-next-action)))
           (tags-todo "@home"
                      ((org-agenda-overriding-header "At home")
                       (org-agenda-skip-function
-                       (quote
-                        (my-org-agenda-skip-non-next-action)))))
+                       #'my-org-agenda-skip-non-next-action)))
           (tags-todo "@dormitory"
                      ((org-agenda-overriding-header "At dormitory")
                       (org-agenda-skip-function
-                       (quote
-                        (my-org-agenda-skip-non-next-action))))))
+                       #'my-org-agenda-skip-non-next-action))))
          nil
          nil)))
 
@@ -184,7 +181,9 @@
       subtree-end)))
 
 (defun my-org-current-todo-p ()
-  (string= "TODO" (org-get-todo-state)))
+  (let ((state (org-get-todo-state)))
+    (or (string= "DOING" state)
+        (string= "TODO" state))))
 
 (global-set-key (kbd "C-c c") #'org-capture)
 (global-set-key (kbd "C-c a") #'org-agenda)
