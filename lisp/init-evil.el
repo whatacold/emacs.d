@@ -327,6 +327,7 @@ If the character before and after CH is space or tab, CH is NOT slash"
         (compilation-mode . emacs)
         (speedbar-mode . emacs)
         (ivy-occur-mode . emacs)
+        (ivy-occur-grep-mode . normal)
         (messages-buffer-mode . normal)
         (magit-commit-mode . normal)
         (magit-diff-mode . normal)
@@ -381,6 +382,10 @@ If the character before and after CH is space or tab, CH is NOT slash"
       (setq isearch-forward t)
       ;; if imenu is available, try it
       (cond
+       ((and (derived-mode-p 'js2-mode)
+             (or (null (get-text-property (point) 'face))
+                 (font-belongs-to (point) '(rjsx-tag))))
+        (js2-jump-to-definition))
        ((fboundp 'imenu--make-index-alist)
         (condition-case nil
             (setq ientry (imenu--make-index-alist))
@@ -406,6 +411,7 @@ If the character before and after CH is space or tab, CH is NOT slash"
 ;; then press "z" to contract, "x" to expand
 (eval-after-load "evil"
   '(progn
+     (define-key global-map (kbd "C-x C-z") 'switch-to-shell-or-ansi-term)
      (setq expand-region-contract-fast-key "z")))
 
 ;; I learn this trick from ReneFroger, need latest expand-region
@@ -457,6 +463,7 @@ If the character before and after CH is space or tab, CH is NOT slash"
        "fp" 'cp-fullpath-of-current-buffer
        "dj" 'dired-jump ;; open the dired from current file
        "xd" 'ido-dired
+       "xo" 'ace-window
        "ff" 'toggle-full-window ;; I use WIN+F in i3
        "ip" 'find-file-in-project
        "jj" 'find-file-in-project-at-point
@@ -472,6 +479,7 @@ If the character before and after CH is space or tab, CH is NOT slash"
        ;; "cl" 'evilnc-comment-or-uncomment-to-the-line
        ;; "cc" 'evilnc-copy-and-comment-lines
        ;; "cp" 'evilnc-comment-or-uncomment-paragraphs
+       "ic" 'my-imenu-comments
        "epy" 'emmet-expand-yas
        "epl" 'emmet-expand-line
        "rd" 'evilmr-replace-in-defun
@@ -637,7 +645,7 @@ If the character before and after CH is space or tab, CH is NOT slash"
        "xh" 'mark-whole-buffer
        "xk" 'ido-kill-buffer
        "xs" 'save-buffer
-       "xz" 'suspend-frame
+       "xz" 'switch-to-shell-or-ansi-term
        "vm" 'vc-rename-file-and-buffer
        "vc" 'vc-copy-file-and-rename-buffer
        "xvv" 'vc-next-action ; 'C-x v v' in original
@@ -819,8 +827,18 @@ If the character before and after CH is space or tab, CH is NOT slash"
                 (set-face-background 'mode-line (car color))
                 (set-face-foreground 'mode-line (cdr color))))))
 
+;; {{ evil-nerd-commenter
 (require 'evil-nerd-commenter)
 (evilnc-default-hotkeys)
+
+(defun my-imenu-comments ()
+  "Imenu display comments."
+  (interactive)
+  (unless (featurep 'counsel) (require 'counsel))
+  (when (fboundp 'evilnc-imenu-create-index-function)
+    (let* ((imenu-create-index-function 'evilnc-imenu-create-index-function))
+      (counsel-imenu))))
+;; }}
 
 ;; {{ evil-exchange
 ;; press gx twice to exchange, gX to cancel

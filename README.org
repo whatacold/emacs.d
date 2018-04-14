@@ -227,6 +227,8 @@ You can always press =C-c C-y= anywhere to bring up default hydra menu.
 
 You can override any key bindings in =~/.custome.el=.
 * FAQ
+** default terminal shell
+You can customize =my-term-program= whose default value is =/bin/bash=. It's used by =ansi-term= and =multi-term=.
 ** Override default setup
 Place your setup in =~/.custom.el=.
 ** Code navigation and auto-completion
@@ -256,7 +258,7 @@ Or you can insert below code into end of =~/.custom.el= or =~/.emacs.d/init.el=,
   (load-theme 'molokai t))
 #+end_src
 
-You can also run =M-x rando-color-theme= to load random color theme.
+You can also run =M-x random-color-theme= to load random color theme.
 *** Use color theme in terminal
 Start Emacs this way,
 #+BEGIN_SRC sh
