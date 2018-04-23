@@ -37,6 +37,30 @@
                (t
                 (set-buffer-file-coding-system 'mac))))))
 
+;; https://en.wikipedia.org/wiki/Indentation_style
+;; auto/allman/k&r
+(setq my-yasnippet-brace-style 'auto)
+
+;; see https://github.com/joaotavora/yasnippet/issues/728
+(setq yas-after-exit-snippet-hook
+      #'(lambda ()
+          (let* ((begin yas-snippet-beg)
+                 (end yas-snippet-end)
+                 (snippet (buffer-substring-no-properties begin end))
+                 (point (point))
+                 rep
+                 new-snippet)
+            (unless (eq 'auto my-yasnippet-brace-style)
+              (setq rep (case my-yasnippet-brace-style
+                          ('allman ")\n{")
+                          (('k&r t) ") {")))
+              (setq new-snippet (replace-regexp-in-string ")[ \t\r\n]*{" rep snippet))
+              (delete-region begin end)
+              (insert new-snippet)
+              ;; XXX what's the proper way to retain point? save-excursion doesn't work.
+              (goto-char (+ point (- (length new-snippet) (length snippet))))
+              (indent-region begin end)))))
+
 ;; org mode {{
 
 ; GTD, see https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
