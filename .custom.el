@@ -50,14 +50,15 @@
                  (point (point))
                  rep
                  new-snippet)
-            (unless (eq 'auto my-yasnippet-brace-style)
+            (unless (or (not (seq-contains '(c++-mode c-mode) major-mode))
+                        (eq 'auto my-yasnippet-brace-style))
               (setq rep (case my-yasnippet-brace-style
                           ('allman ")\n{")
                           (('k&r t) ") {")))
               (setq new-snippet (replace-regexp-in-string ")[ \t\r\n]*{" rep snippet))
               (delete-region begin end)
               (insert new-snippet)
-              ;; XXX what's the proper way to retain point? save-excursion doesn't work.
+              ;; XXX what's the proper way to retain point position? save-excursion doesn't work.
               (goto-char (+ point (- (length new-snippet) (length snippet))))
               (indent-region begin end)))))
 
