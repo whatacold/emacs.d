@@ -37,30 +37,62 @@
                (t
                 (set-buffer-file-coding-system 'mac))))))
 
-;; https://en.wikipedia.org/wiki/Indentation_style
-;; auto/allman/k&r
-(setq my-yasnippet-brace-style 'auto)
+(defun create-active-region (begin end &optional point-at-begin)
+  (if point-at-begin
+      (progn
+        (goto-char begin)
+        (push-mark end))
+    (goto-char end)
+    (push-mark begin))
+  (setq mark-active t))
+
+(defun shell-command-on-string (string command)
+  (let ((process-connection-type nil)
+        (begin 1)
+        end)
+    (with-temp-buffer
+      (insert string)
+      (setq end (point))
+      (shell-command-on-region begin end command nil t)
+      (buffer-substring-no-properties (point-min) (point-max)))))
+
+;; http://astyle.sourceforge.net/astyle.html
+(defcustom my-yasnippet-brace-style 'allman
+  "What style of curly braces to use, nil means keep it as is."
+  :type 'symbol
+  :options '(allman kr))
+
+(defcustom my-astyle-options "--indent=spaces=4 --pad-oper"
+  "Options for astyle except --style.")
+
+(defun astyle-snippet (string)
+  (let ((style (symbol-name my-yasnippet-brace-style))
+        (executable (executable-find "astyle"))
+        command)
+    (setq command (format "%s --style=%s %s" executable style my-astyle-options))
+    (shell-command-on-string string command)))
+
+(defun my-yasnippet-hook-adjust-brace-style ()
+  "Utilize astyle to properly indent brace style set in `my-yasnippet-brace-style'"
+  (let* ((anchor "the_point_anchor;")
+         (begin yas-snippet-beg)
+         (end (+ yas-snippet-end (length anchor)))
+         snippet
+         new-snippet)
+    (insert anchor)
+    (setq snippet (buffer-substring-no-properties begin end))
+    (setq new-snippet (astyle-snippet snippet))
+    (delete-region begin end)
+    (insert new-snippet)
+    (goto-char begin)
+    ;; re-indent it in the context
+    (indent-region begin (+ end (- (length new-snippet)
+                                   (length snippet))))
+    (re-search-forward anchor)
+    (delete-char (- 0 (length anchor)))))
 
 ;; see https://github.com/joaotavora/yasnippet/issues/728
-(setq yas-after-exit-snippet-hook
-      #'(lambda ()
-          (let* ((begin yas-snippet-beg)
-                 (end yas-snippet-end)
-                 (snippet (buffer-substring-no-properties begin end))
-                 (point (point))
-                 rep
-                 new-snippet)
-            (unless (or (not (seq-contains '(c++-mode c-mode) major-mode))
-                        (eq 'auto my-yasnippet-brace-style))
-              (setq rep (case my-yasnippet-brace-style
-                          ('allman ")\n{")
-                          (('k&r t) ") {")))
-              (setq new-snippet (replace-regexp-in-string ")[ \t\r\n]*{" rep snippet))
-              (delete-region begin end)
-              (insert new-snippet)
-              ;; XXX what's the proper way to retain point position? save-excursion doesn't work.
-              (goto-char (+ point (- (length new-snippet) (length snippet))))
-              (indent-region begin end)))))
+(add-to-list 'yas-after-exit-snippet-hook #'my-yasnippet-hook-adjust-brace-style)
 
 ;; org mode {{
 
