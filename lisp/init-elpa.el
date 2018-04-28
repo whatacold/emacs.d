@@ -322,6 +322,7 @@
   (require-package 'zenburn-theme)
   (require-package 'color-theme-sanityinc-solarized)
   (require-package 'color-theme-sanityinc-tomorrow)
+  (require-package 'solarized-theme)
   (require-package 'monokai-theme)
   (require-package 'molokai-theme)
   (require-package 'moe-theme)
