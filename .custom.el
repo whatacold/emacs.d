@@ -62,7 +62,7 @@
   :type 'symbol
   :options '(allman kr))
 
-(defcustom my-astyle-options "--indent=spaces=4 --pad-oper"
+(defcustom my-astyle-options "--indent=spaces=4 --pad-oper --pad-comma --pad-header"
   "Options for astyle except --style.")
 
 (defun astyle-snippet (string)
@@ -76,20 +76,24 @@
   "Utilize astyle to properly indent brace style set in `my-yasnippet-brace-style'"
   (let* ((anchor "the_point_anchor;")
          (begin yas-snippet-beg)
-         (end (+ yas-snippet-end (length anchor)))
-         snippet
+         (end yas-snippet-end)
+         (snippet (buffer-substring-no-properties begin end))
          new-snippet)
-    (insert anchor)
-    (setq snippet (buffer-substring-no-properties begin end))
-    (setq new-snippet (astyle-snippet snippet))
-    (delete-region begin end)
-    (insert new-snippet)
-    (goto-char begin)
-    ;; re-indent it in the context
-    (indent-region begin (+ end (- (length new-snippet)
-                                   (length snippet))))
-    (re-search-forward anchor)
-    (delete-char (- 0 (length anchor)))))
+    (when (and my-yasnippet-brace-style
+               (memq major-mode '(c-mode c++-mode))
+               (string-match "[{}]" snippet))
+      (insert anchor)
+      (setq end (+ yas-snippet-end (length anchor)))
+      (setq snippet (buffer-substring-no-properties begin end))
+      (setq new-snippet (astyle-snippet snippet))
+      (delete-region begin end)
+      (insert new-snippet)
+      (goto-char begin)
+      ;; re-indent it in the context
+      (indent-region begin (+ end (- (length new-snippet)
+                                     (length snippet))))
+      (re-search-forward anchor)
+      (delete-char (- 0 (length anchor))))))
 
 ;; see https://github.com/joaotavora/yasnippet/issues/728
 (add-to-list 'yas-after-exit-snippet-hook #'my-yasnippet-hook-adjust-brace-style)
