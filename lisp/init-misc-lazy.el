@@ -427,7 +427,7 @@ might be bad."
 Including indent-buffer, which should not be called automatically on save."
   (interactive)
   (cleanup-buffer-safe)
-  (indent-buffer))
+  (indent-region (point-min) (point-max)))
 
 ;; {{ save history
 ;; On Corp machines, I don't have permission to access history,
@@ -439,11 +439,6 @@ Including indent-buffer, which should not be called automatically on save."
    (savehist-mode 1)))
 ;; }}
 
-;; {{emms
-(require 'emms-setup)
-(emms-all)
-(emms-default-players)
-;; }}
 (provide 'init-misc-lazy)
 ;;; init-misc-lazy.el ends here
 
