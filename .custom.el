@@ -10,6 +10,8 @@
 ;;        ("melpa-stable" . "http://stable.melpa.org/packages/")))
 (add-to-list 'melpa-include-packages 'org-download)
 
+(setq message-truncate-lines t)
+
 (setq idle-require-load-break 0.1)
 
 (setq auto-save-idle 1)     ; in second
