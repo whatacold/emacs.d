@@ -23,21 +23,25 @@
 (prefer-coding-system 'utf-8)
 (modify-coding-system-alist 'file "\\.sh\\'" 'unix)
 (defun my-set-eol ()
+  "Set end of line of current buffer according to user selection."
   (interactive)
-  (ivy-read (format "current coding system: %s, select one eol: "
+  (ivy-read (format "Select one eol(current coding system: %s): "
                     buffer-file-coding-system)
             (list "unix" "dos" "mac")
             :require-match t
             :action
-            (lambda (type)
-              (cond
-               ((string= type "unix")
-                ;; not really work if EOLs are mixed, e.g. \n and \r\n
-                (set-buffer-file-coding-system 'unix))
-               ((string= type "dos")
-                (set-buffer-file-coding-system 'dos))
-               (t
-                (set-buffer-file-coding-system 'mac))))))
+            #'(lambda (type)
+                (save-excursion
+                  (goto-char (point-min))
+                  (while (re-search-forward "\\(\r*\n\\|\r\\)" nil t)
+                    (replace-match "\n")))
+                (cond
+                 ((string= type "unix")
+                  (set-buffer-file-coding-system 'unix))
+                 ((string= type "dos")
+                  (set-buffer-file-coding-system 'dos))
+                 (t
+                  (set-buffer-file-coding-system 'mac))))))
 
 (defun create-active-region (begin end &optional point-at-begin)
   (if point-at-begin
