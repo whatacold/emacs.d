@@ -63,30 +63,23 @@
       (buffer-substring-no-properties (point-min) (point-max)))))
 
 ;; http://astyle.sourceforge.net/astyle.html
-(defcustom my-yasnippet-brace-style 'allman
-  "What style of curly braces to use, nil means keep it as is."
-  :type 'symbol
-  :options '(allman kr))
-
-(defcustom my-astyle-options "--indent=spaces=4 --pad-oper --pad-comma --pad-header"
-  "Options for astyle except --style.")
+(defcustom my-astyle-options "--style=kr --lineend=linux --indent=spaces=4 --pad-oper --pad-comma --pad-header --attach-extern-c --align-pointer=name"
+  "Options for astyle.")
 
 (defun astyle-snippet (string)
-  (let ((style (symbol-name my-yasnippet-brace-style))
-        (executable (executable-find "astyle"))
+  (let ((executable (executable-find "astyle"))
         command)
-    (setq command (format "%s --style=%s %s" executable style my-astyle-options))
+    (setq command (format "%s %s" executable my-astyle-options))
     (shell-command-on-string string command)))
 
-(defun my-yasnippet-hook-adjust-brace-style ()
-  "Utilize astyle to properly indent brace style set in `my-yasnippet-brace-style'"
+(defun my-yasnippet-hook-adjust-style ()
+  "Utilize astyle to adjust style of yasnippet's snippet, options set in `my-astyle-options'."
   (let* ((anchor "the_point_anchor;")
          (begin yas-snippet-beg)
          (end yas-snippet-end)
          (snippet (buffer-substring-no-properties begin end))
          new-snippet)
-    (when (and my-yasnippet-brace-style
-               (memq major-mode '(c-mode c++-mode))
+    (when (and (memq major-mode '(c-mode c++-mode))
                (string-match "[{}]" snippet))
       (insert anchor)
       (setq end (+ yas-snippet-end (length anchor)))
@@ -102,7 +95,7 @@
       (delete-char (- 0 (length anchor))))))
 
 ;; see https://github.com/joaotavora/yasnippet/issues/728
-(add-to-list 'yas-after-exit-snippet-hook #'my-yasnippet-hook-adjust-brace-style)
+(add-to-list 'yas-after-exit-snippet-hook #'my-yasnippet-hook-adjust-style)
 
 ;; org mode {{
 
