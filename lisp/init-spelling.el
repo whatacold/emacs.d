@@ -189,4 +189,7 @@ Please note RUN-TOGETHER will make aspell less capable. So it should only be use
                         (length aspell-words)
                         (mapconcat 'identity aspell-words "\n"))))))
 
+;; leave C-; for iedit-mode
+(setq flyspell-auto-correct-binding (kbd "C-:"))
+
 (provide 'init-spelling)
