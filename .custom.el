@@ -56,6 +56,7 @@
   (setq mark-active t))
 
 (defun shell-command-on-string (string command)
+  "Execute COMMAND with STRING as pipe input, returns its output."
   (let ((process-connection-type nil)
         (begin 1)
         end)
