@@ -420,3 +420,11 @@ or a keyword will be asked to input."
 ;; e.g.
 ;; (pyvenv-activate "~/path/to/virtualenv/foo/")
 ;; (setq common-lisp-hyperspec-root "file:/path/to/HyperSpec/")
+
+(define-advice start-process (:before (name buffer program &rest program-args) intercept)
+  (message "Intercept start-process: name: %s, buffer: %s, program: %s"
+           name buffer program))
+
+(define-advice shell-command-to-string (:before (command) intercept)
+  (message "Intercept shell-command-to-string: %s" command))
+
