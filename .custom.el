@@ -376,10 +376,11 @@
 use the symbol at point as default keyword when no prefix arg provided,
 or a keyword will be asked to input."
   (interactive "P")
-  (if (not arg)
-      ;; no prefix arg
-      (counsel-etags-grep (thing-at-point 'symbol t))
-    (counsel-etags-grep)))
+  (let ((shell-file-name "/bin/bash"))
+    (if (not arg)
+        ;; no prefix arg
+        (counsel-etags-grep (thing-at-point 'symbol t))
+      (counsel-etags-grep))))
 
 (eval-after-load "evil"
   (nvmap :prefix ","
