@@ -357,7 +357,6 @@
 
 ;; my tuning
 (require-package 'graphviz-dot-mode)
-(require-package 'magit)
 (require-package 'magit-svn)
 (require-package 'cnfonts)
 (require-package 'youdao-dictionary)
