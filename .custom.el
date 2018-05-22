@@ -372,15 +372,14 @@
   (shell-command (format "rsync.sh %s" (my-root-dir))))
 
 (defun my-counsel-etags-grep (arg)
-  "Grep a keyword within current project,
-use the symbol at point as default keyword when no prefix arg provided,
+  "Grep a keyword within current project.
+use the symbol at point as default keyword when no prefix ARG provided,
 or a keyword will be asked to input."
   (interactive "P")
-  (let ((shell-file-name "/bin/bash"))
-    (if (not arg)
-        ;; no prefix arg
-        (counsel-etags-grep (thing-at-point 'symbol t))
-      (counsel-etags-grep))))
+  (if (not arg)
+      ;; no prefix arg
+      (counsel-etags-grep (thing-at-point 'symbol t))
+    (counsel-etags-grep)))
 
 (eval-after-load "evil"
   (nvmap :prefix ","
