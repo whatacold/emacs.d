@@ -423,13 +423,32 @@ or a keyword will be asked to input."
 ;; (pyvenv-activate "~/path/to/virtualenv/foo/")
 ;; (setq common-lisp-hyperspec-root "file:/path/to/HyperSpec/")
 
+;;; {{
+(defvar intercept-subprocess nil)
+
+(defun my-toggle-intercept-subprocess ()
+  "Toggle whether to intercept subprocess creating."
+  (interactive)
+  (setq intercept-subprocess (not intercept-subprocess))
+  (when intercept-subprocess
+    (message "Intercept subprocess creating enable.")))
+
 (define-advice start-process (:before (name buffer program &rest program-args) intercept)
-  (message "Intercept start-process: name: %s, buffer: %s, program: %s"
-           name buffer program))
+  (when intercept-subprocess
+    (message "Intercept start-process: name: %s, buffer: %s, program and args: %s %s"
+             name buffer program
+             (mapconcat #'identity program-args " "))))
 
 (define-advice shell-command-to-string (:before (command) intercept)
-  (message "Intercept shell-command-to-string: %s" command))
+  (when intercept-subprocess
+    (message "Intercept shell-command-to-string: %s" command)))
 
+(define-advice call-process (:before (program &optional infile destination display &rest args))
+  (when intercept-subprocess
+    (message "Intercept call-process: %s %s"
+             program
+             (mapconcat #'identity args " "))))
+;;; }}
 
 (defmacro reset-custom-variable (symbol)
   "Utility macro to reset the value of defcustom variable."
