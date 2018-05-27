@@ -430,3 +430,7 @@ or a keyword will be asked to input."
 (define-advice shell-command-to-string (:before (command) intercept)
   (message "Intercept shell-command-to-string: %s" command))
 
+
+(defmacro reset-custom-variable (symbol)
+  "Utility macro to reset the value of defcustom variable."
+  `(setq ,symbol (eval (car (get ',symbol 'standard-value)))))
