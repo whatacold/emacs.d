@@ -401,6 +401,9 @@ or a keyword will be asked to input."
 ;;; magit
 (global-set-key (kbd "C-x g") #'magit-status)
 (add-hook 'magit-mode-hook 'magit-svn-mode)
+(setq magit-git-output-coding-system 'utf-8)
+(setq magit-git-global-arguments (nconc magit-git-global-arguments
+                                        '("-c" "i18n.logOutputEncoding=UTF-8")))
 
 (setq vc-handled-backends (delete 'Git vc-handled-backends))
 
