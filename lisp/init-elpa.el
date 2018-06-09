@@ -89,6 +89,9 @@
     workgroups2
     zoutline
     pyim
+
+    elfeed-org
+
     company-c-headers
     company-statistics)
   "Packages to install from melpa-unstable.")
@@ -360,5 +363,8 @@
 (require-package 'magit-svn)
 (require-package 'cnfonts)
 (require-package 'youdao-dictionary)
+(require-package 'elfeed)
+;; failed to install elfeed-org due to its mandatory dependency on org-8.2.7
+;(require-package 'elfeed-org)
 
 (provide 'init-elpa)
