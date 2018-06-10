@@ -286,6 +286,12 @@
     (previous-line 2)
     (org-edit-src-code)))
 
+(setq org-confirm-babel-evaluate nil)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ditaa . t)
+   (emacs-lisp . t)))
+
 (require 'ox-reveal)
 (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0/")
 
