@@ -108,6 +108,9 @@
         ;; {{ 163 repository:
         ;; ("melpa" . "https://mirrors.163.com/elpa/melpa/")
         ;; ("melpa-stable" . "https://mirrors.163.com/elpa/melpa-stable/")
+        ;; https is not friendly to proxy, don't know why.
+        ;; undo-tree must be installed from GNU elpa.
+        ("gnu" . "http://mirrors.163.com/elpa/gnu/")
         ("melpa" . "http://mirrors.163.com/elpa/melpa/")
         ("melpa-stable" . "http://mirrors.163.com/elpa/melpa-stable/")
         ;; }}
