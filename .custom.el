@@ -451,7 +451,7 @@ or a keyword will be asked to input."
   (when intercept-subprocess
     (message "Intercept shell-command-to-string: %s" command)))
 
-(define-advice call-process (:before (program &optional infile destination display &rest args))
+(define-advice call-process (:before (program &optional infile destination display &rest args) intercept)
   (when intercept-subprocess
     (message "Intercept call-process: %s %s"
              program
