@@ -122,6 +122,9 @@ A predicate is a function that is passed a filename to check and that
 must return non-nil to exclude it."
   :group 'auto-save)
 
+(defvar auto-save-timer nil
+  "Timer object that drives auto-save.")
+
 ;; Emacs' default auto-save is stupid to generate #foo# files!
 (setq auto-save-default nil)
 
@@ -174,7 +177,16 @@ That is, if it doesn't match any of the `auto-save-exclude' checks."
 
 (defun auto-save-enable ()
   (interactive)
-  (run-with-idle-timer auto-save-idle t #'auto-save-buffers))
+  (unless (timerp auto-save-timer)
+    (setq auto-save-timer (run-with-idle-timer auto-save-idle t #'auto-save-buffers))
+    (message "auto-save enabled")))
+
+(defun auto-save-disable ()
+  (interactive)
+  (when (timerp auto-save-timer)
+    (cancel-timer auto-save-timer)
+    (setq auto-save-timer nil)
+    (message "auto-save disabled")))
 
 (provide 'auto-save)
 
