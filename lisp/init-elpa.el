@@ -90,6 +90,7 @@
     pyim
 
     elfeed-org
+    org-mind-map
 
     company-c-headers
     company-statistics)
@@ -365,6 +366,7 @@
 (require-package 'cnfonts)
 (require-package 'youdao-dictionary)
 (require-package 'elfeed)
+(require-package 'org-mind-map)
 ;; failed to install elfeed-org due to its mandatory dependency on org-8.2.7
 ;(require-package 'elfeed-org)
 

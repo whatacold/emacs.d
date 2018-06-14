@@ -295,6 +295,13 @@
 (require 'ox-reveal)
 (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0/")
 
+;; the file format exported by ox-freemind is too old to work.
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/org/contrib/lisp/")
+;(require 'ox-freemind)
+
+(require 'ox-org)
+(require 'org-mind-map)
+
 (require-package 'org-download)
 (require 'org-download)
 (setq org-download-image-dir "./images/")
