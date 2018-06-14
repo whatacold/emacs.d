@@ -301,6 +301,10 @@
 
 (require 'ox-org)
 (require 'org-mind-map)
+;(setq org-mind-map-engine "twopi")
+(setq org-mind-map-dot-output '("png"))
+;(setq org-mind-map-default-node-attribs '(("shape" . "ellipse")))
+(setq org-mind-map-display 'frame)
 
 (require-package 'org-download)
 (require 'org-download)
