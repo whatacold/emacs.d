@@ -163,6 +163,7 @@
                                init-pomodoro
                                init-dired
                                init-artbollocks-mode
+                               init-eshell
                                init-semantic))
   (idle-require-mode 1) ;; starts loading
   ;; }}
