@@ -305,6 +305,11 @@
 (setq org-mind-map-dot-output '("png"))
 ;(setq org-mind-map-default-node-attribs '(("shape" . "ellipse")))
 (setq org-mind-map-display 'frame)
+(setq org-mind-map-default-graph-attribs '(("resolution" . "100")
+                                           ("nodesep" . "0.75")
+                                           ("overlap" . "false")
+                                           ("spline" . "true")
+                                           ("rankdir" . "LR")))
 
 (require-package 'org-download)
 (require 'org-download)
