@@ -457,11 +457,15 @@ or a keyword will be asked to input."
   (when intercept-subprocess-p
     (message "Intercept subprocess creating enable.")))
 
+(defun my-quote-argument (arg)
+  "Double quote ARG."
+  (concat "\"" arg "\""))
+
 (define-advice start-process (:before (name buffer program &rest program-args) intercept)
   (when intercept-subprocess-p
     (message "Intercept start-process: name: %s, buffer: %s, program and args: %s %s"
              name buffer program
-             (mapconcat #'identity program-args " "))))
+             (mapconcat #'my-quote-argument program-args " "))))
 
 (define-advice shell-command-to-string (:before (command) intercept)
   (when intercept-subprocess-p
@@ -471,7 +475,7 @@ or a keyword will be asked to input."
   (when intercept-subprocess-p
     (message "Intercept call-process: %s %s"
              program
-             (mapconcat #'identity args " "))))
+             (mapconcat #'my-quote-argument args " "))))
 ;;; }}
 
 (defmacro reset-custom-variable (symbol)
