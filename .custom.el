@@ -448,27 +448,27 @@ or a keyword will be asked to input."
 ;; (setq common-lisp-hyperspec-root "file:/path/to/HyperSpec/")
 
 ;;; {{
-(defvar intercept-subprocess nil)
+(defvar intercept-subprocess-p nil)
 
 (defun my-toggle-intercept-subprocess ()
   "Toggle whether to intercept subprocess creating."
   (interactive)
-  (setq intercept-subprocess (not intercept-subprocess))
-  (when intercept-subprocess
+  (setq intercept-subprocess-p (not intercept-subprocess-p))
+  (when intercept-subprocess-p
     (message "Intercept subprocess creating enable.")))
 
 (define-advice start-process (:before (name buffer program &rest program-args) intercept)
-  (when intercept-subprocess
+  (when intercept-subprocess-p
     (message "Intercept start-process: name: %s, buffer: %s, program and args: %s %s"
              name buffer program
              (mapconcat #'identity program-args " "))))
 
 (define-advice shell-command-to-string (:before (command) intercept)
-  (when intercept-subprocess
+  (when intercept-subprocess-p
     (message "Intercept shell-command-to-string: %s" command)))
 
 (define-advice call-process (:before (program &optional infile destination display &rest args) intercept)
-  (when intercept-subprocess
+  (when intercept-subprocess-p
     (message "Intercept call-process: %s %s"
              program
              (mapconcat #'identity args " "))))
