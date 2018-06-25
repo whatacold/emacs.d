@@ -385,7 +385,8 @@
     (add-to-list 'counsel-etags-project-file "GTAGS")))
 (eval-after-load "find-file-in-project"
   (lambda ()
-    (add-to-list 'ffip-project-file "GTAGS")))
+    (add-to-list 'ffip-project-file "GTAGS")
+    (setq ffip-find-pre-path-options "-L")))
 (defhydra hydra-gtags-stack (global-map "C-c t")
   "gtags stack browsing"
   ("f" counsel-gtags-go-forward "forward")
