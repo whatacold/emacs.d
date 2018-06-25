@@ -66,14 +66,17 @@
       (shell-command-on-region begin end command nil t)
       (buffer-substring-no-properties (point-min) (point-max)))))
 
+(defcustom my-astyle-executable (executable-find "astyle")
+  "The path of `astyle' binary.")
+
 ;; http://astyle.sourceforge.net/astyle.html
 (defcustom my-astyle-options "--style=kr --lineend=linux --indent=spaces=4 --pad-oper --pad-comma --pad-header --attach-extern-c --align-pointer=name"
   "Options for astyle.")
 
 (defun astyle-snippet (string)
-  (let ((executable (executable-find "astyle"))
-        command)
-    (setq command (format "%s %s" executable my-astyle-options))
+  "Use `astyle' to format the snippet contained in STRING."
+  (let (command)
+    (setq command (format "%s %s" my-astyle-executable my-astyle-options))
     (shell-command-on-string string command)))
 
 (defun my-yasnippet-hook-adjust-style ()
