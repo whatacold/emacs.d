@@ -427,6 +427,7 @@ or a keyword will be asked to input."
 ;;; magit
 (global-set-key (kbd "C-x g") #'magit-status)
 (add-hook 'magit-mode-hook 'magit-svn-mode)
+(setq magit-diff-refine-hunk t)
 (eval-after-load 'magit-git
   '(progn
     (setq magit-git-output-coding-system 'utf-8)
