@@ -169,6 +169,36 @@ Version 2018-03-31"
 ;; Periodically saving the list of recent files
 (run-at-time nil (* 5 60) 'recentf-save-list)
 
+(defun my-ivy-window ()
+  "Quickly select a window inside any frames based on ivy."
+  (interactive)
+  (let ((frames (frame-list))
+        frame-title
+        candidates)
+    (dolist (frame frames)
+      (let ((frame-title (if (frame-parameter frame 'title)
+                             (frame-parameter frame 'title)
+                           (frame-parameter frame 'name)))
+            (windows (window-list frame)))
+        (dolist (window windows)
+          (when (window-live-p window)
+            (setq candidates (cons (cons (format "%s/%s"
+                                                 frame-title
+                                                 (buffer-name (window-buffer window)))
+                                         window)
+                                   candidates))))))
+    (ivy-read "Select a window(frame/window): "
+              candidates
+              :action #'(lambda (selected)
+                          (let* ((window (cdr selected))
+                                 (frame (window-frame window)))
+                            (when (and (frame-live-p frame)
+                                       (not (eq (selected-frame) frame)))
+                              (select-frame-set-input-focus frame))
+                            (if (window-live-p window)
+                                (select-window window)
+                              (error "Got a dead window %S" window)))))))
+
 ;;; coding system
 (prefer-coding-system 'gbk)
 (prefer-coding-system 'utf-8)
