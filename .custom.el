@@ -505,6 +505,11 @@ Version 2018-03-31"
   (w3m-browse-url (concat "file://" link-no-proto)))
 
 (add-to-list 'org-file-apps '("\\.x?html?\\'" . my-org-html-app))
+
+(require 'pdf-tools)
+;; Don't try to compile `epdfinfo' on every computer
+(when (file-executable-p pdf-info-epdfinfo-program)
+  (pdf-tools-install))
 ;; }}
 
 ;; Sessions tuning, in addition to `init-sessions.el'
@@ -534,6 +539,7 @@ Version 2018-03-31"
                                    ("$" "￥")
                                    ("!" "！")
                                    ("`" "・")))))
+
 ;; How to get back to Chinese:
 ;; type nihao and execute M-x pyim-convert-code-at-point
 (setq-default pyim-english-input-switch-functions

@@ -39,6 +39,7 @@
                                       gnus-summary-mode
                                       gnus-article-mode
                                       elfeed-search-mode
+                                      pdf-view-mode
                                       calendar-mode))
 (defadvice linum-on (around linum-on-inhibit-for-modes)
            "Stop the load of linum-mode for some major modes."

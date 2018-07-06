@@ -91,6 +91,7 @@
 
     elfeed-org
     org-mind-map
+    org-noter
 
     company-c-headers
     company-statistics)
@@ -367,6 +368,8 @@
 (require-package 'youdao-dictionary)
 (require-package 'elfeed)
 (require-package 'org-mind-map)
+(require-package 'pdf-tools)
+(require-package 'org-noter)
 ;; failed to install elfeed-org due to its mandatory dependency on org-8.2.7
 ;(require-package 'elfeed-org)
 
