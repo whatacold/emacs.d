@@ -20,6 +20,9 @@
   (orgtbl-mode 1) ; enable key bindings
   ;; don't wrap lines because there is table in `markdown-mode'
   (setq truncate-lines t)
+
+  (flyspell-mode)
+
   (setq imenu-create-index-function 'markdown-imenu-index))
 
 (add-hook 'markdown-mode-hook 'markdown-mode-hook-setup)
