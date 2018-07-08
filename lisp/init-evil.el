@@ -334,6 +334,7 @@ If the character before and after CH is space or tab, CH is NOT slash"
         (elfeed-search-mode . emacs)
         (elfeed-show-mode . emacs)
         (picture-mode . emacs)
+        (srefactor-ui-menu-mode . emacs)
         )
       do (evil-set-initial-state mode state))
 ;; }}

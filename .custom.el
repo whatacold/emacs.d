@@ -224,6 +224,9 @@ Version 2018-03-31"
                  (t
                   (set-buffer-file-coding-system 'mac))))))
 
+(semantic-mode) ; required by 'srefactor
+(require 'srefactor)
+
 (defun create-active-region (begin end &optional point-at-begin)
   (if point-at-begin
       (progn

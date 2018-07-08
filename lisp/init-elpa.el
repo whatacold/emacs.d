@@ -92,6 +92,7 @@
     elfeed-org
     org-mind-map
     org-noter
+    srefactor
 
     company-c-headers
     company-statistics)
@@ -370,6 +371,8 @@
 (require-package 'org-mind-map)
 (require-package 'pdf-tools)
 (require-package 'org-noter)
+(require-package 'srefactor)
+
 ;; failed to install elfeed-org due to its mandatory dependency on org-8.2.7
 ;(require-package 'elfeed-org)
 
