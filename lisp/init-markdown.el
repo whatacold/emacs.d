@@ -24,6 +24,8 @@
 
 (add-hook 'markdown-mode-hook 'markdown-mode-hook-setup)
 
+(add-to-list 'markdown-mode-hook #'company-ispell-setup)
+
 (eval-after-load 'markdown-mode
   '(progn
      ;; `pandoc' is better than obsolete `markdown'
