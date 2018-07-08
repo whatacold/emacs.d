@@ -205,11 +205,11 @@ _w_ whitespace-mode:   %`whitespace-mode
 ;; {{ @see https://github.com/abo-abo/hydra/wiki/Window-Management
 (defhydra hydra-window ()
   "
-Movement^^   ^Split^         ^Switch^     ^Resize^
------------------------------------------------------
-_h_ Left     _v_ertical      _b_uffer     _q_ X left
-_j_ Down     _x_ horizontal  _f_ind files _w_ X Down
-_k_ Top      _z_ undo        _a_ce 1      _e_ X Top
+Movement^^   ^Split^         ^Switch^     ^Resize^         ^Frame^
+---------------------------------------------------------------------
+_h_ Left     _v_ertical      _b_uffer     _q_ X left       _m_ake
+_j_ Down     _x_ horizontal  _f_ind files _w_ X Down       _n_ame
+_k_ Top      _z_ undo        _a_ce 1      _e_ X Top        _p_ick
 _l_ Right    _Z_ reset       _s_wap       _r_ X Right
 _F_ollow     _D_lt Other     _S_ave       max_i_mize
 _SPC_ cancel _o_nly this     _d_elete
@@ -256,8 +256,13 @@ _SPC_ cancel _o_nly this     _d_elete
          (winner-undo)
          (setq this-command 'winner-undo)))
   ("Z" winner-redo)
+
+  ("m" #'my-make-frame-with-name)
+  ("n" #'my-name-frame)
+  ("p" #'my-ivy-window)
+
   ("SPC" nil))
-(global-set-key (kbd "C-c C-w") 'hydra-window/body)
+(global-set-key (kbd "C-c w") 'hydra-window/body)
 ;; }}
 
 ;; {{ git-gutter, @see https://github.com/abo-abo/hydra/wiki/Git-gutter

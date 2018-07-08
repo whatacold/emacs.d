@@ -169,8 +169,22 @@ Version 2018-03-31"
 ;; Periodically saving the list of recent files
 (run-at-time nil (* 5 60) 'recentf-save-list)
 
+(defun my-name-frame (&optional name)
+  "Name the current frame as specified by user."
+  (interactive)
+  (set-frame-parameter nil 'name (or name
+                                     (read-from-minibuffer "Frame name: "))))
+(my-name-frame "initial")
+
+(defun my-make-frame-with-name ()
+  "Make a frame with name specified by user."
+  (interactive)
+  (let* ((name (read-from-minibuffer "Frame name: "))
+         (frame (make-frame `((name . ,name)))))
+    (select-frame-set-input-focus frame)))
+
 (defun my-ivy-window ()
-  "Quickly select a window inside any frames based on ivy."
+  "Quickly select a window of any frames based on ivy."
   (interactive)
   (let ((frames (frame-list))
         frame-title
