@@ -31,10 +31,6 @@
     ;; NOT evil-mode
     (toggle-input-method))))
 
-(defadvice evil-insert-state (around evil-insert-state-hack activate)
-  ad-do-it
-  (if current-input-method (message "IME on!")))
-
 (global-set-key (kbd "C-\\") 'evil-toggle-input-method)
 ;; }}
 
