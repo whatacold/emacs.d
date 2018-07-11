@@ -167,7 +167,7 @@ Version 2018-03-31"
 
 (setq auto-save-idle 1)     ; in second
 ;; Periodically saving the list of recent files
-(run-at-time nil (* 5 60) 'recentf-save-list)
+(run-at-time t (* 5 60) 'recentf-save-list)
 
 (defun my-name-frame (&optional name)
   "Name the current frame as specified by user."
