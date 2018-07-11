@@ -214,7 +214,7 @@ Version 2018-03-31"
                               (error "Got a dead window %S" window)))))))
 
 ;;; coding system
-(prefer-coding-system 'gbk)
+(prefer-coding-system 'chinese-gbk)
 (prefer-coding-system 'utf-8)
 (modify-coding-system-alist 'file "\\.sh\\'" 'unix)
 (defun my-set-eol ()
