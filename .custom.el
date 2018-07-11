@@ -608,6 +608,8 @@ or a keyword will be asked to input."
       (counsel-etags-grep (thing-at-point 'symbol t))
     (counsel-etags-grep)))
 
+(setq counsel-ag-base-command "ag --nocolor --nogroup -f %s")
+
 (eval-after-load "evil"
   (nvmap :prefix ","
          "qq" 'my-counsel-etags-grep
