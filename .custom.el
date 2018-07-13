@@ -624,6 +624,9 @@ or a keyword will be asked to input."
       do (evil-set-initial-state mode state))
 ;; }}
 
+(define-key youdao-dictionary-mode-map
+  (kbd "i") #'youdao-dictionary-search-from-input)
+
 (require 'cnfonts)
 (cnfonts-enable)
 
