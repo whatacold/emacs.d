@@ -610,6 +610,18 @@ or a keyword will be asked to input."
 
 (setq counsel-ag-base-command "ag --nocolor --nogroup -f %s")
 
+(defvar cold/locate-db-path "~/.locate.db")
+(define-advice counsel-locate-cmd-default (:around (oldfun input) add-options)
+  (let ((cmd (funcall oldfun input)))
+    (replace-regexp-in-string "^locate"
+                              (format "locate --database %s"
+                                      cold/locate-db-path)
+                              cmd)))
+(with-temp-buffer
+  (shell-command (format "updatedb --require-visibility no --output %s &"
+                         cold/locate-db-path)
+                 t))
+
 (eval-after-load "evil"
   (nvmap :prefix ","
          "qq" 'my-counsel-etags-grep
