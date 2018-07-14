@@ -93,6 +93,7 @@
     org-mind-map
     org-noter
     srefactor
+    youdao-dictionary
 
     company-c-headers
     company-statistics)
