@@ -608,7 +608,9 @@ or a keyword will be asked to input."
       (counsel-etags-grep (thing-at-point 'symbol t))
     (counsel-etags-grep)))
 
-(setq counsel-ag-base-command "ag --nocolor --nogroup -f %s")
+;; Follow symbolic links.
+(setq counsel-ag-base-command (replace-regexp-in-string "^ag" "ag -f" counsel-ag-base-command))
+(setq counsel-rg-base-command (replace-regexp-in-string "^rg" "rg --follow" counsel-rg-base-command))
 
 (defvar cold/locate-db-path "~/.locate.db")
 (define-advice counsel-locate-cmd-default (:around (oldfun input) add-options)
