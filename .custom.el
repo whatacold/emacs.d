@@ -176,6 +176,8 @@ Version 2018-03-31"
                                      (read-from-minibuffer "Frame name: "))))
 (my-name-frame "initial")
 
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 (defun my-make-frame-with-name ()
   "Make a frame with name specified by user."
   (interactive)
