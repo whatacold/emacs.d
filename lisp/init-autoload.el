@@ -74,8 +74,6 @@
 (autoload 'dropdown-list "dropdown-list" "")
 (autoload 'magit-commit-popup "magit" "")
 
-(autoload 'pyim-convert-code-at-point "pyim")
-
 (provide 'init-autoload)
 ;;; init-autoload.el ends here
 
