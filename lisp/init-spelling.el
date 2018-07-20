@@ -1,3 +1,6 @@
+;; leave `C-;' to `iedit-mode'
+(setq flyspell-auto-correct-binding (kbd "C-:"))
+
 ;; {{ flyspell setup for web-mode
 (defun web-mode-flyspell-verify ()
   (let* ((f (get-text-property (- (point) 1) 'face))
