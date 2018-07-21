@@ -244,23 +244,26 @@ _w_ whitespace-mode:   %`whitespace-mode
   "
 Movement^^   ^Split^         ^Switch^     ^Resize^         ^Frame^
 ---------------------------------------------------------------------
-_h_ Left     _v_ertical      _b_uffer     _q_ X left       _m_ake
-_j_ Down     _x_ horizontal  _f_ind files _w_ X Down       _n_ame
-_k_ Top      _z_ undo        _a_ce 1      _e_ X Top        _p_ick
-_l_ Right    _Z_ reset       _s_wap       _r_ X Right
-_F_ollow     _D_lt Other     _S_ave       max_i_mize
-_SPC_ cancel _o_nly this     _d_elete
+_h_ Left     _v_ertical      _b_uffer     _H_ X left       _m_ake
+_j_ Down     _x_ horizontal  _f_ind files _J_ X Down       _n_ame
+_k_ Top      _z_ undo        _r_ecent     _K_ X Top        _p_ick
+_l_ Right    _Z_ reset       _a_ce 1      _L_ X Right
+_F_ollow     _D_lt Other     _s_wap       max_i_mize
+_q_ cancel   _o_nly this     _S_ave
+                             _d_elete
 "
   ("h" windmove-left )
   ("j" windmove-down )
   ("k" windmove-up )
   ("l" windmove-right )
-  ("q" hydra-move-splitter-left)
-  ("w" hydra-move-splitter-down)
-  ("e" hydra-move-splitter-up)
-  ("r" hydra-move-splitter-right)
+  ("H" hydra-move-splitter-left)
+  ("J" hydra-move-splitter-down)
+  ("K" hydra-move-splitter-up)
+  ("L" hydra-move-splitter-right)
+
   ("b" ivy-switch-buffer)
   ("f" counsel-find-file)
+  ("r" my-counsel-recentf)
   ("F" follow-mode)
   ("a" (lambda ()
          (interactive)
@@ -298,7 +301,7 @@ _SPC_ cancel _o_nly this     _d_elete
   ("n" #'my-name-frame)
   ("p" #'my-ivy-window)
 
-  ("SPC" nil))
+  ("q" nil))
 (global-set-key (kbd "C-c w") 'hydra-window/body)
 ;; }}
 
