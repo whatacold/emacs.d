@@ -492,7 +492,11 @@ Version 2018-03-31"
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((ditaa . t)
+   (plantuml . t)
    (emacs-lisp . t)))
+
+;; On Fedora, do `dnf install plantuml' to install it
+(setq plantuml-jar-path (setq org-plantuml-jar-path "/usr/share/java/plantuml.jar"))
 
 (require 'ox-reveal)
 (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0/")

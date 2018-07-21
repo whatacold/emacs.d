@@ -370,8 +370,9 @@
 (require-package 'youdao-dictionary)
 (require-package 'elfeed)
 (require-package 'org-mind-map)
-(require-package 'pdf-tools)
 (require-package 'org-noter)
+(require-package 'plantuml-mode)
+(require-package 'pdf-tools)
 (require-package 'srefactor)
 
 ;; failed to install elfeed-org due to its mandatory dependency on org-8.2.7
