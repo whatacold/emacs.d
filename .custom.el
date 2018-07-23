@@ -5,6 +5,13 @@
 (require-package 'hl-todo)
 (global-hl-todo-mode)
 
+(defun whatacold/open-markdown-draft ()
+  "Open a markdown buffer to draft something and post it to forums."
+  (interactive)
+  (let ((buffer (get-buffer-create "*markdown draft*")))
+    (switch-to-buffer buffer)
+    (markdown-mode)))
+
 (defun xah-change-bracket-pairs ( @from-chars @to-chars)
   "Change bracket pairs from one type to another.
 
