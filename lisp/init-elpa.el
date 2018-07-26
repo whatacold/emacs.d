@@ -94,6 +94,7 @@
     org-noter
     srefactor
     youdao-dictionary
+    graphviz-dot-mode
 
     company-c-headers
     company-statistics)
