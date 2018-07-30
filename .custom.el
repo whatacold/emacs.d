@@ -572,12 +572,17 @@ Version 2018-03-31"
                                    ("!" "！")
                                    ("`" "・")))))
 
+(defun whatacold/pyim-probe-program-mode ()
+  "Predicate whether to input ASCII character for current major mode."
+  (and (not (member major-mode '(web-mode plantuml-mode)))
+       (pyim-probe-program-mode)))
+
 ;; How to get back to Chinese:
 ;; type nihao and execute M-x pyim-convert-code-at-point
 (setq-default pyim-english-input-switch-functions
                 '(pyim-probe-dynamic-english
                   pyim-probe-isearch-mode
-                  pyim-probe-program-mode
+                  whatacold/pyim-probe-program-mode
                   pyim-probe-org-structure-template))
 ;; h for HanYu
 (global-set-key (kbd "C-c h") #'pyim-convert-code-at-point)
