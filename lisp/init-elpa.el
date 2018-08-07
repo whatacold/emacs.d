@@ -375,6 +375,7 @@
 (require-package 'plantuml-mode)
 (require-package 'pdf-tools)
 (require-package 'srefactor)
+(require-package 'ensime)
 
 ;; failed to install elfeed-org due to its mandatory dependency on org-8.2.7
 ;(require-package 'elfeed-org)

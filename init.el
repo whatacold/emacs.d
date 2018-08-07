@@ -145,6 +145,7 @@
   (require-init 'init-hydra)
   (require-init 'init-graphviz)
   (require-init 'init-elfeed)
+  (require-init 'init-java)
 
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
   ;; {{ idle require other stuff
