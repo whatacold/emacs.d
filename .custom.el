@@ -542,6 +542,13 @@ Version 2018-03-31"
 ;; Don't try to compile `epdfinfo' on every computer
 (when (file-executable-p pdf-info-epdfinfo-program)
   (pdf-tools-install))
+;; http://babbagefiles.blogspot.com/2017/11/more-pdf-tools-tricks.html
+(defun whatacold/pdf-view-light-solarized ()
+  "View pdf with color scheme of light solarized."
+  (interactive)
+  (setq pdf-view-midnight-colors '("#657b83" . "#fdf6e3" ))
+  (pdf-view-midnight-minor-mode))
+(add-hook 'pdf-view-mode-hook #'whatacold/pdf-view-light-solarized)
 ;; }}
 
 ;; Sessions tuning, in addition to `init-sessions.el'
