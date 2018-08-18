@@ -667,6 +667,10 @@ If the character before and after CH is space or tab, CH is NOT slash"
        "xnd" 'narrow-to-defun
        "xnr" 'narrow-to-region
        "ycr" 'my-yas-reload-all
+
+       "ag" #'counsel-ag
+       "qq" #'my-counsel-etags-grep
+
        "wf" 'popup-which-function)
 ;; }}
 

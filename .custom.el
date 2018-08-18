@@ -593,6 +593,10 @@ Version 2018-03-31"
                   pyim-probe-org-structure-template))
 ;; h for HanYu
 (global-set-key (kbd "C-c h") #'pyim-convert-code-at-point)
+(define-key evil-insert-state-map (kbd "kl") #'pyim-convert-code-at-point)
+(define-key evil-insert-state-map (kbd "kk") (lambda ()
+                                               (interactive)
+                                               (insert "k")))
 
 (setq browse-url-generic-program
       (when *unix* ; linux or unix
