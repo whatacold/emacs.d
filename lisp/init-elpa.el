@@ -317,12 +317,15 @@
 (require-package 'evil-surround)
 (require-package 'evil-visualstar)
 (require-package 'evil-lion)
+(require-package 'evil-args)
 (require-package 'slime)
 (require-package 'counsel-css)
 (require-package 'auto-package-update)
 (require-package 'keyfreq)
 (require-package 'adoc-mode) ; asciidoc files
 (require-package 'magit) ; Magit 2.12 is the last feature release to support Emacs 24.4.
+(require-package 'shackle)
+
 ;; {{ @see https://pawelbx.github.io/emacs-theme-gallery/
 (when *emacs24*
   (require-package 'color-theme)

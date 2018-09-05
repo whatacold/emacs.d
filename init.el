@@ -7,7 +7,7 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(let ((minver "24.3"))
+(let ((minver "24.4"))
   (when (version< emacs-version minver)
     (error "This config requires Emacs v%s or higher" minver)))
 
@@ -115,7 +115,6 @@
   (require-init 'init-linum-mode)
   (require-init 'init-git) ;; git-gutter should be enabled after `display-line-numbers-mode' turned on
   ;; (require-init 'init-gist)
-  (require-init 'init-moz)
   (require-init 'init-gtags)
   ;; init-evil dependent on init-clipboard
   (require-init 'init-clipboard)
@@ -143,6 +142,8 @@
 
   (require-init 'init-emacs-w3m)
   (require-init 'init-hydra)
+  (require-init 'init-shackle)
+
   (require-init 'init-graphviz)
   (require-init 'init-elfeed)
   (require-init 'init-java)
