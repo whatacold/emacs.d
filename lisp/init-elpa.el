@@ -95,6 +95,7 @@
     srefactor
     youdao-dictionary
     graphviz-dot-mode
+    quelpa
 
     company-c-headers
     company-statistics)
@@ -379,6 +380,7 @@
 (require-package 'pdf-tools)
 (require-package 'srefactor)
 (require-package 'ensime)
+(require-package 'quelpa)
 
 ;; failed to install elfeed-org due to its mandatory dependency on org-8.2.7
 ;(require-package 'elfeed-org)
