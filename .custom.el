@@ -685,7 +685,8 @@ or a keyword will be asked to input."
     (setq magit-git-global-arguments (nconc magit-git-global-arguments
                                             '("-c" "i18n.logOutputEncoding=UTF-8")))))
 
-(setq vc-handled-backends (delete 'Git vc-handled-backends))
+;; comment out for `eglot'
+;; (setq vc-handled-backends (delete 'Git vc-handled-backends))
 
 (require 'slime)
 (setq inferior-lisp-program (executable-find "sbcl"))
