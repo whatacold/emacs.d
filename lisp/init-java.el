@@ -25,7 +25,7 @@
       quelpa-update-melpa-p nil
       quelpa-melpa-recipe-stores nil
       quelpa-self-upgrade-p nil)
-(quelpa '(eglot :fetcher github :repo "mkcms/eglot" :branch "feature/eclipse.jdt.ls-server")
+(quelpa '(eglot :fetcher github :repo "whatacold/eglot" :branch "tmp/merge-eclipse.jdt.ls")
         :upgrade t)
 
 ;; download and extract http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
