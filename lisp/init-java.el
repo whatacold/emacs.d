@@ -41,4 +41,13 @@
 
 (whatacold/eglot-eclipse-jdt-ls-jar-set (concat user-emacs-directory "bin/eclipse.jdt.ls/"))
 
+(eval-after-load 'eglot
+  '(progn
+     (add-to-list 'eglot-server-programs '((c-mode c++-mode) "ccls"
+                                           "-log-file=/tmp/ccls.log"))))
+
+(add-hook 'c++-mode-hook #'eglot-ensure)
+(add-hook 'c-mode-hook #'eglot-ensure)
+(add-hook 'java-mode-hook #'eglot-ensure)
+
 (provide 'init-java)

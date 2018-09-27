@@ -168,7 +168,8 @@ Version 2018-03-31"
 ;;        ("melpa-stable" . "http://stable.melpa.org/packages/")))
 (add-to-list 'melpa-include-packages 'org-download)
 
-(setq message-truncate-lines t)
+; eglot needs this to show multi-line hover message
+; (setq message-truncate-lines t)
 
 (setq idle-require-load-break 0.1)
 
@@ -250,6 +251,7 @@ Version 2018-03-31"
 ;(semantic-mode) ; required by 'srefactor
 (require 'srefactor)
 
+(delete 'company-clang company-backends)
 (setq company-clang-insert-arguments t)
 
 (defun create-active-region (begin end &optional point-at-begin)
