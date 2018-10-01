@@ -7,6 +7,7 @@
                                       erc-mode
                                       browse-kill-ring-mode
                                       dired-mode
+                                      magit-revision-mode
                                       help-mode
                                       text-mode
                                       fundamental-mode
@@ -20,6 +21,7 @@
                                       twittering-mode
                                       compilation-mode
                                       weibo-timeline-mode
+                                      Man-mode
                                       woman-mode
                                       Info-mode
                                       calc-mode
