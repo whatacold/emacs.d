@@ -40,7 +40,7 @@
 
 (defun my-c-mode-setup ()
   "C/C++ only setup"
-  (message "my-c-mode-setup called (buffer-file-name)=%s" (buffer-file-name))
+  ;; (message "my-c-mode-setup called (buffer-file-name)=%s" (buffer-file-name))
   ;; @see http://stackoverflow.com/questions/3509919/ \
   ;; emacs-c-opening-corresponding-header-file
   (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
