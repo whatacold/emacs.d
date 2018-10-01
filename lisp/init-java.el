@@ -20,6 +20,9 @@
 ;; (add-to-list 'company-backends 'ensime-company)
 ;; (setq company-minimum-prefix-length 2)
 
+;; helper commands for maven
+(quelpa '(mvn :fetcher github :repo "apg/mvn-el"))
+
 ;; copied from doom-emacs
 (setq quelpa-checkout-melpa-p nil
       quelpa-update-melpa-p nil
