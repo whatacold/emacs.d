@@ -1,3 +1,24 @@
+
+(defun whatacold/mode-line-file-info ()
+  "Construct file info for mode line, witch is stolen from doom emacs."
+  (concat "("
+          (format (if indent-tabs-mode "⭾%d" "␣%d")
+                  tab-width)
+          " "
+          (pcase (coding-system-eol-type buffer-file-coding-system)
+            (0 "LF")
+            (1 "CRLF")
+            (2 "CR"))
+          " "
+          (let* ((sys (coding-system-plist buffer-file-coding-system))
+                 (category (plist-get sys :category)))
+            (cond ((eq category 'coding-category-undecided) "")
+                  ((or (eq category 'coding-category-utf-8)
+                       (eq (plist-get sys :name) 'prefer-utf-8))
+                   "UTF-8 ")
+                  ((concat (upcase (symbol-name (plist-get sys :name))) "  "))))
+          ")"))
+
 ;; @see http://emacs-fu.blogspot.com/2011/08/customizing-mode-line.html
 ;; But I need global-mode-string,
 ;; @see http://www.delorie.com/gnu/docs/elisp-manual-21/elisp_360.html
@@ -13,13 +34,15 @@
     "%02l" "," "%01c"
       ;; (propertize "%02l" 'face 'font-lock-type-face) ","
       ;; (propertize "%02c" 'face 'font-lock-type-face)
-    ") %p "
+    ")"
+    " %p " ; percent of buffer
 
     ;; the current major mode for the buffer.
     "["
 
-    '(:eval (propertize "%m" 'face nil
-              'help-echo buffer-file-coding-system))
+    ;; '(:eval (propertize "%m" 'face nil
+    ;;           'help-echo buffer-file-coding-system))
+
     " "
 
 
@@ -43,7 +66,11 @@
     "] "
 
     ;;global-mode-string, org-timer-set-timer in org-mode need this
-    (propertize "%M" 'face nil)
+
+    '(:eval (whatacold/mode-line-file-info))
+
+    ;; Current date and time
+    ;; (propertize "%M" 'face nil)
 
     " --"
     ;; i don't want to see minor-modes; but if you want, uncomment this:
