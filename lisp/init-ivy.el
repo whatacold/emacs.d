@@ -336,4 +336,8 @@ If N is nil, use `ivy-mode' to browse the `kill-ring'."
    ("k" kill-buffer "kill")
    ("r" ivy--rename-buffer-action "rename")))
 
+;; Let `counsel-ag' work fine with `wgrep', for dos and unix files
+;; https://github.com/abo-abo/swiper/issues/1384
+(setq counsel-async-split-string-re "\r?\n")
+
 (provide 'init-ivy)
