@@ -25,7 +25,7 @@
     jss ; remote debugger of browser
     ;; {{ since stable v0.9.1 released, we go back to stable version
     ivy ; stable counsel dependent unstable ivy
-    ;; counsel
+    counsel ; for better `counsel-ag', see https://github.com/abo-abo/swiper/pull/1559
     ;; swiper
     ;; }}
     moe-theme
