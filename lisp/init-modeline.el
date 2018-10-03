@@ -2,21 +2,28 @@
 (defun whatacold/mode-line-file-info ()
   "Construct file info for mode line, witch is stolen from doom emacs."
   (concat "("
-          (format (if indent-tabs-mode "⭾%d" "␣%d")
-                  tab-width)
+          ;; coding system
+          (let* ((sys (coding-system-plist buffer-file-coding-system))
+                 (category (plist-get sys :category))
+                 (coding-system-name
+                  (cond ((eq category 'coding-category-undecided) "")
+                        ((or (eq category 'coding-category-utf-8)
+                             (eq (plist-get sys :name) 'prefer-utf-8))
+                         "UTF-8")
+                        ((concat (upcase (symbol-name (plist-get sys :name))) "???")))))
+            (propertize coding-system-name 'face nil
+                        'help-echo (symbol-name buffer-file-coding-system)))
           " "
           (pcase (coding-system-eol-type buffer-file-coding-system)
             (0 "LF")
             (1 "CRLF")
-            (2 "CR"))
+            (2 "CR")
+            (_ "??"))
           " "
-          (let* ((sys (coding-system-plist buffer-file-coding-system))
-                 (category (plist-get sys :category)))
-            (cond ((eq category 'coding-category-undecided) "")
-                  ((or (eq category 'coding-category-utf-8)
-                       (eq (plist-get sys :name) 'prefer-utf-8))
-                   "UTF-8 ")
-                  ((concat (upcase (symbol-name (plist-get sys :name))) "  "))))
+          (propertize (format (if indent-tabs-mode "⭾%d" "␣%d")
+                              tab-width)
+                      'face nil
+                      'help-echo "tab/spaces width")
           ")"))
 
 ;; @see http://emacs-fu.blogspot.com/2011/08/customizing-mode-line.html
@@ -37,14 +44,12 @@
     ")"
     " %p " ; percent of buffer
 
-    ;; the current major mode for the buffer.
     "["
 
-    ;; '(:eval (propertize "%m" 'face nil
-    ;;           'help-echo buffer-file-coding-system))
+    ;; major mode
+    "%m"
 
     " "
-
 
     ;; insert vs overwrite mode, input-method in a tooltip
     '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
