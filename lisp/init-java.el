@@ -23,13 +23,7 @@
 ;; helper commands for maven
 (quelpa '(mvn :fetcher github :repo "apg/mvn-el"))
 
-;; copied from doom-emacs
-(setq quelpa-checkout-melpa-p nil
-      quelpa-update-melpa-p nil
-      quelpa-melpa-recipe-stores nil
-      quelpa-self-upgrade-p nil)
-(quelpa '(eglot :fetcher github :repo "whatacold/eglot" :branch "tmp/merge-eclipse.jdt.ls")
-        :upgrade t)
+(quelpa '(eglot :fetcher github :repo "whatacold/eglot" :branch "tmp/merge-eclipse.jdt.ls"))
 
 ;; download and extract http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
 ;; then `M-x eglot'

@@ -380,7 +380,14 @@
 (require-package 'pdf-tools)
 (require-package 'srefactor)
 (require-package 'ensime)
+
 (require-package 'quelpa)
+
+;; copied from doom-emacs
+(setq quelpa-checkout-melpa-p nil
+      quelpa-update-melpa-p nil
+      quelpa-melpa-recipe-stores nil
+      quelpa-self-upgrade-p nil)
 
 ;; failed to install elfeed-org due to its mandatory dependency on org-8.2.7
 ;(require-package 'elfeed-org)
