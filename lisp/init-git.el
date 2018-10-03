@@ -233,4 +233,9 @@ If nothing is selected, use the word under cursor as function name to look up."
       (require 'find-file-in-project)
       (ffip-show-content-in-diff-mode (shell-command-to-string cmd)))))
 
+(eval-after-load 'magit
+  ;; Hide stashes in status buffer by default
+  '(setq magit-section-initial-visibility-alist
+         (cons '([stashes status] . hide) magit-section-initial-visibility-alist)))
+
 (provide 'init-git)
