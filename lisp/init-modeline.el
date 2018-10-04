@@ -6,18 +6,20 @@
           (let* ((sys (coding-system-plist buffer-file-coding-system))
                  (category (plist-get sys :category))
                  (coding-system-name
-                  (cond ((eq category 'coding-category-undecided) "")
+                  (cond ((eq category 'coding-category-undecided) "--")
                         ((or (eq category 'coding-category-utf-8)
                              (eq (plist-get sys :name) 'prefer-utf-8))
-                         "UTF-8")
-                        ((concat (upcase (symbol-name (plist-get sys :name))) "???")))))
+                         "utf-8")
+                        ((eq (plist-get sys :name) 'chinese-gbk)
+                         "gbk")
+                        ((symbol-name (plist-get sys :name))))))
             (propertize coding-system-name 'face nil
                         'help-echo (symbol-name buffer-file-coding-system)))
           " "
           (pcase (coding-system-eol-type buffer-file-coding-system)
-            (0 "LF")
-            (1 "CRLF")
-            (2 "CR")
+            (0 "unix")
+            (1 "dos")
+            (2 "mac")
             (_ "??"))
           " "
           (propertize (format (if indent-tabs-mode "⭾%d" "␣%d")
@@ -49,7 +51,7 @@
     ;; major mode
     "%m"
 
-    " "
+    ","
 
     ;; insert vs overwrite mode, input-method in a tooltip
     '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
