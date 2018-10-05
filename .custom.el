@@ -528,7 +528,8 @@ Version 2018-03-31"
 
 (require-package 'org-download)
 (require 'org-download)
-(setq org-download-image-dir "./images/")
+(setq-default org-download-image-dir "~/org/images/")
+(setq-default org-download-heading-lvl 0)
 (setq org-download-screenshot-method
       (if *cygwin*
           "convert clipboard: %s"
