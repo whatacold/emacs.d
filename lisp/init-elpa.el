@@ -380,6 +380,7 @@
 (require-package 'pdf-tools)
 (require-package 'srefactor)
 (require-package 'ensime)
+(require-package 'tiny)
 
 (require-package 'quelpa)
 
