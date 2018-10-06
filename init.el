@@ -147,6 +147,7 @@
   (require-init 'init-graphviz)
   (require-init 'init-elfeed)
   (require-init 'init-java)
+  (require-init 'init-keybinding)
 
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
   ;; {{ idle require other stuff
