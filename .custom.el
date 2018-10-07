@@ -776,3 +776,26 @@ or a keyword will be asked to input."
                               whatacold/maxims))))
 
 (add-hook 'focus-in-hook #'whatacold/maxim-show-randomly)
+
+
+;; useful when define keys
+;; https://oremacs.com/2015/02/11/elisp-newbie-style/
+(defun whatacold/describe-keys-prefixes ()
+  "Describe keys prefixes by abo-abo."
+  (interactive)
+  (with-output-to-temp-buffer "*Bindings*"
+    (dolist (letter-group (list
+                           (cl-loop for c from ?a to ?z
+                                    collect (string c))
+                           (cl-loop for c from ?α to ?ω
+                                    collect (string c))))
+      (dolist (prefix '("" "C-" "M-" "C-M-"))
+        (princ (mapconcat
+                (lambda (letter)
+                  (let ((key (concat prefix letter)))
+                    (format ";; (global-set-key (kbd \"%s\") '%S)"
+                            key
+                            (key-binding (kbd key)))))
+                letter-group
+                "\n"))
+        (princ "\n\n")))))
