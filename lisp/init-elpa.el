@@ -260,7 +260,7 @@
 (require-package 'session)
 (require-package 'unfill)
 (require-package 'w3m)
-(require-package 'counsel-gtags)
+;(require-package 'counsel-gtags)
 (require-package 'buffer-move)
 (require-package 'ace-window)
 (require-package 'cmake-mode)
@@ -392,5 +392,9 @@
 
 ;; failed to install elfeed-org due to its mandatory dependency on org-8.2.7
 ;(require-package 'elfeed-org)
+
+;; wait PR to be merged
+(quelpa '(counsel-gtags :fetcher github :repo "whatacold/emacs-counsel-gtags"
+                        :branch "whatacold"))
 
 (provide 'init-elpa)
