@@ -765,3 +765,14 @@ or a keyword will be asked to input."
     (when filename
       (kill-new filename)
       (message "Buffer file name '%s' copied." filename))))
+
+(defcustom whatacold/maxims nil
+  "Maxims to be randomly displayed in echo area when gaining focus.")
+
+(defun whatacold/maxim-show-randomly ()
+  "Randomly pick a maxim from `whatacold/maxims' and show it in echo area."
+  (when (and whatacold/maxims (listp whatacold/maxims))
+    (message "maxim: %s" (nth (random (length whatacold/maxims))
+                              whatacold/maxims))))
+
+(add-hook 'focus-in-hook #'whatacold/maxim-show-randomly)
