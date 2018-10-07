@@ -743,3 +743,25 @@ or a keyword will be asked to input."
 (defmacro reset-custom-variable (symbol)
   "Utility macro to reset the value of defcustom variable."
   `(setq ,symbol (eval (car (get ',symbol 'standard-value)))))
+
+(defun joaot/delete-process-at-point ()
+  (interactive)
+  (let ((process (get-text-property (point) 'tabulated-list-id)))
+    (cond ((and process
+                (processp process))
+           (delete-process process)
+           (revert-buffer))
+          (t
+           (error "no process at point!")))))
+
+(define-key process-menu-mode-map (kbd "C-k") 'joaot/delete-process-at-point)
+
+(defun kill-file-name ()
+  "Kill (Copy) the current buffer's file name to kill ring, or even the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (file-name-nondirectory (buffer-file-name)))))
+    (when filename
+      (kill-new filename)
+      (message "Buffer file name '%s' copied." filename))))
