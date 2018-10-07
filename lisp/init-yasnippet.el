@@ -7,6 +7,9 @@
 (if (and  (file-exists-p my-yasnippets) (not (member my-yasnippets yas-snippet-dirs)))
     (add-to-list 'yas-snippet-dirs my-yasnippets))
 
+;; also for auto-yasnippet
+(setq aya-persist-snippets-dir my-yasnippets)
+
 (yas-reload-all)
 (defun yasnippet-generic-setup-for-mode-hook ()
   ;(unless (is-buffer-file-temp))
