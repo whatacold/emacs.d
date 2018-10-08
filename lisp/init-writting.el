@@ -46,8 +46,8 @@ Also converts full stops to commas."
     (endless/call-subword-cmd 'subword-upcase)))
 
 ;; these bindings are fine
-(global-set-key (kbd "M-c") 'endless/capitalize)
-(global-set-key (kbd "M-l") 'endless/downcase)
-(global-set-key (kbd "M-u") 'endless/upcase)
+;; (global-set-key (kbd "M-c") 'endless/capitalize)
+;; (global-set-key (kbd "M-l") 'endless/downcase)
+;; (global-set-key (kbd "M-u") 'endless/upcase)
 
 (provide 'init-writting)
