@@ -191,3 +191,4 @@
 ;;; no-byte-compile: t
 ;;; End:
 (put 'erase-buffer 'disabled nil)
+(put 'list-timers 'disabled nil)
