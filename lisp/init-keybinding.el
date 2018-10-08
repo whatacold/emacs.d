@@ -10,7 +10,13 @@
 (global-set-key (kbd "M-h") #'avy-goto-char-timer)
 (global-set-key (kbd "M-n") #'aya-expand)
 (global-set-key (kbd "C-l") #'find-file-in-project)
-(global-set-key (kbd "C-i") #'counsel-ag)
+
+;; workaround for distinguish `C-i' from 'TAB'
+;; https://stackoverflow.com/a/11319885/910978
+(define-key input-decode-map (kbd "C-i") (kbd "H-i"))
+(define-key input-decode-map (kbd "C-m") (kbd "H-m"))
+(global-set-key (kbd "H-i") #'counsel-ag)
+
 (global-set-key (kbd "M-l") #'counsel-imenu)
 
 ;; magit
