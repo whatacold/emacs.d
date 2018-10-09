@@ -767,7 +767,7 @@ or a keyword will be asked to input."
 (defun whatacold/maxim-show-randomly ()
   "Randomly pick a maxim from `whatacold/maxims' and show it in echo area."
   (when (and whatacold/maxims (listp whatacold/maxims)
-             (not (minibuffer-window-active-p (selected-window))))
+             (not (window-minibuffer-p)))
     (message "maxim: %s" (nth (random (length whatacold/maxims))
                               whatacold/maxims))))
 
