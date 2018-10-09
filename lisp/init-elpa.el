@@ -395,6 +395,11 @@
 
 ;; wait PR to be merged
 (quelpa '(counsel-gtags :fetcher github :repo "whatacold/emacs-counsel-gtags"
-                        :branch "whatacold"))
+                        :branch "whatacold")
+        :upgrade t)
+(quelpa '(counsel :fetcher github :repo "whatacold/swiper"
+                  :branch "fix-ag-occur-line-ending"
+                  :files ("counsel.el"))
+        :upgrade t)
 
 (provide 'init-elpa)
