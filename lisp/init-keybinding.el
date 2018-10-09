@@ -9,6 +9,7 @@
 
 (global-set-key (kbd "M-h") #'avy-goto-char-timer)
 (global-set-key (kbd "M-n") #'aya-expand)
+(global-set-key (kbd "M-u") #'counsel-imenu)
 (global-set-key (kbd "C-l") #'find-file-in-project)
 
 ;; workaround for distinguish `C-i' from 'TAB'
@@ -17,7 +18,8 @@
 (define-key input-decode-map (kbd "C-m") (kbd "H-m"))
 (global-set-key (kbd "H-i") #'counsel-ag)
 
-(global-set-key (kbd "M-l") #'counsel-imenu)
+(global-set-key (kbd "M-l") #'pyim-convert-code-at-point)
+
 
 ;; magit
 (eval-after-load 'magit
