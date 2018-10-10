@@ -383,6 +383,7 @@
 (require-package 'tiny)
 
 (require-package 'quelpa)
+(require-package 'org-bullets)
 
 ;; copied from doom-emacs
 (setq quelpa-checkout-melpa-p nil

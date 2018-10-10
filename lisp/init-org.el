@@ -173,6 +173,9 @@ If use-indirect-buffer is not nil, use `indirect-buffer' to hold the widen conte
      ;; @see http://irreal.org/blog/1
      (setq org-src-fontify-natively t)))
 
+;; http://xahlee.info/comp/unicode_circled_numbers.html
+(setq org-bullets-bullet-list '("㊀" "㊁" "㊂" "㊃" "㊄" "㊅" "㊆" "㊇" "㊈" "㊉"))
+
 (defun org-mode-hook-setup ()
   (unless (is-buffer-file-temp)
     (setq evil-auto-indent nil)
@@ -192,6 +195,8 @@ If use-indirect-buffer is not nil, use `indirect-buffer' to hold the widen conte
 
     ;; don't spell check double words
     (setq flyspell-check-doublon nil)
+
+    (org-bullets-mode)
 
     ;; display wrapped lines instead of truncated lines
     (setq truncate-lines nil)
