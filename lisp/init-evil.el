@@ -832,19 +832,6 @@ If the character before and after CH is space or tab, CH is NOT slash"
   (my-cc-isearch-string))
 ;; }}
 
-;; change mode-line color by evil state
-(lexical-let ((default-color (cons (face-background 'mode-line)
-                                   (face-foreground 'mode-line))))
-  (add-hook 'post-command-hook
-            (lambda ()
-              (let ((color (cond ((minibufferp) default-color)
-                                 ((evil-insert-state-p) '("#d04646" . "#ffffff"))
-                                 ((evil-emacs-state-p)  '("#444488" . "#ffffff"))
-                                 ((buffer-modified-p)   '("#006fa0" . "#ffffff"))
-                                 (t default-color))))
-                (set-face-background 'mode-line (car color))
-                (set-face-foreground 'mode-line (cdr color))))))
-
 ;; {{ evil-nerd-commenter
 (require 'evil-nerd-commenter)
 (evilnc-default-hotkeys)
