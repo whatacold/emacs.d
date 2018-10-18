@@ -6,10 +6,6 @@
 (defcustom cdg-db-file-name "compile_commands.json"
   "The compilation database file name.")
 
-(defvar cdg--make-absolute-dir)
-
-(defvar cdg--target-db-dir)
-
 (defun cdg--parse-make-output (make-output make-absolute-dir)
   "Parse `make-output' and generate compilation database in `target-db-dir'.
 `make' is executed with `make-absolute-dir' as CWD, the directory part could be converted."
@@ -35,14 +31,6 @@
                    entries))))
     (nreverse entries)))
 
-(defun cdg--convert-entry-dir (entry)
-  (let ((dir (plist-get entry :directory)))
-    (plist-put entry
-               :directory
-               (replace-regexp-in-string (regexp-quote cdg--make-absolute-dir)
-                                         cdg--target-db-dir
-                                         dir))))
-
 (defun cdg-generate (make-absolute-dir target-db-dir)
   "Parse current buffer as `make' output and generate the compilation database in `target-db-dir'.
 `make' is executed with `make-absolute-dir' as CWD.
@@ -57,10 +45,17 @@ and some assumptions:
          (json-object-type 'plist)
          (json-array-type 'list)
          (json-null nil))
-    ;; XXX ugly!
-    (setq cdg--make-absolute-dir make-absolute-dir)
-    (setq cdg--target-db-dir target-db-dir)
-    (setq entries (mapcar #'cdg--convert-entry-dir entries))
+    (setq entries (lexical-let ((from-dir make-absolute-dir)
+                                (to-dir target-db-dir))
+                    (mapcar #'(lambda (entry)
+                                (let ((dir (plist-get entry :directory)))
+                                  (plist-put entry
+                                             :directory
+                                             (replace-regexp-in-string
+                                              (regexp-quote from-dir)
+                                              to-dir
+                                              dir))))
+                            entries)))
     (with-temp-buffer
       (insert (json-encode (vconcat entries))) ; XXX why json-encode doesn't support list as JSON array?
       (json-pretty-print-buffer)
