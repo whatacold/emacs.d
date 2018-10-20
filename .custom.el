@@ -653,20 +653,20 @@ or a keyword will be asked to input."
                          cold/locate-db-path)
                  t))
 
-;;; keybinds
-(eval-after-load "evil"
-  (nvmap :prefix ","
-         "qq" 'my-counsel-etags-grep
-         "sy" 'my-rsync))
-(setq keyfreq-excluded-commands '(self-insert-command))
+;; ;;; keybinds
+;; (eval-after-load "evil"
+;;   (nvmap :prefix ","
+;;          "qq" 'my-counsel-etags-grep
+;;          "sy" 'my-rsync))
+;; (setq keyfreq-excluded-commands '(self-insert-command))
 
-;; {{ specify major mode uses Evil (vim) NORMAL state or EMACS original state.
-;; You may delete this setup to use Evil NORMAL state always.
-(loop for (mode . state) in
-      '((youdao-dictionary-mode . emacs)
-        (process-menu-mode . emacs) ; e.g. M-x list-processes
-        )
-      do (evil-set-initial-state mode state))
+;; ;; {{ specify major mode uses Evil (vim) NORMAL state or EMACS original state.
+;; ;; You may delete this setup to use Evil NORMAL state always.
+;; (loop for (mode . state) in
+;;       '((youdao-dictionary-mode . emacs)
+;;         (process-menu-mode . emacs) ; e.g. M-x list-processes
+;;         )
+;;       do (evil-set-initial-state mode state))
 ;; }}
 
 (eval-after-load 'youdao-dictionary
