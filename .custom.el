@@ -622,11 +622,6 @@ Version 2018-03-31"
   ("f" counsel-gtags-go-forward "forward")
   ("b" counsel-gtags-go-backward "backward"))
 
-(defun my-rsync ()
-  "Util to easily rsync projects"
-  (interactive)
-  (shell-command (format "rsync.sh %s" (my-root-dir))))
-
 (defun my-counsel-etags-grep (arg)
   "Grep a keyword within current project.
 use the symbol at point as default keyword when no prefix ARG provided,
@@ -656,8 +651,7 @@ or a keyword will be asked to input."
 ;; ;;; keybinds
 ;; (eval-after-load "evil"
 ;;   (nvmap :prefix ","
-;;          "qq" 'my-counsel-etags-grep
-;;          "sy" 'my-rsync))
+;;          "qq" 'my-counsel-etags-grep))
 ;; (setq keyfreq-excluded-commands '(self-insert-command))
 
 ;; ;; {{ specify major mode uses Evil (vim) NORMAL state or EMACS original state.
