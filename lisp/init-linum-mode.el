@@ -39,6 +39,7 @@
                                       gnus-summary-mode
                                       gnus-article-mode
                                       elfeed-search-mode
+                                      elfeed-show-mode
                                       pdf-view-mode
                                       calendar-mode))
 
