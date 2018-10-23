@@ -23,8 +23,6 @@
 ;; helper commands for maven
 (quelpa '(mvn :fetcher github :repo "apg/mvn-el"))
 
-(quelpa '(eglot :fetcher github :repo "whatacold/eglot" :branch "tmp/merge-eclipse.jdt.ls"))
-
 ;; download and extract http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
 ;; then `M-x eglot'
 ;; When asked, point at the root directory where you extracted the server.
@@ -38,9 +36,5 @@
 
 (whatacold/eglot-eclipse-jdt-ls-jar-set (concat user-emacs-directory "bin/eclipse.jdt.ls/"))
 
-(eval-after-load 'eglot
-  '(progn
-     (add-to-list 'eglot-server-programs '((c-mode c++-mode) "ccls"
-                                           "-log-file=/tmp/ccls.log"))))
 
 (provide 'init-java)
