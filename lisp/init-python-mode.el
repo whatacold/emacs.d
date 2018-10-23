@@ -7,6 +7,7 @@
 
 (defun python-mode-hook-setup ()
   (unless (is-buffer-file-temp)
+    (hs-minor-mode)
     ;; http://emacs.stackexchange.com/questions/3322/python-auto-indent-problem/3338#3338
     ;; emacs 24.4 only
     (setq electric-indent-chars (delq ?: electric-indent-chars))))
