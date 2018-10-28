@@ -31,6 +31,7 @@
                                       inf-ruby-mode
                                       gud-mode
                                       org-mode
+                                      org-agenda-mode
                                       vc-git-log-edit-mode
                                       log-edit-mode
                                       term-mode
