@@ -790,3 +790,5 @@ or a keyword will be asked to input."
                 letter-group
                 "\n"))
         (princ "\n\n")))))
+
+(setq counsel-more-chars-alist '((t . 2)))
