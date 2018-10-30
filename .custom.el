@@ -791,4 +791,10 @@ or a keyword will be asked to input."
                 "\n"))
         (princ "\n\n")))))
 
+;;; why not work?
+(add-to-list 'counsel-more-chars-alist '((counsel-ag . 2)))
+
 (setq counsel-more-chars-alist '((t . 2)))
+
+;; magit-git-exit-code: Symbol’s value as variable is void: magit-git-global-arguments
+(make-variable-buffer-local 'magit-git-global-arguments) ; why do I need this?
