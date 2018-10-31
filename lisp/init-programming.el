@@ -14,17 +14,24 @@
 
 (eval-after-load 'eglot
   '(progn
-     (add-to-list 'eglot-server-programs (cons '(c-mode c++-mode foo-mode)
-                                               #'(lambda (interactive-p)
-                                                   (list "ccls"
-                                                         "-log-file=/tmp/ccls.log"
-
-                                                         (when whatacold/ccls-init-args
-                                                           (let ((json-object-type 'plist)
-                                                                 (json-array-type 'list))
-                                                             (format "-init=%s" (json-encode (vconcat whatacold/ccls-init-args)))))
-
-                                                         ))))))
+     (add-to-list 'eglot-server-programs
+                  (cons '(c-mode c++-mode foo-mode)
+                        #'(lambda (interactive-p)
+                            (let ((json-object-type 'plist)
+                                  (json-array-type 'list)
+                                  result)
+                              (push (format "-log-file=/tmp/ccls-%s.log"
+                                            (file-name-base
+                                             (directory-file-name
+                                              (car
+                                               (project-roots
+                                                (project-current))))))
+                                    result)
+                              (when whatacold/ccls-init-args
+                                (push (format "-init=%s" (json-encode
+                                                          (vconcat whatacold/ccls-init-args)))
+                                      result))
+                              (push "ccls" result)))))))
 
 (setq avy-timeout-seconds 0.3)
 
