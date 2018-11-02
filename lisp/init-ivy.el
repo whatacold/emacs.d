@@ -300,7 +300,7 @@ If N is nil, use `ivy-mode' to browse the `kill-ring'."
 
 (defun pinyin-to-utf8 (str)
   (when (and (> (length str) 0)
-             (string= (substring str 0 1) ":"))
+             (string= (substring str 0 1) ivy-pinyin-search-trigger-key))
     (let* ((collection (split-string (replace-regexp-in-string ivy-pinyin-search-trigger-key
                                                                ""
                                                                str) "")))
@@ -311,6 +311,7 @@ If N is nil, use `ivy-mode' to browse the `kill-ring'."
                  ""))))
 
 (defun re-builder-pinyin (str)
+  "Prefix with `ivy-pinyin-search-trigger-key' to search in piniyin."
   (or (pinyin-to-utf8 str)
       (ivy--regex-plus str)))
 
