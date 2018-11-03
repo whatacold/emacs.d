@@ -29,7 +29,7 @@
                                     result)
                               (when whatacold/ccls-init-args
                                 (push (format "-init=%s" (json-encode
-                                                          (vconcat whatacold/ccls-init-args)))
+                                                          whatacold/ccls-init-args))
                                       result))
                               (push "ccls" result)))))))
 
