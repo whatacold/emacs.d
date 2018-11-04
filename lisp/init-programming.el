@@ -37,12 +37,12 @@
 
 (setq avy-timeout-seconds 0.3)
 
-(defun whatacold/highlight-symbol-specify-symbol (&optional symbol)
+(defun whatacold/highlight-symbol-specify-symbol (orig-fn &rest args)
   "Prompt user to specify SYMBOL given prefix arg."
   (when current-prefix-arg
-    (setq symbol (read-from-minibuffer "Symbol: "))))
+    (funcall orig-fn (read-from-minibuffer "Symbol: "))))
 
 (advice-add #'highlight-symbol
-            :before #'whatacold/highlight-symbol-specify-symbol)
+            :around #'whatacold/highlight-symbol-specify-symbol)
 
 (provide 'init-programming)
