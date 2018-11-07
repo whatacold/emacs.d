@@ -37,6 +37,15 @@
 
 (setq avy-timeout-seconds 0.3)
 
+(defun whatacold/avy-pinyin-re-builder (orig-fn &optional re-builder)
+  "An around advice to let `avy-goto-char-timer' support pinyin."
+  (if re-builder
+      (funcall orig-fn re-builder)
+    (require 'pinyinlib)
+    (funcall orig-fn #'pinyinlib-build-regexp-string)))
+
+(advice-add 'avy--read-candidates :around #'whatacold/avy-pinyin-re-builder)
+
 (defun whatacold/highlight-symbol-specify-symbol (orig-fn &rest args)
   "Prompt user to specify SYMBOL given prefix arg."
   (when current-prefix-arg
