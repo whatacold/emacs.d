@@ -67,4 +67,9 @@ Argument INTERACTIVE-P indicates where it's called interactively."
 (advice-add #'highlight-symbol
             :around #'whatacold/highlight-symbol-specify-symbol)
 
+(defun whatacold/toggle-display-line-number ()
+  "Toggle display line number in current buffer."
+  (interactive)
+  (setq display-line-numbers (not display-line-numbers)))
+
 (provide 'init-programming)
