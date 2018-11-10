@@ -506,7 +506,7 @@ Version 2018-03-31"
 (setq plantuml-jar-path (setq org-plantuml-jar-path "/usr/share/java/plantuml.jar"))
 
 (require 'ox-reveal)
-(setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0/")
+(setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.7.0/")
 
 ;; the file format exported by ox-freemind is too old to work.
 ;(add-to-list 'load-path "~/.emacs.d/site-lisp/org/contrib/lisp/")
