@@ -12,8 +12,12 @@
 ;; e.g. (setq whatacold/ccls-init-args '(:clang (:extraArgs ("-std=c++03"))))
 (defvar whatacold/ccls-init-args nil)
 
+(defcustom eglot-ls-output-encoding "utf-8"
+  "The LS's output encoding")
+
 (defun whatacold/eglot-ccls-contact (interactive-p)
-  "A contact function to assemble args for ccls."
+  "A contact function to assemble args for ccls.
+Argument INTERACTIVE-P indicates where it's called interactively."
   (let ((json-object-type 'plist)
         (json-array-type 'list)
         result)
@@ -28,7 +32,16 @@
       (push (format "-init=%s" (json-encode
                                 whatacold/ccls-init-args))
             result))
-    (push "ccls" result)))
+    (push "ccls" result)
+
+    (unless (equal eglot-ls-output-encoding "utf-8")
+      (dolist (item (reverse (list "lsa.py"
+                                   (concat "--original-output-encoding="
+                                           eglot-ls-output-encoding)
+                                   "--log-level=DEBUG"
+                                   "--")))
+        (push item result)))
+    result))
 
 (eval-after-load 'eglot
   '(progn
