@@ -15,7 +15,7 @@
               (or user-login-name "")
               " - Emacs loves you!\n\n")))))
 
-(setq-default initial-scratch-message (show-scratch-buffer-message))
+(setq-default initial-scratch-message "")
 
 ;; racket
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . lisp-mode))
