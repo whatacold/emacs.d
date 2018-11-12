@@ -1,4 +1,5 @@
 ;;;; Generic programming settings
+(blink-cursor-mode -1)
 
 ;;; LSP support
 
