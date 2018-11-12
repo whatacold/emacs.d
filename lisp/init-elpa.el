@@ -96,6 +96,8 @@
     youdao-dictionary
     graphviz-dot-mode
     quelpa
+    eglot
+    avy
 
     company-c-headers
     company-statistics)

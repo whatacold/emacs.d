@@ -486,7 +486,7 @@ Version 2018-03-31"
             "octave" "oz" "plantuml" "R" "sass" "screen" "sql" "awk" "ditaa"
             "haskell" "latex" "lisp" "matlab" "ocaml" "org" "perl" "ruby"
             "scheme" "sqlite")))
-     (list (ido-completing-read "Source code type: " src-code-types))))
+     (list (completing-read "Source code type: " src-code-types))))
   (progn
     (newline-and-indent)
     (insert (format "#+BEGIN_SRC %s\n" src-code-type))
@@ -643,10 +643,10 @@ or a keyword will be asked to input."
                               (format "locate --database %s"
                                       cold/locate-db-path)
                               cmd)))
-(with-temp-buffer
-  (shell-command (format "updatedb --require-visibility no --output %s &"
-                         cold/locate-db-path)
-                 t))
+;; (with-temp-buffer
+;;   (shell-command (format "updatedb --require-visibility no --output %s &"
+;;                          cold/locate-db-path)
+;;                  t))
 
 ;; ;;; keybinds
 ;; (eval-after-load "evil"

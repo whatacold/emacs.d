@@ -7,7 +7,10 @@
 (global-set-key (kbd "C-.") #'counsel-gtags-dwim) ; XXX why not work on fedora?
 (global-set-key (kbd "C-,") #'counsel-gtags-go-backward)
 
+;;; release key bindings
 (define-key org-mode-map (kbd "M-h") nil)
+(define-key org-mode-map (kbd "C-c C-r") nil)
+
 (global-set-key (kbd "M-h") #'avy-goto-char-timer)
 (global-set-key (kbd "M-n") #'aya-expand)
 (global-set-key (kbd "M-u") #'counsel-imenu)

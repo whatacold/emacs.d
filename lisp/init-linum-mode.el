@@ -8,6 +8,7 @@
                                       browse-kill-ring-mode
                                       dired-mode
                                       magit-revision-mode
+                                      magit-status-mode
                                       help-mode
                                       text-mode
                                       fundamental-mode
