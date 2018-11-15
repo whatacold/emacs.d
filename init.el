@@ -54,6 +54,9 @@
 (defmacro local-require (pkg)
   `(load (file-truename (format "~/.emacs.d/site-lisp/%s/%s" ,pkg ,pkg))))
 
+(defmacro require-submodule (pkg)
+  `(load (file-truename (format "~/.emacs.d/submodules/%s/%s" ,pkg ,pkg))))
+
 (defmacro require-init (pkg)
   `(load (file-truename (format "~/.emacs.d/lisp/%s" ,pkg))))
 
@@ -69,6 +72,8 @@
 ;; ("\\`/:" . file-name-non-special))
 ;; Which means on every .el and .elc file loaded during start up, it has to runs those regexps against the filename.
 (let ((file-name-handler-alist nil))
+  (require-submodule 'awesome-pair)
+
   (require-init 'init-autoload)
   (require-init 'init-modeline)
   ;; (require 'cl-lib) ; it's built in since Emacs v24.3

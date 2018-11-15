@@ -1,0 +1,3 @@
+[submodule "submodules/awesome-pair"]
+	path = submodules/awesome-pair
+	url = https://github.com/manateelazycat/awesome-pair.git

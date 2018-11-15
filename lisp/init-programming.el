@@ -1,7 +1,32 @@
 ;;;; Generic programming settings
 (blink-cursor-mode -1)
 
-;;; LSP support
+;;;; Editing
+;;; awesome-pair
+(define-key awesome-pair-mode-map (kbd "%") #'awesome-pair-match-paren)
+
+(define-key awesome-pair-mode-map [C-backspace] #'awesome-pair-backward-delete)
+(define-key awesome-pair-mode-map (kbd "C-k") #'awesome-pair-kill)
+
+(define-key awesome-pair-mode-map (kbd "M-\"") #'awesome-pair-wrap-double-quote)
+(define-key awesome-pair-mode-map (kbd "M-[") #'awesome-pair-wrap-bracket)
+(define-key awesome-pair-mode-map (kbd "M-{") #'awesome-pair-wrap-curly)
+(define-key awesome-pair-mode-map (kbd "M-(") #'awesome-pair-wrap-round)
+(define-key awesome-pair-mode-map (kbd "M-)") #'awesome-pair-unwrap)
+
+(define-key awesome-pair-mode-map (kbd "M-<right>") #'awesome-pair-jump-right)
+(define-key awesome-pair-mode-map (kbd "M-<left>") #'awesome-pair-jump-left)
+(define-key awesome-pair-mode-map [C-return] #'awesome-pair-jump-out-pair-and-newline)
+
+(dolist (hook (list
+               'c-mode-common-hook
+               'c-mode-hook
+               'c++-mode-hook
+               'java-mode-hook
+               ))
+  (add-hook hook #'(lambda () (awesome-pair-mode))))
+
+;;;; LSP support
 
 ;; workaround, wait better solution for gbk files.
 ;(quelpa '(jsonrpc :url "https://raw.githubusercontent.com/whatacold/eglot/workaround-non-utf8/jsonrpc.el" :fetcher url))
