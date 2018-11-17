@@ -4,7 +4,8 @@
 
 
 ;; similar to M-, M-. for xref
-(global-set-key (kbd "C-.") #'counsel-gtags-dwim) ; XXX why not work on fedora?
+(define-key flyspell-mode-map (kbd "C-.") nil)
+(global-set-key (kbd "C-.") #'counsel-gtags-dwim) ; it will be intercepted by rime if on.
 (global-set-key (kbd "C-,") #'counsel-gtags-go-backward)
 
 ;;; release key bindings
