@@ -383,6 +383,7 @@
 (require-package 'srefactor)
 (require-package 'ensime)
 (require-package 'tiny)
+(require-package 'easy-kill)
 
 (require-package 'quelpa)
 (require-package 'org-bullets)

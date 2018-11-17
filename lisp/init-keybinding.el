@@ -2,6 +2,12 @@
 (global-set-key [f9] #'compile)
 (global-set-key [f5] #'set-mark-command)
 
+;;; easy-kill and easy-mark
+(global-set-key [remap kill-ring-save] 'easy-kill) ; M-w
+(global-set-key [remap mark-sexp] 'easy-mark) ; C-M-@
+
+;;; expand region
+(global-set-key (kbd "C-=") #'er/expand-region)
 
 ;; similar to M-, M-. for xref
 (define-key flyspell-mode-map (kbd "C-.") nil)
@@ -34,5 +40,6 @@
 
 ;; Not that frequently used
 (global-set-key (kbd "C-c r") #'my-counsel-recentf)
+(global-set-key (kbd "C-c m") #'set-mark-command)
 
 (provide 'init-keybinding)
