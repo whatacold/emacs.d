@@ -322,8 +322,6 @@ version control automatically"
           (vc-register)
           )))))
 
-(defvar http-proxy "http://127.0.0.1:8000"
-  "http proxy url")
 (defun toggle-env-http-proxy ()
   "set/unset the environment variable http_proxy which w3m uses"
   (interactive)

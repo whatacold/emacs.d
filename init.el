@@ -1,6 +1,14 @@
 ;; -*- coding: utf-8 -*-
 ;(defvar best-gc-cons-threshold gc-cons-threshold "Best default gc threshold value. Should't be too big.")
 
+(defvar http-proxy nil
+  "http proxy url without scheme, e.g. 127.0.0.1:8000")
+
+;;; For package.el
+(when http-proxy
+  (setq url-proxy-services `(("http" . ,http-proxy)
+                             ("https" . ,http-proxy))))
+
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
