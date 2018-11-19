@@ -435,7 +435,6 @@ See \"Reusing passwords for several connections\" from INFO.
                         "\\.mkv$"
                         "\\.mp[34]$"
                         "\\.avi$"
-                        "\\.pdf$"
                         "\\.docx?$"
                         "\\.xlsx?$"
                         ;; sub-titles
