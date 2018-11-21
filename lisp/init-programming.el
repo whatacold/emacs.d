@@ -1,6 +1,10 @@
 ;;;; Generic programming settings
 (blink-cursor-mode -1)
 
+;; Open symlink as is, not as its true file
+(setq find-file-existing-other-name nil)
+(setq vc-follow-symlinks nil)
+
 ;;;; Editing
 ;;; awesome-pair
 (define-key awesome-pair-mode-map (kbd "%") #'awesome-pair-match-paren)
