@@ -86,9 +86,11 @@ Argument INTERACTIVE-P indicates where it's called interactively."
 (advice-add 'avy--read-candidates :around #'whatacold/avy-pinyin-re-builder)
 
 (defun whatacold/highlight-symbol-specify-symbol (orig-fn &rest args)
-  "Prompt user to specify SYMBOL given prefix arg."
-  (when current-prefix-arg
-    (funcall orig-fn (read-from-minibuffer "Symbol: "))))
+  "Prompt user to specify SYMBOL given prefix arg.
+Argument ORIG-FN is the adviced function, and ARGS are its arguments."
+  (if current-prefix-arg
+      (funcall orig-fn (read-from-minibuffer "Symbol: "))
+    (apply orig-fn args)))
 
 (advice-add #'highlight-symbol
             :around #'whatacold/highlight-symbol-specify-symbol)

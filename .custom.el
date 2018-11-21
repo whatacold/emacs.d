@@ -547,10 +547,13 @@ Version 2018-03-31"
 (defun whatacold/pdf-view-light-solarized ()
   "View pdf with color scheme of light solarized."
   (interactive)
+  ;; foreground and background colors
+  ;; solarized light
   ;; (setq pdf-view-midnight-colors '("#657b83" . "#fdf6e3" ))
   ;; kindle
-  ;; foreground and background colors
   (setq pdf-view-midnight-colors '("#000000" . "#f6f6f6" ))
+  ;; solarized dark
+  (setq pdf-view-midnight-colors '("#839496" . "#002b36" ))
   (pdf-view-midnight-minor-mode))
 (add-hook 'pdf-view-mode-hook #'whatacold/pdf-view-light-solarized)
 ;; }}

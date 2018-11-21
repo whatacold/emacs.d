@@ -11,6 +11,7 @@
 
 ;; similar to M-, M-. for xref
 (define-key flyspell-mode-map (kbd "C-.") nil)
+(define-key flyspell-mode-map (kbd "C-,") nil)
 (global-set-key (kbd "C-.") #'counsel-gtags-dwim) ; it will be intercepted by rime if on.
 (global-set-key (kbd "C-,") #'counsel-gtags-go-backward)
 
@@ -31,12 +32,17 @@
 
 (global-set-key (kbd "M-l") #'pyim-convert-code-at-point)
 
-
 ;; magit
 (eval-after-load 'magit
   '(progn
      (define-key magit-status-mode-map (kbd "<down>") #'magit-section-forward)
      (define-key magit-status-mode-map (kbd "<up>") #'magit-section-backward)))
+
+;; pdf tools
+(eval-after-load 'pdf-view
+  '(progn
+     (define-key pdf-view-mode-map (kbd "<up>") #'pdf-view-scroll-down-or-previous-page)
+     (define-key pdf-view-mode-map (kbd "<down>") #'pdf-view-scroll-up-or-next-page)))
 
 ;; Not that frequently used
 (global-set-key (kbd "C-c r") #'my-counsel-recentf)
