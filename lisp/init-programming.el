@@ -64,6 +64,9 @@ Argument INTERACTIVE-P indicates where it's called interactively."
             result))
     (push "ccls" result)
 
+    ;; cquery works now, so stick to it for some time.
+    (setq result (list "cquery" "--log-all-to-stderr"))
+
     (unless (equal eglot-ls-output-encoding "utf-8")
       (dolist (item (reverse (list "lsa.py"
                                    (concat "--original-output-encoding="
@@ -71,6 +74,8 @@ Argument INTERACTIVE-P indicates where it's called interactively."
                                    "--log-level=DEBUG"
                                    "--")))
         (push item result)))
+
+    (push 'eglot-cquery result)
     result))
 
 (eval-after-load 'eglot

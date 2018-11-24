@@ -42,7 +42,9 @@
 (eval-after-load 'pdf-view
   '(progn
      (define-key pdf-view-mode-map (kbd "<up>") #'pdf-view-scroll-down-or-previous-page)
-     (define-key pdf-view-mode-map (kbd "<down>") #'pdf-view-scroll-up-or-next-page)))
+     (define-key pdf-view-mode-map (kbd "<down>") #'pdf-view-scroll-up-or-next-page)
+     (define-key pdf-view-mode-map (kbd "C-s") #'isearch-forward)
+     (define-key pdf-view-mode-map (kbd "C-r") #'isearch-backward)))
 
 ;; Not that frequently used
 (global-set-key (kbd "C-c r") #'my-counsel-recentf)
