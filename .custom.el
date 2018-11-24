@@ -1,18 +1,20 @@
 (when (or (display-graphic-p)
           (string-match-p "256color"(getenv "TERM")))
-  (load-theme 'solarized-light t))
+  (defcustom whatacold/theme-pair '(solarized-dark . solarized-light)
+    "The theme pair to toggle selection.")
+  (defvar whatacold//current-theme 'solarized-light)
+  (defun whatacold/toggle-theme ()
+    (interactive)
+    (setq whatacold//current-theme (if (eq whatacold//current-theme (car whatacold/theme-pair))
+                                         (cdr whatacold/theme-pair)
+                                       (car whatacold/theme-pair)))
+    (load-theme whatacold//current-theme t))
+  (whatacold/toggle-theme))
 
 (require-package 'hl-todo)
 (global-hl-todo-mode)
 
-(defun whatacold/open-markdown-draft ()
-  "Open a markdown buffer to draft something and post it to forums."
-  (interactive)
-  (let ((buffer (get-buffer-create "*markdown draft*")))
-    (switch-to-buffer buffer)
-    (markdown-mode)))
-
-(defun xah-change-bracket-pairs ( @from-chars @to-chars)
+(defun xah-change-bracket-pairs (@from-chars @to-chars)
   "Change bracket pairs from one type to another.
 
 For example, change all parenthesis () to square brackets [].

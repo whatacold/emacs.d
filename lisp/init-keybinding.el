@@ -5,6 +5,7 @@
 ;;; easy-kill and easy-mark
 (global-set-key [remap kill-ring-save] 'easy-kill) ; M-w
 (global-set-key [remap mark-sexp] 'easy-mark) ; C-M-@
+(global-set-key (kbd "M-y") 'counsel-yank-pop)
 
 ;;; expand region
 (global-set-key (kbd "C-=") #'er/expand-region)
