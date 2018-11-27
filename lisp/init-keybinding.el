@@ -10,6 +10,9 @@
 ;;; expand region
 (global-set-key (kbd "C-=") #'er/expand-region)
 
+;;; jump around
+(global-set-key (kbd "M-g g") 'avy-goto-line)
+
 ;; similar to M-, M-. for xref
 (define-key flyspell-mode-map (kbd "C-.") nil)
 (define-key flyspell-mode-map (kbd "C-,") nil)
@@ -20,7 +23,8 @@
 (define-key org-mode-map (kbd "M-h") nil)
 (define-key org-mode-map (kbd "C-c C-r") nil)
 
-(global-set-key (kbd "M-h") #'avy-goto-char-timer)
+;; (global-set-key (kbd "M-h") #'avy-goto-char-timer)
+(global-set-key (kbd "M-h") #'avy-goto-char)
 (global-set-key (kbd "M-n") #'aya-expand)
 (global-set-key (kbd "M-u") #'counsel-imenu)
 (global-set-key (kbd "C-l") #'find-file-in-project)
