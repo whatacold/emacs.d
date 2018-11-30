@@ -123,7 +123,7 @@ if no files marked, always operate on current line in dired-mode
      (define-key dired-mode-map "/" 'dired-isearch-filenames)
      (define-key dired-mode-map "\\" 'diredext-exec-git-command-in-shell)
 
-     (require 'dired+)
+     ;; (require 'dired+)
      (setq dired-recursive-deletes 'always)
      (dolist (file `(((if *unix* "zathura" "open") "pdf" "dvi" "pdf.gz" "ps" "eps")
                      ("7z x" "rar" "zip" "7z") ; "e" to extract, "x" to extract with full path

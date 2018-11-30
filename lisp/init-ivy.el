@@ -172,8 +172,8 @@ Or else, find files since 24 weeks (6 months) ago."
     (ivy-read "bookmarks:"
               collection
               :action (lambda (bookmark)
-                        (unless (featurep 'bookmark+)
-                          (require 'bookmark+))
+                        ;; (unless (featurep 'bookmark+)
+                        ;;   (require 'bookmark+))
                         (bookmark-jump bookmark)))))
 
 (defun counsel-yank-bash-history ()
