@@ -387,6 +387,7 @@
 
 (require-package 'quelpa)
 (require-package 'org-bullets)
+(require-package 'org-static-blog)
 
 ;; copied from doom-emacs
 (setq quelpa-checkout-melpa-p nil

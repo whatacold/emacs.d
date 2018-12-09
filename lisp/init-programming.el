@@ -83,6 +83,9 @@ Argument INTERACTIVE-P indicates where it's called interactively."
      (add-to-list 'eglot-server-programs
                   (cons '(c-mode c++-mode foo-mode) #'whatacold/eglot-ccls-contact))))
 
+(setq avy-keys '(?s ?d ?f ?j ?k ?l ?a ?g ?h
+                    ?w ?e ?r ?u ?i ?o ?q ?p ?t ?y
+                    ?x ?c ?v ?m ?z ?b ?n))
 (setq avy-timeout-seconds 0.3)
 
 (defun whatacold/avy-pinyin-re-builder (orig-fn &optional re-builder)
