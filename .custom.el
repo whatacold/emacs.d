@@ -502,6 +502,7 @@ Version 2018-03-31"
  'org-babel-load-languages
  '((ditaa . t)
    (plantuml . t)
+   (dot . t)
    (emacs-lisp . t)))
 
 ;; On Fedora, do `dnf install plantuml' to install it
