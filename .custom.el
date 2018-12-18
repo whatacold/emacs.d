@@ -541,6 +541,22 @@ Version 2018-03-31"
   (w3m-browse-url (concat "file://" link-no-proto)))
 
 (add-to-list 'org-file-apps '("\\.x?html?\\'" . my-org-html-app))
+(defun whatacold/org-pdf-app (file-path link-without-schema)
+  "Open pdf file using pdf-tools and go to the specified page."
+  (let* ((page (if (not (string-match "\\.pdf::\\([0-9]+\\)\\'"
+                                      link-without-schema))
+                   1
+                 (string-to-number (match-string 1 link-without-schema)))))
+    (find-file-other-window file-path)
+    (pdf-view-goto-page page)))
+
+(setq org-file-apps
+      '((auto-mode . emacs)
+        ("\\.x?html?\\'" . "firefox %s")
+        ("\\.pdf\\(::[0-9]+\\)?\\'" . whatacold/org-pdf-app)
+        ("\\.gif\\'" . "eog \"%s\"")
+        ("\\.mp4\\'" . "vlc \"%s\"")
+        ("\\.mkv" . "vlc \"%s\"")))
 
 (require 'pdf-tools)
 ;; Don't try to compile `epdfinfo' on every computer
@@ -559,6 +575,40 @@ Version 2018-03-31"
   (setq pdf-view-midnight-colors '("#839496" . "#002b36" ))
   (pdf-view-midnight-minor-mode))
 (add-hook 'pdf-view-mode-hook #'whatacold/pdf-view-light-solarized)
+
+(defcustom pdf-outline-export-dir nil
+  "Export dir for org-mode files of pdf outline")
+
+;; https://github.com/politza/pdf-tools/issues/338#issuecomment-447214217
+(defun pdf-outline-export-to-org ()
+  "Export the outlines of current pdf as TODO items to an org mode file."
+  (interactive)
+  (let* ((pdf-buffer (current-buffer))
+         (filename (file-name-sans-extension (buffer-name pdf-buffer)))
+         (org-filename (concat filename ".org"))
+         (outline-info (pdf-info-outline pdf-buffer)))
+    (if (not outline-info)
+        (message "No outline.")
+      (with-temp-buffer
+        (org-mode)
+        (insert (concat "#+TITLE: " filename "\n\n"))
+        (dolist (item outline-info)
+          (let ((title (assoc-default 'title item))
+                (page (assoc-default 'page item))
+                (level (assoc-default 'depth item)))
+            (insert (format
+                     "%s %s[[file:%s.pdf::%s][%s]]\n"
+                     (make-string level ?*)
+                     (if (= 1 level)
+                         "[/] "
+                       "")
+                     (concat default-directory filename)
+                     page title))
+            (org-set-property "page" (number-to-string page))
+            (org-todo 'todo)))
+        (write-file (concat (or pdf-outline-export-dir default-directory)
+                            org-filename)
+                    'prompt-confirm)))))
 ;; }}
 
 ;; Sessions tuning, in addition to `init-sessions.el'
