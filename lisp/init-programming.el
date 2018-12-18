@@ -69,7 +69,7 @@ Argument INTERACTIVE-P indicates where it's called interactively."
 
     (unless (equal eglot-ls-output-encoding "utf-8")
       (dolist (item (reverse (list "lsa.py"
-                                   (concat "--original-output-encoding="
+                                   (concat "--original-response-encoding="
                                            eglot-ls-output-encoding)
                                    "--log-level=DEBUG"
                                    "--")))

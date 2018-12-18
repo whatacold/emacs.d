@@ -536,11 +536,10 @@ Version 2018-03-31"
           "convert clipboard: %s"
         "gnome-screenshot -a -f %s"))
 
-(defun my-org-html-app (file-path link-no-proto)
-  "Use w3m to open .html"
-  (w3m-browse-url (concat "file://" link-no-proto)))
+(defun whatacold/org-html-app (file-path link-without-schema)
+  "Use w3m to open local .html links."
+  (w3m-browse-url (concat "file://" link-without-schema)))
 
-(add-to-list 'org-file-apps '("\\.x?html?\\'" . my-org-html-app))
 (defun whatacold/org-pdf-app (file-path link-without-schema)
   "Open pdf file using pdf-tools and go to the specified page."
   (let* ((page (if (not (string-match "\\.pdf::\\([0-9]+\\)\\'"

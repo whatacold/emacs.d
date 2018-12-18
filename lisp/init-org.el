@@ -122,7 +122,8 @@ If use-indirect-buffer is not nil, use `indirect-buffer' to hold the widen conte
       org-agenda-inhibit-startup t ;; ~50x speedup
       org-agenda-use-tag-inheritance nil ;; 3-4x speedup
       ;; }}
-      )
+      org-startup-folded nil
+ )
 
 ;; Refile targets include this file and any file contributing to the agenda - up to 5 levels deep
 (setq org-refile-targets '((nil :maxlevel . 5) (org-agenda-files :maxlevel . 5)))
