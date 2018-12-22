@@ -43,11 +43,14 @@
 (require 'json)
 (require 'iedit) ; let it bind keys
 
-;; e.g. (setq whatacold/ccls-init-args '(:clang (:extraArgs ("-std=c++03"))))
-(defvar whatacold/ccls-init-args nil)
+(defcustom ccls-init-args nil
+  "Init args for ccls, e.g. '(:clang (:extraArgs (\"-std=c++03\")))")
 
 (defcustom eglot-ls-output-encoding "utf-8"
   "The LS's output encoding")
+
+(defcustom eglot-cpp-ls "cquery"
+  "The language server for C/C++.")
 
 (defun whatacold/eglot-ccls-contact (interactive-p)
   "A contact function to assemble args for ccls.
@@ -55,22 +58,24 @@ Argument INTERACTIVE-P indicates where it's called interactively."
   (let ((json-object-type 'plist)
         (json-array-type 'list)
         result)
-    (push (format "-log-file=/tmp/ccls-%s.log"
-                  (file-name-base
-                   (directory-file-name
-                    (car
-                     (project-roots
-                      (project-current))))))
-          result)
-    (when whatacold/ccls-init-args
-      (push (format "-init=%s" (json-encode
-                                whatacold/ccls-init-args))
-            result))
-    (push "ccls" result)
-
-    ;; cquery works now, so stick to it for some time.
-    (setq result (list "cquery" "--log-all-to-stderr"))
-
+    (cond ((equal "ccls" eglot-cpp-ls)
+           (push (format "-log-file=/tmp/ccls-%s.log"
+                         (file-name-base
+                          (directory-file-name
+                           (car
+                            (project-roots
+                             (project-current))))))
+                 result)
+           (when ccls-init-args
+             (push (format "-init=%s" (json-encode
+                                       ccls-init-args))
+                   result))
+           (push "ccls" result))
+          ((equal "cquery" eglot-cpp-ls)
+           (setq result (list "cquery" "--log-all-to-stderr")))
+          (t ; e.g. clangd
+           (push eglot-cpp-ls result)))
+    ;; apply the adapter if necessary
     (unless (equal eglot-ls-output-encoding "utf-8")
       (dolist (item (reverse (list "lsa.py"
                                    (concat "--original-response-encoding="
@@ -78,8 +83,9 @@ Argument INTERACTIVE-P indicates where it's called interactively."
                                    "--log-level=DEBUG"
                                    "--")))
         (push item result)))
-
-    (push 'eglot-cquery result)
+    ;; cquery should apply the specific class in elgot
+    (when (equal "cquery" eglot-cpp-ls)
+      (push 'eglot-cquery result))
     result))
 
 (eval-after-load 'eglot
