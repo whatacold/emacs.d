@@ -603,7 +603,6 @@ Version 2018-03-31"
                        "")
                      (concat default-directory filename)
                      page title))
-            (org-set-property "page" (number-to-string page))
             (org-todo 'todo)))
         (write-file (concat (or pdf-outline-export-dir default-directory)
                             org-filename)
