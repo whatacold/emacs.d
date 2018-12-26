@@ -825,8 +825,8 @@ or a keyword will be asked to input."
 
 ;; useful when define keys
 ;; https://oremacs.com/2015/02/11/elisp-newbie-style/
-(defun whatacold/describe-keys-prefixes ()
-  "Describe keys prefixes by abo-abo."
+(defun whatacold/describe-key-prefixes ()
+  "Describe all key prefixes, courtesy of @abo-abo."
   (interactive)
   (with-output-to-temp-buffer "*Bindings*"
     (dolist (letter-group (list
