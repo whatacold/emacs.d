@@ -1,4 +1,3 @@
-
 (global-set-key [f9] #'compile)
 (global-set-key [f5] #'set-mark-command)
 
@@ -54,5 +53,17 @@
 ;; Not that frequently used
 (global-set-key (kbd "C-c r") #'my-counsel-recentf)
 (global-set-key (kbd "C-c m") #'set-mark-command)
+
+;; flymake
+(global-set-key (kbd "C-c f p") #'flymake-goto-prev-error)
+(global-set-key (kbd "C-c f n") #'flymake-goto-next-error)
+
+;; https://www.reddit.com/r/emacs/comments/2jzkz7/quickly_switch_to_previous_buffer/
+(defun switch-to-last-buffer ()
+  "Switch to last buffer."
+  (interactive)
+  (switch-to-buffer nil))
+
+(global-set-key (kbd "C-c b") #'switch-to-last-buffer)
 
 (provide 'init-keybinding)

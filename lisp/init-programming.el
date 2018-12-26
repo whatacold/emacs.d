@@ -5,10 +5,6 @@
 (setq find-file-existing-other-name nil)
 (setq vc-follow-symlinks nil)
 
-;;;; check
-(global-set-key (kbd "C-c f p") #'flymake-goto-prev-error)
-(global-set-key (kbd "C-c f n") #'flymake-goto-next-error)
-
 ;;;; Editing
 ;;; awesome-pair
 (define-key awesome-pair-mode-map (kbd "%") #'awesome-pair-match-paren)
