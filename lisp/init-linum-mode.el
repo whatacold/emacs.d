@@ -43,6 +43,7 @@
                                       elfeed-search-mode
                                       elfeed-show-mode
                                       pdf-view-mode
+                                      nov-mode
                                       calendar-mode))
 
 (cond

@@ -98,6 +98,7 @@
     quelpa
     eglot
     avy
+    ivy-yasnippet
 
     company-c-headers
     company-statistics)
@@ -364,6 +365,7 @@
   (require-package 'hemisu-theme)
   (require-package 'badger-theme)
   (require-package 'distinguished-theme)
+  (require-package 'flucui-themes) ; for reading
   (require-package 'challenger-deep-theme))
 ;; }}
 

@@ -557,6 +557,8 @@ Version 2018-03-31"
         ("\\.mp4\\'" . "vlc \"%s\"")
         ("\\.mkv" . "vlc \"%s\"")))
 
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
 (require 'pdf-tools)
 ;; Don't try to compile `epdfinfo' on every computer
 (when (file-executable-p pdf-info-epdfinfo-program)
