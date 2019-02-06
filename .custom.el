@@ -1,5 +1,6 @@
 (when (or (display-graphic-p)
-          (string-match-p "256color"(getenv "TERM")))
+          (string-match-p "256color" (getenv "TERM")))
+
   (defcustom whatacold/theme-pair '(solarized-dark . solarized-light)
     "The theme pair to toggle selection.")
   (defvar whatacold//current-theme 'solarized-light)
@@ -9,7 +10,9 @@
                                          (cdr whatacold/theme-pair)
                                        (car whatacold/theme-pair)))
     (load-theme whatacold//current-theme t))
-  (whatacold/toggle-theme))
+;  (whatacold/toggle-theme)
+
+  (load-theme 'flucui-light t))
 
 (require-package 'hl-todo)
 (global-hl-todo-mode)
@@ -249,19 +252,10 @@ Version 2018-03-31"
                   (set-buffer-file-coding-system 'mac))))))
 
 ;(semantic-mode) ; required by 'srefactor
-(require 'srefactor)
+;(require 'srefactor)
 
 (delete 'company-clang company-backends)
 (setq company-clang-insert-arguments t)
-
-(defun create-active-region (begin end &optional point-at-begin)
-  (if point-at-begin
-      (progn
-        (goto-char begin)
-        (push-mark end))
-    (goto-char end)
-    (push-mark begin))
-  (setq mark-active t))
 
 (defun shell-command-on-string (string command)
   "Execute COMMAND with STRING as pipe input, returns its output."
@@ -287,7 +281,7 @@ Version 2018-03-31"
     (setq command (format "%s %s" my-astyle-executable my-astyle-options))
     (shell-command-on-string string command)))
 
-(defun my-yasnippet-hook-adjust-style ()
+(defun my-yasnippet-hook-adjust-c/cpp-style ()
   "Utilize astyle to adjust style of yasnippet's snippet, options set in `my-astyle-options'."
   (let* ((anchor "the_point_anchor;")
          (begin yas-snippet-beg)
@@ -310,7 +304,7 @@ Version 2018-03-31"
       (delete-char (- 0 (length anchor))))))
 
 ;; see https://github.com/joaotavora/yasnippet/issues/728
-(add-to-list 'yas-after-exit-snippet-hook #'my-yasnippet-hook-adjust-style)
+(add-to-list 'yas-after-exit-snippet-hook #'my-yasnippet-hook-adjust-c/cpp-style)
 
 ;; org mode {{
 
