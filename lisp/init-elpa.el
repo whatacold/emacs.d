@@ -99,6 +99,8 @@
     eglot
     avy
     ivy-yasnippet
+    ace-pinyin
+    anki-editor
 
     company-c-headers
     company-statistics)
@@ -391,6 +393,9 @@
 (require-package 'org-bullets)
 (require-package 'org-static-blog)
 
+(require-package 'anki-editor)
+(setq anki-editor-create-decks t)
+
 ;; copied from doom-emacs
 (setq quelpa-checkout-melpa-p nil
       quelpa-update-melpa-p nil
@@ -403,5 +408,10 @@
 ;; wait PR to be merged
 (quelpa '(counsel-gtags :fetcher github :repo "whatacold/emacs-counsel-gtags"
                         :branch "whatacold"))
+
+;; my hacks
+(quelpa '(nov :fetcher github
+              :repo "whatacold/nov.el"
+              :branch "hacks"))
 
 (provide 'init-elpa)

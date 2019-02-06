@@ -1,5 +1,6 @@
 ;;;; Generic programming settings
 (blink-cursor-mode -1)
+(global-hl-line-mode) ; highlight current line
 
 ;; Open symlink as is, not as its true file
 (setq find-file-existing-other-name nil)
