@@ -119,4 +119,10 @@ Argument ORIG-FN is the adviced function, and ARGS are its arguments."
   (interactive)
   (setq display-line-numbers (not display-line-numbers)))
 
+(defun whatacold/insert-timestamp (&optional compact)
+  "Insert the current timestamp in a readable or COMPACT way."
+  (interactive "P")
+  (insert   (format-time-string (if compact "%Y%m%d%H%M%S"
+                                  "%Y-%m-%d %H:%M:%S"))))
+
 (provide 'init-programming)
