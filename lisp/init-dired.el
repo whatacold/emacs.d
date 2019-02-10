@@ -96,6 +96,7 @@ if no files marked, always operate on current line in dired-mode
   '(progn
      ;; @see https://emacs.stackexchange.com/questions/5649/sort-file-names-numbered-in-dired/5650#5650
      (setq dired-listing-switches "-laGh1v")
+
      ;; {{ @see https://oremacs.com/2017/03/18/dired-ediff/
      ;; -*- lexical-binding: t -*-
      (defun ora-ediff-files ()
@@ -119,22 +120,25 @@ if no files marked, always operate on current line in dired-mode
            (error "no more than 2 files should be marked"))))
      (define-key dired-mode-map "e" 'ora-ediff-files)
      ;; }}
+
      ;; from 24.4, dired+ can show/hide dired details by press "("
      (define-key dired-mode-map "/" 'dired-isearch-filenames)
      (define-key dired-mode-map "\\" 'diredext-exec-git-command-in-shell)
 
-     ;; (require 'dired+)
-     ;; (dolist (file `(((if *unix* "zathura" "open") "pdf" "dvi" "pdf.gz" "ps" "eps")
-     ;;                 ("7z x" "rar" "zip" "7z") ; "e" to extract, "x" to extract with full path
-     ;;                 ((if (not *is-a-mac*) (my-guess-mplayer-path) "open")  "ogm" "avi" "mpg" "rmvb" "rm" "flv" "wmv" "mkv" "mp4" "m4v" "webm" "part" "mov")
-     ;;                 ((concat (my-guess-mplayer-path) " -playlist") "list" "pls")
-     ;;                 ((if *unix* "feh" "open") "gif" "jpeg" "jpg" "tif" "png" )
-     ;;                 ((if *unix* "libreoffice" "open") "doc" "docx" "xls" "xlsx" "odt")
-     ;;                 ("djview" "djvu")
-     ;;                 ("firefox" "xml" "xhtml" "html" "htm" "mht" "epub")))
-     ;;   (add-to-list 'dired-guess-shell-alist-user
-     ;;                (list (concat "\\." (regexp-opt (cdr file) t) "$")
-     ;;                      (car file))))
+     (require 'dired-x)
+     (dolist (file `(;((if *unix* "zathura" "open") "pdf" "dvi" "pdf.gz" "ps" "eps")
+                     ;("7z x" "rar" "zip" "7z") ; "e" to extract, "x" to extract with full path
+                     ("vlc" ; (if (not *is-a-mac*)(my-guess-mplayer-path) "open")
+                      "ogm" "avi" "mpg" "rmvb" "rm" "flv" "wmv" "mkv" "mp4" "m4v" "webm" "part" "mov" "mp3")
+                     ;((concat (my-guess-mplayer-path) " -playlist") "list" "pls")
+                     ;((if *unix* "feh" "open") "gif" "jpeg" "jpg" "tif" "png" )
+                     (,(if *unix* "libreoffice" "open") "doc" "docx" "xls" "xlsx" "odt")
+                     ("djview" "djvu")
+                     ("firefox" "xml" "xhtml" "html" "htm" "mht" "epub")))
+       (add-to-list 'dired-guess-shell-alist-user
+                    (list (concat "\\." (regexp-opt (cdr file) t) "$")
+                          (car file))))
+
      (setq dired-recursive-deletes 'always)))
 
 ;; {{ Write backup files to own directory
