@@ -576,7 +576,7 @@ Version 2018-03-31"
 
 ;; https://github.com/politza/pdf-tools/issues/338#issuecomment-447214217
 (defun pdf-outline-export-to-org ()
-  "Export the outlines of current pdf as TODO items to an org mode file."
+  "Export the outline of current pdf to an org mode file."
   (interactive)
   (let* ((pdf-buffer (current-buffer))
          (filename (file-name-sans-extension (buffer-name pdf-buffer)))
@@ -592,14 +592,10 @@ Version 2018-03-31"
                 (page (assoc-default 'page item))
                 (level (assoc-default 'depth item)))
             (insert (format
-                     "%s %s[[file:%s.pdf::%s][%s]]\n"
+                     "%s [[file:%s.pdf::%s][%s]]\n"
                      (make-string level ?*)
-                     (if (= 1 level)
-                         "[/] "
-                       "")
                      (concat default-directory filename)
-                     page title))
-            (org-todo 'todo)))
+                     page title))))
         (write-file (concat (or pdf-outline-export-dir default-directory)
                             org-filename)
                     'prompt-confirm)))))
