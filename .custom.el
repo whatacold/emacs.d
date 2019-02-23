@@ -497,6 +497,7 @@ Version 2018-03-31"
  '((ditaa . t)
    (plantuml . t)
    (dot . t)
+   (C . t) ; will support C/C++/D, see https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-C.html
    (emacs-lisp . t)))
 
 ;; On Fedora, do `dnf install plantuml' to install it
