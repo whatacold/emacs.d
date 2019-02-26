@@ -96,7 +96,7 @@
     youdao-dictionary
     graphviz-dot-mode
     quelpa
-    eglot
+    ; eglot
     avy
     ivy-yasnippet
     ace-pinyin

@@ -1,3 +1,6 @@
 [submodule "submodules/awesome-pair"]
 	path = submodules/awesome-pair
 	url = https://github.com/manateelazycat/awesome-pair.git
+[submodule "submodules/eglot"]
+	path = submodules/eglot
+	url = https://github.com/joaotavora/eglot.git
