@@ -39,12 +39,13 @@
 
 ;; I'm in Australia now, so I set the locale to "en_AU"
 (defun insert-date (prefix)
-  "Insert the current date. With prefix-argument, use ISO format. With
-   two prefix arguments, write out the day and month name."
+  "Insert the current date.
+With prefix-argument, use ISO format.
+With two PREFIX arguments, write out the day and month name."
   (interactive "P")
   (let ((format (cond
-                 ((not prefix) "%d.%m.%Y")
-                 ((equal prefix '(4)) "%Y-%m-%d")
+                 ((not prefix) "%Y-%m-%d")
+                 ((equal prefix '(4)) "%d.%m.%Y")
                  ((equal prefix '(16)) "%d %B %Y")))
         )
     (insert (format-time-string format))))
