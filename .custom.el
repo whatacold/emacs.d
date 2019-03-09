@@ -281,30 +281,71 @@ Version 2018-03-31"
     (setq command (format "%s %s" my-astyle-executable my-astyle-options))
     (shell-command-on-string string command)))
 
-(defun my-yasnippet-hook-adjust-c/cpp-style ()
-  "Utilize astyle to adjust style of yasnippet's snippet, options set in `my-astyle-options'."
-  (let* ((anchor "the_point_anchor;")
+(defun whatacold/style-braces-in-allman (snippet)
+  "Style the SNIPPET in allman brace style.
+
+There are roughly 3 basic brace styles:
+- Attached: The braces are attached to the end of the last line of the previous block. (Java).
+- Broken: The braces are broken from the previous block. (Allman).
+- Linux: The braces are attached except for the opening brace of a function, class, or namespace (K&R, Linux).
+
+http://astyle.sourceforge.net/astyle.html#_Basic_Brace_Styles"
+  (let ((len (length snippet))
+        (i 0)
+        chars char new-str)
+    (while (< i len)
+      (setq char (aref snippet i))
+      (case char
+        (?{
+         (push ?\n chars)
+         (push char chars))
+        (?}
+         (push ?\n chars)
+         (push char chars)
+         (push ?\n chars))
+        (t
+         (push char chars)))
+      (setq i (1+ i)))
+    (setq new-str (replace-regexp-in-string "[\n \t]+\n"
+                                            "\n"
+                                            (apply #'string (nreverse chars))))
+    new-str))
+
+(defcustom whatacold/yasnippet-c-style nil
+  "Style of curly braces, e.g. 'allman."
+  :type '(symbol))
+
+(defun whatacold/yasnippet-exit-hook-c ()
+  (let* ((text-marker "the-yasnippet-exit-point;") ; workaround. text property is more elegant.
          (begin yas-snippet-beg)
          (end yas-snippet-end)
          (snippet (buffer-substring-no-properties begin end))
          new-snippet)
-    (when (and (memq major-mode '(c-mode c++-mode))
-               (string-match "[{}]" snippet))
-      (insert anchor)
-      (setq end (+ yas-snippet-end (length anchor)))
-      (setq snippet (buffer-substring-no-properties begin end))
-      (setq new-snippet (astyle-snippet snippet))
+    (when (and (string-match "[{}]" snippet)
+               (eq 'allman whatacold/yasnippet-c-style))
+      (insert text-marker)
+      (setq end (+ yas-snippet-end (length text-marker)))
+
+      (setq snippet (buffer-substring-no-properties begin end)) ; re-fetch content
+      (setq new-snippet (whatacold/style-braces-in-allman snippet))
       (delete-region begin end)
       (insert new-snippet)
+
       (goto-char begin)
       ;; re-indent it in the context
       (indent-region begin (+ end (- (length new-snippet)
                                      (length snippet))))
-      (re-search-forward anchor)
-      (delete-char (- 0 (length anchor))))))
+      (re-search-forward text-marker)
+      (delete-char (- 0 (length text-marker))))))
+
+(defun whatacold/yasnippet-exit-hook ()
+  "My yasnippet exit hook."
+  (case major-mode
+    ((c-mode c++-mode)
+     (whatacold/yasnippet-exit-hook-c))))
 
 ;; see https://github.com/joaotavora/yasnippet/issues/728
-(add-to-list 'yas-after-exit-snippet-hook #'my-yasnippet-hook-adjust-c/cpp-style)
+(add-to-list 'yas-after-exit-snippet-hook #'whatacold/yasnippet-exit-hook)
 
 ;; org mode {{
 
