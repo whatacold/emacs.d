@@ -119,6 +119,11 @@ Argument ORIG-FN is the adviced function, and ARGS are its arguments."
   (interactive)
   (setq display-line-numbers (not display-line-numbers)))
 
+(defun whatacold/toggle-tab-width ()
+  "Toggle tab width inn the width of 4 or 8 characters."
+  (interactive)
+  (setq tab-width (if (= 4 tab-width) 8 4)))
+
 (defun whatacold/insert-timestamp (&optional compact)
   "Insert the current timestamp in a readable or COMPACT way."
   (interactive "P")
