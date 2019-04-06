@@ -23,6 +23,8 @@
 (define-key awesome-pair-mode-map (kbd "M-<left>") #'awesome-pair-jump-left)
 (define-key awesome-pair-mode-map [C-return] #'awesome-pair-jump-out-pair-and-newline)
 
+(define-key global-map (kbd "C-c y") #'ivy-yasnippet)
+
 (dolist (hook (list
                'c-mode-common-hook
                'c-mode-hook
