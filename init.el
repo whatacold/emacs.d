@@ -113,6 +113,7 @@
   (require-init 'init-hippie-expand)
   (require-init 'init-windows)
   (require-init 'init-markdown)
+  (require-init 'init-edit)
   (require-init 'init-programming)
   (require-init 'init-erlang)
   (require-init 'init-javascript)
