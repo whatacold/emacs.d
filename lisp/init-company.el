@@ -16,6 +16,7 @@
 
      (add-to-list 'company-backends 'company-cmake)
      (add-to-list 'company-backends 'company-c-headers)
+     (add-to-list 'company-backends #'company-tabnine)
      ;; can't work with TRAMP
      (setq company-backends (delete 'company-ropemacs company-backends))
      ;; (setq company-backends (delete 'company-capf company-backends))

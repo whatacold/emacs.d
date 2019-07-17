@@ -103,6 +103,7 @@
     anki-editor
 
     company-c-headers
+    company-tabnine
     company-statistics)
   "Packages to install from melpa-unstable.")
 
@@ -294,6 +295,7 @@
 (require-package 'company)
 (require-package 'company-c-headers)
 (require-package 'company-statistics)
+(require-package 'company-tabnine)
 (require-package 'elpy)
 (require-package 'legalese)
 (require-package 'simple-httpd)
