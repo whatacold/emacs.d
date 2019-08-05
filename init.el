@@ -181,6 +181,7 @@
                                init-dired
                                ; init-artbollocks-mode ; don't need this yet.
                                init-eshell
+                               init-erc
                                init-semantic))
   (idle-require-mode 1) ;; starts loading
   ;; }}
