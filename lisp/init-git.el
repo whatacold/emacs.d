@@ -237,5 +237,7 @@ If nothing is selected, use the word under cursor as function name to look up."
   ;; Hide stashes in status buffer by default
   '(setq magit-section-initial-visibility-alist
          (cons '([stashes status] . hide) magit-section-initial-visibility-alist)))
+;;; workaround magit default value, could be removed in the future stable release.
+(setq magit-repository-directories nil)
 
 (provide 'init-git)
