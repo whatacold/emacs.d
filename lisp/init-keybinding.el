@@ -34,7 +34,7 @@
 (define-key input-decode-map (kbd "C-m") (kbd "H-m"))
 (global-set-key (kbd "H-i") #'counsel-ag)
 
-(global-set-key (kbd "M-l") #'pyim-convert-code-at-point)
+(global-set-key (kbd "M-l") #'pyim-convert-string-at-point)
 
 ;; magit
 (eval-after-load 'magit
