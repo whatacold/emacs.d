@@ -54,8 +54,9 @@
                                        (should-use-minimum-resource))
                                    nil
                                  t)))
-  (add-hook 'display-line-numbers-mode-hook 'display-line-numbers-mode-hook-setup)
-  (global-display-line-numbers-mode t))
+  ; (add-hook 'display-line-numbers-mode-hook 'display-line-numbers-mode-hook-setup)
+  ; (global-display-line-numbers-mode t)
+  )
  (t
   (global-linum-mode t)
 
