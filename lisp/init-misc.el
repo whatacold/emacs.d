@@ -1008,6 +1008,12 @@ If no region is selected. You will be asked to use `kill-ring' or clipboard inst
   (if (display-graphic-p) (switch-to-ansi-term)
     (suspend-frame)))
 
+(defun urxvt ()
+  "Spawn a urxvt instance based on the directory of current buffer."
+  (interactive)
+  (let ((urxvt "urxvt256c-ml"))
+    (start-process urxvt nil urxvt "-cd" (expand-file-name "./"))))
+
 ;; {{emms
 (require 'emms-setup)
 (emms-all)
