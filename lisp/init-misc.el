@@ -1029,4 +1029,7 @@ If no region is selected. You will be asked to use `kill-ring' or clipboard inst
 (unless *no-memory*
   ;; speed up font rendering for special characters
   (setq inhibit-compacting-font-caches t))
+
+(server-start)
+
 (provide 'init-misc)
