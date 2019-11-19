@@ -435,4 +435,12 @@ you can '(setq my-mplayer-extra-opts \"-ao alsa -vo vdpau\")'.")
   (and buffer-file-name
        (string-match-p "\.\\(mock\\|min\\)\.js" buffer-file-name)))
 
+(defun djb2-hash (str)
+  "DJB2 hash."
+  (let ((hash 5381)
+        (len (length str)))
+    (dotimes (i len hash)
+      (message "hash: %d" hash)
+      (setq hash (+ (* hash 33) (aref str i))))))
+
 (provide 'init-utils)
