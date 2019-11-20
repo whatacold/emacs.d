@@ -101,6 +101,7 @@
     ivy-yasnippet
     ace-pinyin
     anki-editor
+    elpy
 
     company-c-headers
     company-tabnine
