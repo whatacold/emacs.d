@@ -687,8 +687,8 @@ http://astyle.sourceforge.net/astyle.html#_Basic_Brace_Styles"
 
 (setq browse-url-generic-program
       (when *unix* ; linux or unix
-        (or (executable-find "chrome") "/opt/google/chrome/chrome"))
-      browse-url-browser-function #'w3m-browse-url)
+        (or (executable-find "firefox") "/usr/bin/firefox"))
+      browse-url-browser-function #'browse-url-firefox)
 
 (setq w3m-user-agent "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36")
 
