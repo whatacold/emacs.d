@@ -635,10 +635,9 @@ http://astyle.sourceforge.net/astyle.html#_Basic_Brace_Styles"
                 (page (assoc-default 'page item))
                 (level (assoc-default 'depth item)))
             (insert (format
-                     "%s [[file:%s.pdf::%s][%s]]\n"
+                     "%s %s\n"
                      (make-string level ?*)
-                     (concat default-directory filename)
-                     page title))))
+                     title))))
         (write-file (concat (or pdf-outline-export-dir default-directory)
                             org-filename)
                     'prompt-confirm)))))
