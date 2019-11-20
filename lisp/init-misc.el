@@ -421,8 +421,6 @@ See \"Reusing passwords for several connections\" from INFO.
 (setq recentf-keep '(file-remote-p file-readable-p))
 (setq recentf-max-saved-items 2048
       recentf-exclude '("/tmp/"
-                        "/ssh:"
-                        "/sudo:"
                         "recentf$"
                         "company-statistics-cache\\.el$"
                         ;; ctags
