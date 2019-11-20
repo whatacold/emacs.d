@@ -361,7 +361,8 @@ http://astyle.sourceforge.net/astyle.html#_Basic_Brace_Styles"
 (setq org-agenda-files '("~/org/gtd/inbox.org"
                          "~/org/gtd/gtd.org"
                          "~/org/gtd/tickler.org"))
-(setq org-refile-targets '(("~/org/gtd/gtd.org" :maxlevel . 3)
+(setq org-refile-targets '((nil :maxlevel . 10) ; current buffer
+                           ("~/org/gtd/gtd.org" :maxlevel . 3)
                            ("~/org/gtd/someday.org" :level . 1)
                            ("~/org/gtd/tickler.org" :maxlevel . 2)
                            ("~/org/gtd/trash.org" :level . 1)
@@ -403,7 +404,7 @@ http://astyle.sourceforge.net/astyle.html#_Basic_Brace_Styles"
                 ((org-agenda-overriding-header "Wait for something or somebody")))))
 
         ("D" "Done in last 7 days in archive"
-         tags "+TODO=\"DONE\"&CLOSED<=\"<today>\"&CLOSED>=\"<-7d>\""
+         tags "+TODO=\"DONE\"&CLOSED<=\"<now>\"&CLOSED>=\"<-7d>\""
          ((org-agenda-tag-filter-preset nil)
           (org-agenda-overriding-header "Done in last 7 days")
           (org-agenda-sorting-strategy '(tsia-up))
