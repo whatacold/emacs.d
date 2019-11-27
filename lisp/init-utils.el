@@ -443,4 +443,11 @@ you can '(setq my-mplayer-extra-opts \"-ao alsa -vo vdpau\")'.")
       (message "hash: %d" hash)
       (setq hash (+ (* hash 33) (aref str i))))))
 
+(defun w/toggle-line-move-visual ()
+  "Toggle the variable `line-move-visual'.
+
+So that `next-line' etc.  commands can move logical lines-wise."
+  (interactive)
+  (setq line-move-visual (not line-move-visual)))
+
 (provide 'init-utils)
