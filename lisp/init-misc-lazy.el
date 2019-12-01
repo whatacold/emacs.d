@@ -415,10 +415,11 @@ Current position is preserved."
 
 (defun cleanup-buffer-safe ()
   "Perform a bunch of safe operations on the whitespace content of a buffer.
-Does not indent buffer, because it is used for a before-save-hook, and that
+Does not indent buffer, because it is used for a `before-save-hook', and that
 might be bad."
   (interactive)
-  (untabify (point-min) (point-max))
+  (unless (eq major-mode 'makefile-gmake-mode)
+    (untabify (point-min) (point-max)))
   (delete-trailing-whitespace))
 
 (defun cleanup-buffer ()
