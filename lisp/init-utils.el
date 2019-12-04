@@ -450,4 +450,32 @@ So that `next-line' etc.  commands can move logical lines-wise."
   (interactive)
   (setq line-move-visual (not line-move-visual)))
 
+;; https://www.emacswiki.org/emacs/AddCommasToNumbers
+(defun group-number (number &optional separator)
+  "Add commas to NUMBER and return it as a string.
+
+    Optional SEPARATOR is the string to separate groups.
+    It defaults to a comma."
+  (let ((num (number-to-string number))
+	    (op (or separator ",")))
+	(while (string-match "\\(.*[0-9]\\)\\([0-9][0-9][0-9].*\\)" num)
+	  (setq num (concat
+                 (match-string 1 num)
+                 op
+                 (match-string 2 num))))
+	num))
+
+(defun w/show-me-numbers ()
+  "Show me large numbers to practice their pronunciations."
+  (interactive)
+  (random t)
+  (let (prompt
+        (i 0)
+        (ranges '(100000000000 100000000 100000)))
+    (while (progn
+             (setq prompt (format "Pronounce this number: %s, Another?"
+                                  (group-number (random (nth i ranges)))))
+             (setq i (% (1+ i) (length ranges)))
+             (yes-or-no-p prompt)))))
+
 (provide 'init-utils)
