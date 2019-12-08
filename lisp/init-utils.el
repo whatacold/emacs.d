@@ -469,13 +469,16 @@ So that `next-line' etc.  commands can move logical lines-wise."
   "Show me large numbers to practice their pronunciations."
   (interactive)
   (random t)
-  (let (prompt
+  (let (prompt result results
         (i 0)
         (ranges '(100000000000 100000000 100000)))
     (while (progn
+             (setq result (group-number (random (nth i ranges))))
              (setq prompt (format "Pronounce this number: %s, Another?"
-                                  (group-number (random (nth i ranges)))))
+                                  result))
+             (push result results)
              (setq i (% (1+ i) (length ranges)))
-             (yes-or-no-p prompt)))))
+             (yes-or-no-p prompt)))
+    (message (format "All %d numbers: %S" (length results) (reverse results)))))
 
 (provide 'init-utils)
