@@ -788,32 +788,33 @@ or a keyword will be asked to input."
 ;; (setq common-lisp-hyperspec-root "file:/path/to/HyperSpec/")
 
 ;;; {{
-(defvar intercept-subprocess-p nil)
+(defvar trace-subprocess-p nil
+  "Whether to trace subprocess creating or not.")
 
-(defun my-toggle-intercept-subprocess ()
-  "Toggle whether to intercept subprocess creating."
+(defun my-toggle-trace-subprocess ()
+  "Toggle whether to trace subprocess creating."
   (interactive)
-  (setq intercept-subprocess-p (not intercept-subprocess-p))
-  (when intercept-subprocess-p
-    (message "Intercept subprocess creating enable.")))
+  (setq trace-subprocess-p (not trace-subprocess-p))
+  (when trace-subprocess-p
+    (message "Trace subprocess creating.")))
 
 (defun my-quote-argument (arg)
   "Double quote ARG."
   (concat "\"" arg "\""))
 
-(define-advice start-process (:before (name buffer program &rest program-args) intercept)
-  (when intercept-subprocess-p
-    (message "Intercept start-process: name: %s, buffer: %s, program and args: %s %s"
+(define-advice start-process (:before (name buffer program &rest program-args) trace)
+  (when trace-subprocess-p
+    (message "Trace start-process: name: %s, buffer: %s, program and args: %s %s"
              name buffer program
              (mapconcat #'my-quote-argument program-args " "))))
 
-(define-advice shell-command-to-string (:before (command) intercept)
-  (when intercept-subprocess-p
-    (message "Intercept shell-command-to-string: %s" command)))
+(define-advice shell-command-to-string (:before (command) trace)
+  (when trace-subprocess-p
+    (message "Trace shell-command-to-string: %s" command)))
 
-(define-advice call-process (:before (program &optional infile destination display &rest args) intercept)
-  (when intercept-subprocess-p
-    (message "Intercept call-process: %s %s"
+(define-advice call-process (:before (program &optional infile destination display &rest args) trace)
+  (when trace-subprocess-p
+    (message "Trace call-process: %s %s"
              program
              (mapconcat #'my-quote-argument args " "))))
 ;;; }}
