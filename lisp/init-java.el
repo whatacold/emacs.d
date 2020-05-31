@@ -27,14 +27,14 @@
 ;; then `M-x eglot'
 ;; When asked, point at the root directory where you extracted the server.
 ;; I put it under `~/.emacs.d/bin/eclipse.jdt.ls/' .
-(defun whatacold/eglot-eclipse-jdt-ls-jar-set (directory)
+(defun w/eglot-eclipse-jdt-ls-jar-set (directory)
   "Set CLASSPATH env for eglot and eclipse jdt ls, if DIRECTORY is the root directory."
   (let* ((regex "org\\.eclipse\\.equinox\\.launcher_.*\\.jar$")
          (jar (directory-files (concat directory "plugins/") t regex)))
     (when (listp jar)
       (setenv "CLASSPATH" (concat (getenv "CLASSPATH") ":" (car jar))))))
 
-(whatacold/eglot-eclipse-jdt-ls-jar-set (concat user-emacs-directory "bin/eclipse.jdt.ls/"))
+(w/eglot-eclipse-jdt-ls-jar-set (concat user-emacs-directory "bin/eclipse.jdt.ls/"))
 
 
 (provide 'init-java)

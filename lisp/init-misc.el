@@ -744,12 +744,12 @@ If no region is selected. You will be asked to use `kill-ring' or clipboard inst
 (auto-save-enable)
 (setq auto-save-slient t)
 
-(defun whatacold/inhibit-message-advice (orig-fun &rest args)
+(defun w/inhibit-message-advice (orig-fun &rest args)
   "An :around advice to inhibit showing message in the echo area."
   (let ((inhibit-message t))
     (apply orig-fun args)))
 ;; Showing message in echo area will disrupt eldoc message.
-(advice-add #'auto-save-buffers :around #'whatacold/inhibit-message-advice)
+(advice-add #'auto-save-buffers :around #'w/inhibit-message-advice)
 ;; }}
 
 ;; {{ csv

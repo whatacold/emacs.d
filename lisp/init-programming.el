@@ -51,7 +51,7 @@
 (defcustom eglot-cpp-ls "cquery"
   "The language server for C/C++.")
 
-(defun whatacold/eglot-ccls-contact (interactive-p)
+(defun w/eglot-ccls-contact (interactive-p)
   "A contact function to assemble args for ccls.
 Argument INTERACTIVE-P indicates where it's called interactively."
   (let ((json-object-type 'plist)
@@ -90,23 +90,23 @@ Argument INTERACTIVE-P indicates where it's called interactively."
 (eval-after-load 'eglot
   '(progn
      (add-to-list 'eglot-server-programs
-                  (cons '(c-mode c++-mode foo-mode) #'whatacold/eglot-ccls-contact))))
+                  (cons '(c-mode c++-mode foo-mode) #'w/eglot-ccls-contact))))
 
 (setq avy-keys '(?s ?d ?f ?j ?k ?l ?a ?g ?h
                     ?w ?e ?r ?u ?i ?o ?q ?p ?t ?y
                     ?x ?c ?v ?m ?z ?b ?n))
 (setq avy-timeout-seconds 0.3)
 
-(defun whatacold/avy-pinyin-re-builder (orig-fn &optional re-builder)
+(defun w/avy-pinyin-re-builder (orig-fn &optional re-builder)
   "An around advice to let `avy-goto-char-timer' support pinyin."
   (if re-builder
       (funcall orig-fn re-builder)
     (require 'pinyinlib)
     (funcall orig-fn #'pinyinlib-build-regexp-string)))
 
-(advice-add 'avy--read-candidates :around #'whatacold/avy-pinyin-re-builder)
+(advice-add 'avy--read-candidates :around #'w/avy-pinyin-re-builder)
 
-(defun whatacold/highlight-symbol-specify-symbol (orig-fn &rest args)
+(defun w/highlight-symbol-specify-symbol (orig-fn &rest args)
   "Prompt user to specify SYMBOL given prefix arg.
 Argument ORIG-FN is the adviced function, and ARGS are its arguments."
   (if current-prefix-arg
@@ -114,22 +114,22 @@ Argument ORIG-FN is the adviced function, and ARGS are its arguments."
     (apply orig-fn args)))
 
 (advice-add #'highlight-symbol
-            :around #'whatacold/highlight-symbol-specify-symbol)
+            :around #'w/highlight-symbol-specify-symbol)
 
-(defun whatacold/toggle-display-line-number ()
+(defun w/toggle-display-line-number ()
   "Toggle display line number in current buffer."
   (interactive)
   (setq display-line-numbers (not display-line-numbers)))
 
-(defun whatacold/toggle-tab-width ()
+(defun w/toggle-tab-width ()
   "Toggle tab width inn the width of 4 or 8 characters."
   (interactive)
   (setq tab-width (if (= 4 tab-width) 8 4)))
 
-(defun whatacold/insert-timestamp (&optional compact)
+(defun w/insert-timestamp (&optional compact)
   "Insert the current timestamp in a readable or COMPACT way."
   (interactive "P")
-  (insert   (format-time-string (if compact "%Y%m%d%H%M%S"
-                                  "%Y-%m-%d %H:%M:%S"))))
+  (insert (format-time-string (if compact "%Y%m%d%H%M%S"
+                                "%Y-%m-%d %H:%M:%S"))))
 
 (provide 'init-programming)

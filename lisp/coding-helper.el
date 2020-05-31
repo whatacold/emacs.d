@@ -2,7 +2,7 @@
 
 ;;; SQL
 
-(defun whatacold/sql/insert-create-table (table fields)
+(defun w/sql/insert-create-table (table fields)
   "Helper to insert a template of `CREATE TABLE'."
   (interactive "sTable name: \nXSelect the varialbe for table fields: ") ; TODO how to prompt for completion?
   (let (field-definitions)
@@ -16,7 +16,7 @@
                     table
                     field-definitions))))
 
-(defun whatacold/sql/extract-fields-from-show-table ()
+(defun w/sql/extract-fields-from-show-table ()
   "Coding helper for extract table fields from `show table foo;' of SQL.
 
 Region should be active."

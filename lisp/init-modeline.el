@@ -1,5 +1,5 @@
 
-(defun whatacold/mode-line-file-info ()
+(defun w/mode-line-file-info ()
   "Construct file info for mode line, witch is stolen from doom emacs."
   (concat "("
           ;; coding system
@@ -74,7 +74,7 @@
 
     ;;global-mode-string, org-timer-set-timer in org-mode need this
 
-    '(:eval (whatacold/mode-line-file-info))
+    '(:eval (w/mode-line-file-info))
 
     ;; Current date and time
     ;; (propertize "%M" 'face nil)
