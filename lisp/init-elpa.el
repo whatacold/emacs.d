@@ -379,7 +379,6 @@
 
 ;; my tuning
 (require-package 'graphviz-dot-mode)
-(require-package 'magit-svn)
 (require-package 'cnfonts)
 (require-package 'youdao-dictionary)
 (require-package 'elfeed)
@@ -396,6 +395,7 @@
 (require-package 'quelpa)
 (require-package 'org-bullets)
 (require-package 'org-static-blog)
+(require-package 'protobuf-mode)
 
 (require-package 'anki-editor)
 (setq anki-editor-create-decks t)
