@@ -539,6 +539,7 @@ http://astyle.sourceforge.net/astyle.html#_Basic_Brace_Styles"
  '((ditaa . t)
    (plantuml . t)
    (dot . t)
+   (python . t)
    (C . t) ; will support C/C++/D, see https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-C.html
    (emacs-lisp . t)))
 
