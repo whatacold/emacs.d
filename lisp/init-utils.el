@@ -481,4 +481,12 @@ So that `next-line' etc.  commands can move logical lines-wise."
              (yes-or-no-p prompt)))
     (message (format "All %d numbers: %S" (length results) (reverse results)))))
 
+(defun w/run-doxygen ()
+  "Run doxygen asynchronously."
+  (interactive)
+  (let ((conf (locate-dominating-file default-directory "doxygen.conf")))
+    (if (not conf)
+        (message "No doxygen.conf found!")
+      (shell-command (format "doxygen %sdoxygen.conf&" conf)))))
+
 (provide 'init-utils)
