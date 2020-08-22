@@ -723,7 +723,7 @@ or a keyword will be asked to input."
 
 ;; Follow symbolic links.
 (setq counsel-ag-base-command (replace-regexp-in-string "^ag" "ag -f" counsel-ag-base-command))
-(setq counsel-rg-base-command (replace-regexp-in-string "^rg" "rg --follow" counsel-rg-base-command))
+(add-to-list 'counsel-rg-base-command "--follow")
 
 (defvar cold/locate-db-path "~/.locate.db")
 (define-advice counsel-locate-cmd-default (:around (oldfun input) add-options)
